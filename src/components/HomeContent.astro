@@ -1,42 +1,48 @@
-<section class="min-h-screen grid sm:grid-cols-5">
-  <div class="flex items-center px-6 sm:px-12 lg:px-16 py-24 sm:py-0 sm:col-span-3">
-    <div class="max-w-lg">
-      <p class="reveal visible text-xs font-medium tracking-[0.15em] text-black/30 uppercase mb-6">Studio de développement</p>
-      <h1 class="reveal visible text-5xl sm:text-6xl lg:text-7xl font-['DM_Serif_Display',serif] leading-[0.95] tracking-tight text-[#1d1d1f]">
-        Façonner<span class="italic">,</span><br />
-        <span class="italic">le web</span>
-      </h1>
-      <p class="reveal visible reveal-delay-1 mt-6 text-base sm:text-lg text-black/40 leading-relaxed">
-        WordPress, sites sur mesure, applications. 
-        Chaque projet est pensé, conçu et livré avec une obsession : la qualité.
-      </p>
-      <div class="reveal visible reveal-delay-2 mt-8 flex items-center gap-5">
-        <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white text-sm font-medium rounded-full hover:bg-black/80 transition-all duration-200">
-          Démarrer un projet
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <a href="/services" class="text-sm text-black/40 hover:text-black/70 transition-colors">En savoir plus</a>
+<section class="relative overflow-hidden">
+  <div class="mx-auto max-w-7xl px-6 pt-12 sm:pt-16 pb-20 sm:pb-28">
+    <div class="grid sm:grid-cols-5 gap-8 sm:gap-0 items-center">
+      <div class="sm:col-span-3">
+        <p class="reveal visible text-xs font-medium tracking-[0.15em] text-vert uppercase">Studio de développement</p>
+        <h1 class="reveal visible reveal-delay-1 mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#2d2a24] leading-[1.1]">
+          Donner vie à<br />
+          <span class="text-vert">vos idées</span>
+        </h1>
+        <p class="reveal visible reveal-delay-2 mt-5 text-base sm:text-lg text-[#2d2a24]/50 leading-relaxed max-w-md">
+          WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec soin.
+        </p>
+        <div class="reveal visible reveal-delay-3 mt-8 flex items-center gap-4">
+          <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm hover:shadow-md">
+            Démarrer un projet
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="/services" class="text-sm text-[#2d2a24]/40 hover:text-[#2d2a24] transition-colors">
+            En savoir plus
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="sm:col-span-2 flex items-center justify-center p-8 sm:p-12">
-    <div class="w-48 h-48 sm:w-56 sm:h-56">
-      <img
-        src="/me.png"
-        alt="Olivier"
-        class="w-full h-full rounded-full object-cover object-top shadow-lg"
-        loading="eager"
-      />
+      <div class="sm:col-span-2 flex justify-center sm:justify-end">
+        <div class="relative">
+          <div class="absolute -inset-4 bg-jaune/30 rounded-full blur-2xl" />
+          <div class="relative w-64 h-64 sm:w-72 sm:h-72">
+            <img
+              src="/me.png"
+              alt="Olivier"
+              class="w-full h-full rounded-full object-cover object-top shadow-xl"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="px-6 sm:px-12 lg:px-16 py-24 sm:py-32">
-  <div class="mx-auto max-w-5xl">
+<section class="bg-white/60 py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6">
     <div class="grid sm:grid-cols-3 gap-12 sm:gap-16">
       <div class="sm:col-span-1">
-        <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">Savoir-faire</p>
-        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Ce que je fais</h2>
+        <p class="reveal text-xs font-medium tracking-[0.15em] text-vert uppercase">Services</p>
+        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-bold text-[#2d2a24]">Ce que je fais</h2>
       </div>
       <div class="sm:col-span-2 space-y-10">
         {[
@@ -45,8 +51,13 @@
           { title: 'Maintenance & SEO', desc: 'Audit, sécurité, performance. Je garde votre site en bonne santé et à la page.' },
         ].map((item, i) => (
           <div class="reveal" style={`transition-delay: ${i * 0.1}s`}>
-            <h3 class="text-lg font-semibold text-[#1d1d1f]">{item.title}</h3>
-            <p class="mt-2 text-sm text-black/40 leading-relaxed max-w-lg">{item.desc}</p>
+            <div class="flex items-start gap-4">
+              <span class="w-2 h-2 rounded-full bg-jaune mt-2 shrink-0" />
+              <div>
+                <h3 class="text-lg font-semibold text-[#2d2a24]">{item.title}</h3>
+                <p class="mt-1.5 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">{item.desc}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -54,30 +65,30 @@
   </div>
 </section>
 
-<section class="bg-[#f8f8f8] px-6 sm:px-12 lg:px-16 py-24 sm:py-32">
-  <div class="mx-auto max-w-5xl">
+<section class="py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6">
     <div class="grid sm:grid-cols-3 gap-12 sm:gap-16">
       <div class="sm:col-span-1">
-        <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">À propos</p>
-        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Qui je suis</h2>
+        <p class="reveal text-xs font-medium tracking-[0.15em] text-vert uppercase">À propos</p>
+        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-bold text-[#2d2a24]">Qui je suis</h2>
       </div>
       <div class="sm:col-span-2">
-        <p class="reveal text-sm sm:text-base text-black/50 leading-relaxed max-w-lg">
-          Développeur indépendant basé à Toulouse. Je travaille seul ou en collaboration avec vos équipes. 
+        <p class="reveal text-sm sm:text-base text-[#2d2a24]/50 leading-relaxed max-w-lg">
+          Développeur indépendant basé à Toulouse. Je travaille seul ou en collaboration avec vos équipes.
           Mon approche : écouter, concevoir, livrer — avec un niveau d'exigence qui ne transige pas sur la qualité.
         </p>
         <div class="reveal reveal-delay-1 mt-10 grid grid-cols-3 gap-8">
           <div>
-            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">10+</div>
-            <p class="mt-1 text-xs text-black/30">Projets</p>
+            <div class="text-4xl font-bold text-vert">10+</div>
+            <p class="mt-1 text-xs text-[#2d2a24]/40">Projets</p>
           </div>
           <div>
-            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">100%</div>
-            <p class="mt-1 text-xs text-black/30">Satisfait</p>
+            <div class="text-4xl font-bold text-vert">100%</div>
+            <p class="mt-1 text-xs text-[#2d2a24]/40">Satisfait</p>
           </div>
           <div>
-            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">24h</div>
-            <p class="mt-1 text-xs text-black/30">Réponse</p>
+            <div class="text-4xl font-bold text-vert">24h</div>
+            <p class="mt-1 text-xs text-[#2d2a24]/40">Réponse</p>
           </div>
         </div>
       </div>
@@ -85,12 +96,11 @@
   </div>
 </section>
 
-<section class="px-6 sm:px-12 lg:px-16 py-24 sm:py-32 text-center">
-  <div class="mx-auto max-w-lg">
-    <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">Contact</p>
-    <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Un projet en tête ?</h2>
-    <p class="reveal reveal-delay-2 mt-4 text-sm text-black/40">Discutons-en sans engagement. Devis gratuit sous 48h.</p>
-    <a href="/contact" class="reveal reveal-delay-3 mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white text-sm font-medium rounded-full hover:bg-black/80 transition-all duration-200">
+<section class="bg-vert text-white py-20 sm:py-28 text-center">
+  <div class="mx-auto max-w-lg px-6">
+    <h2 class="reveal text-3xl sm:text-4xl font-bold">Un projet en tête ?</h2>
+    <p class="reveal reveal-delay-1 mt-3 text-white/70">Discutons-en sans engagement. Devis gratuit sous 48h.</p>
+    <a href="/contact" class="reveal reveal-delay-2 mt-8 inline-flex items-center gap-2 px-6 py-3 bg-jaune text-[#2d2a24] text-sm font-medium rounded-full hover:bg-jaune/90 transition-all duration-200 shadow-sm">
       Me contacter
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </a>

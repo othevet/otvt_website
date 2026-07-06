@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --color-vert: #009B4D;
+  --color-jaune: #FFCC00;
+  --color-ivoire: #FAF5E9;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(20px);
