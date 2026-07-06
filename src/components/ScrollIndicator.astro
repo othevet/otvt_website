@@ -1,0 +1,27 @@
+<div id="scroll-indicator" class="fixed bottom-8 right-8 z-40 transition-opacity duration-500">
+  <div class="flex flex-col items-center gap-1.5 text-[#2d2a24]/20">
+    <span class="text-[10px] font-medium tracking-widest uppercase">Scroll</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-bounce">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const indicator = document.getElementById('scroll-indicator');
+  if (indicator) {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          indicator.style.opacity = window.scrollY > 80 ? '0' : '1';
+          indicator.style.pointerEvents = window.scrollY > 80 ? 'none' : 'auto';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
