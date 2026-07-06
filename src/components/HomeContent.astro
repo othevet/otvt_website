@@ -1,103 +1,82 @@
-<section class="relative min-h-[85vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 pt-16 sm:pt-0">
-  <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-amber-400/10 to-transparent blur-[120px]" />
-    <div class="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-indigo-400/10 to-transparent blur-[120px]" />
-  </div>
-
-  <div class="os-window w-full max-w-4xl border border-black/[0.04]">
-    <div class="os-titlebar">
-      <span class="os-dot red" />
-      <span class="os-dot yellow" />
-      <span class="os-dot green" />
-      <span class="ml-3 text-xs text-black/30 font-medium">OTVT — Studio Web</span>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-0">
-      <div class="px-8 sm:px-10 pb-10 sm:pb-12 pt-5">
-        <p class="text-xs font-medium tracking-widest text-black/30 uppercase mb-5">Développement web</p>
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[0.95] text-[#1d1d1f]">
-          Façonner<br />
-          <span class="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">le web</span>
-        </h1>
-        <p class="mt-5 text-sm sm:text-base text-black/40 leading-relaxed">
-          WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec une obsession : la qualité.
-        </p>
-        <div class="mt-7 flex items-center gap-4">
-          <a href="/contact" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1d1d1f] text-white rounded-lg text-sm font-medium hover:bg-black transition-all duration-200">
-            Démarrer un projet
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
-          <a href="/services" class="text-sm text-black/40 hover:text-black/70 transition-colors">
-            Voir les services
-          </a>
-        </div>
+<section class="min-h-screen grid sm:grid-cols-2">
+  <div class="flex items-center px-6 sm:px-12 lg:px-16 py-24 sm:py-0">
+    <div class="max-w-lg">
+      <p class="reveal visible text-xs font-medium tracking-[0.15em] text-black/30 uppercase mb-6">Studio de développement</p>
+      <h1 class="reveal visible text-5xl sm:text-6xl lg:text-7xl font-['DM_Serif_Display',serif] leading-[0.95] tracking-tight text-[#1d1d1f]">
+        Façonner<span class="italic">,</span><br />
+        <span class="italic">le web</span>
+      </h1>
+      <p class="reveal visible reveal-delay-1 mt-6 text-base sm:text-lg text-black/40 leading-relaxed">
+        WordPress, sites sur mesure, applications. 
+        Chaque projet est pensé, conçu et livré avec une obsession : la qualité.
+      </p>
+      <div class="reveal visible reveal-delay-2 mt-8 flex items-center gap-5">
+        <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white text-sm font-medium rounded-full hover:bg-black/80 transition-all duration-200">
+          Démarrer un projet
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="/services" class="text-sm text-black/40 hover:text-black/70 transition-colors">En savoir plus</a>
       </div>
-      <div class="relative sm:min-h-full flex items-center justify-center p-6 sm:p-8">
-        <div class="w-56 h-56 sm:w-64 sm:h-64">
-          <img
-            src="/me.png"
-            alt="Olivier — OTVT Dev"
-            class="w-full h-full rounded-full object-cover object-top shadow-xl"
-            loading="eager"
-          />
-        </div>
+    </div>
+  </div>
+  <div class="relative h-[50vh] sm:h-auto bg-[#f5f5f7] overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent z-10" />
+    <img
+      src="/me.png"
+      alt="Olivier"
+      class="w-full h-full object-cover object-top sm:object-center"
+      loading="eager"
+    />
+  </div>
+</section>
+
+<section class="px-6 sm:px-12 lg:px-16 py-24 sm:py-32">
+  <div class="mx-auto max-w-5xl">
+    <div class="grid sm:grid-cols-3 gap-12 sm:gap-16">
+      <div class="sm:col-span-1">
+        <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">Savoir-faire</p>
+        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Ce que je fais</h2>
+      </div>
+      <div class="sm:col-span-2 space-y-10">
+        {[
+          { title: 'WordPress', desc: 'Thèmes sur mesure, WooCommerce, plugins. Pas de template pré-fait — du sur-mesure pensé pour vos objectifs.' },
+          { title: 'Sites sur mesure', desc: 'Next.js, Astro, React. Des sites ultra-rapides, modernes et évolutifs, déployés en continu.' },
+          { title: 'Maintenance & SEO', desc: 'Audit, sécurité, performance. Je garde votre site en bonne santé et à la page.' },
+        ].map((item, i) => (
+          <div class="reveal" style={`transition-delay: ${i * 0.1}s`}>
+            <h3 class="text-lg font-semibold text-[#1d1d1f]">{item.title}</h3>
+            <p class="mt-2 text-sm text-black/40 leading-relaxed max-w-lg">{item.desc}</p>
+          </div>
+        ))}
       </div>
     </div>
   </div>
 </section>
 
-<section class="px-4 sm:px-6 pb-24 sm:pb-40">
+<section class="bg-[#f8f8f8] px-6 sm:px-12 lg:px-16 py-24 sm:py-32">
   <div class="mx-auto max-w-5xl">
-    <div class="grid sm:grid-cols-3 gap-4 sm:gap-6">
-      <div class="os-window border border-black/[0.04] sm:col-span-2">
-        <div class="os-titlebar">
-          <span class="os-dot red" />
-          <span class="os-dot yellow" />
-          <span class="os-dot green" />
-          <span class="ml-3 text-xs text-black/25">Savoir-faire</span>
-        </div>
-        <div class="p-6 sm:p-8 grid gap-8">
-          {[
-            { num: '01', title: 'WordPress', desc: 'Thèmes sur mesure, WooCommerce, plugins. Pas de template pré-fait.', color: 'text-black/80' },
-            { num: '02', title: 'Sites sur mesure', desc: 'Next.js, Astro, React. Ultra-rapides, modernes, évolutifs.', color: 'text-black/80' },
-            { num: '03', title: 'Maintenance & SEO', desc: 'Audit, sécurité, performance. Votre site en bonne santé.', color: 'text-black/80' },
-          ].map((item, i) => (
-            <div class="reveal group" style={`transition-delay: ${i * 0.12}s`}>
-              <div class="flex items-start gap-5">
-                <span class="text-3xl font-bold text-black/10 group-hover:text-amber-400/50 transition-colors">{item.num}</span>
-                <div>
-                  <h3 class="text-base font-semibold text-[#1d1d1f] group-hover:text-amber-600 transition-colors">{item.title}</h3>
-                  <p class="mt-1.5 text-sm text-black/40 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div class="grid sm:grid-cols-3 gap-12 sm:gap-16">
+      <div class="sm:col-span-1">
+        <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">À propos</p>
+        <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Qui je suis</h2>
       </div>
-
-      <div class="os-window border border-black/[0.04]">
-        <div class="os-titlebar">
-          <span class="os-dot red" />
-          <span class="os-dot yellow" />
-          <span class="os-dot green" />
-          <span class="ml-3 text-xs text-black/25">À propos</span>
-        </div>
-        <div class="p-6 sm:p-8">
-          <p class="reveal text-sm text-black/50 leading-relaxed">
-          Développeur indépendant basé à Toulouse. Je travaille seul ou en collaboration avec vos équipes.
-          </p>
-          <div class="reveal reveal-delay-1 mt-8 space-y-5">
-            <div>
-              <div class="text-3xl font-bold text-amber-600">10+</div>
-              <div class="text-xs text-black/30 mt-1">Projets livrés</div>
-            </div>
-            <div>
-              <div class="text-3xl font-bold text-amber-600">100%</div>
-              <div class="text-xs text-black/30 mt-1">Satisfait ou corrigé</div>
-            </div>
-            <div>
-              <div class="text-3xl font-bold text-amber-600">24h</div>
-              <div class="text-xs text-black/30 mt-1">Délai de réponse</div>
-            </div>
+      <div class="sm:col-span-2">
+        <p class="reveal text-sm sm:text-base text-black/50 leading-relaxed max-w-lg">
+          Développeur indépendant basé à Toulouse. Je travaille seul ou en collaboration avec vos équipes. 
+          Mon approche : écouter, concevoir, livrer — avec un niveau d'exigence qui ne transige pas sur la qualité.
+        </p>
+        <div class="reveal reveal-delay-1 mt-10 grid grid-cols-3 gap-8">
+          <div>
+            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">10+</div>
+            <p class="mt-1 text-xs text-black/30">Projets</p>
+          </div>
+          <div>
+            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">100%</div>
+            <p class="mt-1 text-xs text-black/30">Satisfait</p>
+          </div>
+          <div>
+            <div class="text-3xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">24h</div>
+            <p class="mt-1 text-xs text-black/30">Réponse</p>
           </div>
         </div>
       </div>
@@ -105,25 +84,14 @@
   </div>
 </section>
 
-<section class="px-4 sm:px-6 pb-32 sm:pb-40">
-  <div class="mx-auto max-w-2xl">
-    <div class="os-window border border-black/[0.04] text-center">
-      <div class="os-titlebar justify-center">
-        <span class="os-dot red" />
-        <span class="os-dot yellow" />
-        <span class="os-dot green" />
-        <span class="ml-3 text-xs text-black/25">Contact</span>
-      </div>
-      <div class="px-8 sm:px-12 py-10 sm:py-14">
-        <h2 class="reveal text-2xl sm:text-3xl font-bold text-[#1d1d1f]">Un projet en tête ?</h2>
-        <p class="reveal reveal-delay-1 mt-3 text-sm text-black/40">
-          Discutons-en sans engagement. Devis gratuit sous 48h.
-        </p>
-        <a href="/contact" class="reveal reveal-delay-2 mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-[#1d1d1f] text-white rounded-lg text-sm font-medium hover:bg-black transition-all duration-200">
-          Me contacter
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
+<section class="px-6 sm:px-12 lg:px-16 py-24 sm:py-32 text-center">
+  <div class="mx-auto max-w-lg">
+    <p class="reveal text-xs font-medium tracking-[0.15em] text-black/30 uppercase">Contact</p>
+    <h2 class="reveal reveal-delay-1 mt-4 text-3xl sm:text-4xl font-['DM_Serif_Display',serif] text-[#1d1d1f]">Un projet en tête ?</h2>
+    <p class="reveal reveal-delay-2 mt-4 text-sm text-black/40">Discutons-en sans engagement. Devis gratuit sous 48h.</p>
+    <a href="/contact" class="reveal reveal-delay-3 mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white text-sm font-medium rounded-full hover:bg-black/80 transition-all duration-200">
+      Me contacter
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
   </div>
 </section>
