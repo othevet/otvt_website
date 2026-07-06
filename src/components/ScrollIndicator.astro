@@ -9,23 +9,22 @@
 </div>
 
 <style is:global>
-  .scroll-indicator {
+  #scroll-indicator {
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .scroll-indicator.is-hidden {
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
+  #scroll-indicator.is-hidden {
+    opacity: 0 !important;
+    transform: translateY(8px) !important;
+    pointer-events: none !important;
   }
 </style>
 
 <script>
-  const el = document.getElementById('scroll-indicator');
-  if (el) {
-    const toggle = () => {
-      el.classList.toggle('is-hidden', window.scrollY > 80);
-    };
-    window.addEventListener('scroll', toggle, { passive: true });
-    toggle();
-  }
+  const toggle = () => {
+    const el = document.getElementById('scroll-indicator');
+    if (el) el.classList.toggle('is-hidden', window.scrollY > 80);
+  };
+  window.addEventListener('scroll', toggle, { passive: true });
+  document.addEventListener('astro:page-load', toggle);
+  toggle();
 </script>
