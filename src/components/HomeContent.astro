@@ -2,15 +2,15 @@
   <div class="relative w-full max-w-7xl mx-auto px-6 py-20">
     <div class="relative flex items-center justify-center min-h-[85vh]">
 
-      <!-- Layer 1: Giant title behind -->
+      <!-- Layer 1: Full title behind -->
       <div class="absolute inset-0 flex items-center justify-center z-0 select-none pointer-events-none">
-        <div class="text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center w-full">
+        <div class="w-full text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center">
           <div>DONNER VIE</div>
           <div>À VOS IDÉES</div>
         </div>
       </div>
 
-      <!-- Layer 2: Cutout photo on top of text -->
+      <!-- Layer 2: Cutout photo -->
       <div class="relative z-10 flex items-center justify-center">
         <img
           src="/me.png"
@@ -20,11 +20,12 @@
         />
       </div>
 
-      <!-- Layer 3: Text fragment over the shoulder -->
-      <div class="absolute right-[8%] bottom-[18%] z-20 pointer-events-none hidden sm:block">
-        <span class="text-3xl sm:text-4xl font-black tracking-[-0.03em] text-vert-fonce/30 select-none">
-          vos idées
-        </span>
+      <!-- Layer 3: Clipped title copy over the shoulder -->
+      <div class="absolute inset-0 flex items-center justify-center z-20 select-none pointer-events-none">
+        <div class="w-full text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center clip-shoulder">
+          <div>DONNER VIE</div>
+          <div>À VOS IDÉES</div>
+        </div>
       </div>
 
     </div>

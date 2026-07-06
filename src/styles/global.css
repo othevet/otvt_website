@@ -7,6 +7,16 @@
   --color-ivoire: #FAF5E9;
 }
 
+.clip-shoulder {
+  clip-path: polygon(3% 50%, 26% 50%, 26% 86%, 3% 86%);
+}
+
+@media (max-width: 640px) {
+  .clip-shoulder {
+    clip-path: polygon(3% 50%, 40% 50%, 40% 86%, 3% 86%);
+  }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(20px);
