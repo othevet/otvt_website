@@ -1,0 +1,27 @@
+---
+const apps = [
+  { icon: '🏠', label: 'Accueil', href: '/' },
+  { icon: '⚙️', label: 'Services', href: '/services' },
+  { icon: '✏️', label: 'Blog', href: '/blog' },
+  { icon: '📧', label: 'Contact', href: '/contact' },
+];
+---
+
+<footer class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-2 sm:pb-3 pointer-events-none">
+  <div class="pointer-events-auto flex items-end gap-1.5 sm:gap-2 px-3 py-2 rounded-2xl bg-deep-800/70 backdrop-blur-2xl border border-white/[0.06] shadow-2xl">
+    {apps.map(({ icon, label, href }) => (
+      <a
+        href={href}
+        class="dock-item flex flex-col items-center gap-0.5 px-2 sm:px-3 py-1.5 rounded-xl hover:bg-white/5 transition-colors"
+      >
+        <span class="text-lg sm:text-xl leading-none">{icon}</span>
+        <span class="dock-label text-[10px] text-white/70 bg-deep-800/90 px-2 py-0.5 rounded-md">{label}</span>
+      </a>
+    ))}
+    <div class="w-px h-8 bg-white/10 mx-1" />
+    <a href="/contact" class="dock-item flex flex-col items-center gap-0.5 px-2 sm:px-3 py-1.5 rounded-xl hover:bg-white/5 transition-colors">
+      <span class="text-lg sm:text-xl leading-none">💬</span>
+      <span class="dock-label text-[10px] text-white/70 bg-deep-800/90 px-2 py-0.5 rounded-md">Devis</span>
+    </a>
+  </div>
+</footer>

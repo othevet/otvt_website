@@ -1,6 +1,6 @@
 ---
 import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Dock from '../components/Dock.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
@@ -17,22 +17,23 @@ const { title, description } = Astro.props;
 <html lang="fr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c0a0f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
-    <title>{title ? `${title} — OTVT` : 'OTVT — Développement Web sur Mesure'}</title>
-    <meta name="description" content={description ?? 'Développement web sur mesure. WordPress, Next.js, Astro. Basé à Toulouse.'} />
+    <title>{title ? `${title} — OTVT` : 'OTVT — Studio Web'}</title>
+    <meta name="description" content={description ?? 'Studio de développement web. WordPress, Next.js, Astro. Basé à Toulouse.'} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-deep-900 text-white font-['Inter',sans-serif] antialiased">
+  <body class="desktop-bg min-h-screen font-['Inter',-apple-system,BlinkMacSystemFont,sans-serif] text-white antialiased overflow-x-hidden">
     <Header />
-    <main class="min-h-screen">
+    <main class="min-h-screen pt-12 pb-32">
       <slot />
     </main>
-    <Footer />
+    <Dock />
     <ScrollReveal />
   </body>
 </html>

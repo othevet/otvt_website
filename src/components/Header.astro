@@ -1,67 +1,56 @@
 ---
-const pages = [
-  { path: '/', label: 'Accueil' },
-  { path: '/services', label: 'Services' },
-  { path: '/blog', label: 'Journal' },
-  { path: '/contact', label: 'Contact' },
+const menus = [
+  { label: 'OTVT', items: ['À propos', 'Contact', '—', 'Quitter'] },
+  { label: 'Services', items: ['WordPress', 'Sur mesure', 'Maintenance'] },
+  { label: 'Blog', items: ['Tous les articles', 'Tutoriels', 'Astuces'] },
 ];
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
-  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-    <a href="/" class="text-sm font-medium tracking-wider text-white/80 hover:text-white transition-colors uppercase">
-      OTVT
-    </a>
+<header class="menu-bar fixed top-0 left-0 right-0 z-50 bg-deep-900/60 border-b border-white/[0.06]">
+  <div class="flex items-center justify-between px-4 sm:px-6 h-11">
+    <div class="flex items-center gap-1 sm:gap-2">
+      <a href="/" class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors">
+        <span class="text-xs font-semibold tracking-tight text-white/80">OV</span>
+      </a>
 
-    <ul class="hidden sm:flex items-center gap-8">
-      {pages.map(({ path, label }) => (
-        <li>
-          <a
-            href={path}
-            class="text-sm tracking-wide transition-all duration-200"
-            class:list={currentPath === path
-              ? 'text-white'
-              : 'text-white/50 hover:text-white/80'
-            }
-          >
-            {label}
-          </a>
-        </li>
-      ))}
-    </ul>
+      <nav class="hidden sm:flex items-center gap-0.5">
+        {menus.map((menu) => (
+          <div class="relative group">
+            <button class="px-2.5 py-1 text-xs text-white/50 hover:text-white/80 hover:bg-white/5 rounded-md transition-colors">
+              {menu.label}
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-44 bg-deep-800/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-1 group-hover:translate-y-0 py-1">
+              {menu.items.map((item) => (
+                item === '—'
+                  ? <div class="my-1 border-t border-white/10" />
+                  : <a href="#" class="block px-4 py-1.5 text-xs text-white/60 hover:text-white hover:bg-white/5 transition-colors">{item}</a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </nav>
+    </div>
 
-    <a
-      href="/contact"
-      class="hidden sm:inline text-sm tracking-wide text-white/80 hover:text-white transition-colors"
-    >
-      Devis gratuit →
-    </a>
+    <div class="flex items-center gap-1">
+      <span class="hidden sm:block text-xs text-white/30 px-2">lun. 6 juil. 2026</span>
+      <div class="flex items-center gap-1.5">
+        <span class="hidden sm:flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-semibold">D</span>
+        <span class="text-xs text-white/40 mr-1">Olivier</span>
+      </div>
+      <button id="menu-toggle" class="sm:hidden p-1.5 text-white/50 hover:text-white/80 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <button id="menu-toggle" class="sm:hidden p-2 text-white/60 hover:text-white transition-colors" aria-label="Menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </nav>
-
-  <div id="mobile-menu" class="hidden bg-deep-900/95 backdrop-blur-xl px-6 pb-6 sm:hidden">
-    <ul class="flex flex-col gap-1 pt-2">
-      {pages.map(({ path, label }) => (
-        <li>
-          <a
-            href={path}
-            class="block rounded-lg px-4 py-3 text-sm tracking-wide transition-colors"
-            class:list={currentPath === path ? 'text-white bg-white/10' : 'text-white/50 hover:text-white hover:bg-white/5'}
-          >
-            {label}
-          </a>
-        </li>
-      ))}
-      <li class="mt-2">
-        <a href="/contact" class="block rounded-lg bg-white/10 px-4 py-3 text-sm text-white text-center">
-          Devis gratuit →
-        </a>
-      </li>
-    </ul>
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-white/5 bg-deep-900/95 backdrop-blur-xl">
+    <div class="px-4 py-3 space-y-3">
+      <a href="/" class="block text-sm text-white/70 hover:text-white py-1">Accueil</a>
+      <a href="/services" class="block text-sm text-white/70 hover:text-white py-1">Services</a>
+      <a href="/blog" class="block text-sm text-white/70 hover:text-white py-1">Blog</a>
+      <a href="/contact" class="block text-sm text-white/70 hover:text-white py-1">Contact</a>
+    </div>
   </div>
 </header>
 
