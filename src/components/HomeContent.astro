@@ -1,40 +1,41 @@
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <div class="mx-auto max-w-5xl px-6 py-20">
-    <div class="flex flex-col items-center text-center relative">
-      <p class="reveal visible text-xs font-medium tracking-[0.15em] text-vert uppercase mb-12 relative z-10">Studio de développement</p>
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-ivoire">
+  <div class="relative w-full max-w-7xl mx-auto px-6 py-20">
+    <div class="relative flex items-center justify-center min-h-[85vh]">
 
-      <div class="relative flex flex-col items-center">
-        <div class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-[#2d2a24] leading-[0.9] absolute -top-20 sm:-top-24 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 select-none opacity-60">
-          Donner vie à
-        </div>
-
-        <div class="relative z-10 my-16 sm:my-20">
-          <div class="absolute -inset-8 bg-jaune/15 rounded-full blur-3xl" />
-          <div class="relative">
-            <img
-              src="/me.png"
-              alt="Olivier"
-              class="w-auto h-[50vh] sm:h-[65vh] object-contain"
-              loading="eager"
-            />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <span class="text-5xl sm:text-7xl font-bold text-vert/90 leading-none drop-shadow-lg [text-shadow:0_2px_20px_rgba(255,204,0,0.3)]">
-                vos idées
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight leading-[0.9] absolute -bottom-20 sm:-bottom-24 left-1/2 -translate-x-1/2 whitespace-nowrap z-0 select-none opacity-60">
-          <span class="text-vert">vos idées</span>
+      <!-- Layer 1: Giant title behind -->
+      <div class="absolute inset-0 flex items-center justify-center z-0 select-none pointer-events-none">
+        <div class="text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center w-full">
+          <div>DONNER VIE</div>
+          <div>À VOS IDÉES</div>
         </div>
       </div>
 
-      <p class="reveal visible reveal-delay-1 mt-24 sm:mt-28 text-base sm:text-lg text-[#2d2a24]/50 max-w-md relative z-10">
+      <!-- Layer 2: Cutout photo on top of text -->
+      <div class="relative z-10 flex items-center justify-center">
+        <img
+          src="/me.png"
+          alt="Olivier"
+          class="h-[55vh] sm:h-[72vh] w-auto object-contain"
+          loading="eager"
+        />
+      </div>
+
+      <!-- Layer 3: Text fragment over the shoulder -->
+      <div class="absolute right-[8%] bottom-[18%] z-20 pointer-events-none hidden sm:block">
+        <span class="text-3xl sm:text-4xl font-black tracking-[-0.03em] text-vert-fonce/30 select-none">
+          vos idées
+        </span>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="relative z-10 mt-12 sm:mt-16 flex flex-col items-center text-center">
+      <p class="text-base sm:text-lg text-[#2d2a24]/50 max-w-md">
         WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec soin.
       </p>
 
-      <div class="reveal visible reveal-delay-2 mt-8 flex items-center gap-4 relative z-10">
+      <div class="mt-8 flex items-center gap-4">
         <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm hover:shadow-md">
           Démarrer un projet
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
