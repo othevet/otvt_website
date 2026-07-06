@@ -1,4 +1,4 @@
-<div id="scroll-indicator" class="fixed bottom-8 right-8 z-40 transition-opacity duration-500">
+<div id="scroll-indicator" class="scroll-indicator fixed bottom-8 right-8 z-40">
   <div class="flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur border border-vert/15 rounded-lg shadow-sm">
     <span class="w-1.5 h-4 bg-vert animate-pulse" />
     <span class="text-xs text-vert/60 font-mono tracking-wide">scroll</span>
@@ -8,21 +8,24 @@
   </div>
 </div>
 
+<style>
+  .scroll-indicator {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .scroll-indicator.is-hidden {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+</style>
+
 <script>
-  const indicator = document.getElementById('scroll-indicator');
-  if (indicator) {
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          indicator.style.opacity = window.scrollY > 80 ? '0' : '1';
-          indicator.style.pointerEvents = window.scrollY > 80 ? 'none' : 'auto';
-          ticking = false;
-        });
-        ticking = true;
-      }
+  const el = document.getElementById('scroll-indicator');
+  if (el) {
+    const toggle = () => {
+      el.classList.toggle('is-hidden', window.scrollY > 80);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
   }
 </script>
