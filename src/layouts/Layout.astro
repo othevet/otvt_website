@@ -11,6 +11,9 @@ export interface Props {
 }
 
 const { title, description } = Astro.props;
+const siteTitle = title ? `${title} — OTVT` : 'OTVT — Studio Web | Développeur Web Indépendant';
+const siteDescription = description ?? 'Développeur web indépendant à Origny le Sec (Aube). WordPress, Next.js, Astro, applications sur mesure. Je donne vie à vos idées.';
+const canonical = Astro.url.origin + Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -20,10 +23,18 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#FAF5E9" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
-    <title>{title ? `${title} — OTVT` : 'OTVT — Studio Web'}</title>
-    <meta name="description" content={description ?? 'Studio de développement web. WordPress, Next.js, Astro. Basé à Toulouse.'} />
+    <title>{siteTitle}</title>
+    <meta name="description" content={siteDescription} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
