@@ -1,31 +1,31 @@
 <section class="relative min-h-[85vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 pt-16 sm:pt-0">
   <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-amber-500/8 to-transparent blur-[150px]" />
-    <div class="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-indigo-600/8 to-transparent blur-[150px]" />
+    <div class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-amber-400/10 to-transparent blur-[120px]" />
+    <div class="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-indigo-400/10 to-transparent blur-[120px]" />
   </div>
 
-  <div class="os-window bg-deep-800/60 backdrop-blur-xl w-full max-w-2xl">
+  <div class="os-window w-full max-w-2xl border border-black/[0.04]">
     <div class="os-titlebar">
       <span class="os-dot red" />
       <span class="os-dot yellow" />
       <span class="os-dot green" />
-      <span class="ml-3 text-xs text-white/30 font-medium">OTVT — Studio Web</span>
+      <span class="ml-3 text-xs text-black/30 font-medium">OTVT — Studio Web</span>
     </div>
     <div class="px-8 sm:px-12 pb-12 sm:pb-16 pt-4">
-      <p class="text-xs font-medium tracking-widest text-white/30 uppercase mb-6">Développement web</p>
-      <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[0.95] text-white">
+      <p class="text-xs font-medium tracking-widest text-black/30 uppercase mb-6">Développement web</p>
+      <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[0.95] text-[#1d1d1f]">
         Façonner<br />
-        <span class="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-400 bg-clip-text text-transparent">le web</span>
+        <span class="bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">le web</span>
       </h1>
-      <p class="mt-6 text-base sm:text-lg text-white/40 max-w-md leading-relaxed">
+      <p class="mt-6 text-base sm:text-lg text-black/40 max-w-md leading-relaxed">
         WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec une obsession : la qualité.
       </p>
       <div class="mt-8 flex items-center gap-4">
-        <a href="/contact" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-all duration-200">
+        <a href="/contact" class="inline-flex items-center gap-2 px-6 py-2.5 bg-[#1d1d1f] text-white rounded-lg text-sm font-medium hover:bg-black transition-all duration-200">
           Démarrer un projet
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <a href="/services" class="text-sm text-white/40 hover:text-white/70 transition-colors">
+        <a href="/services" class="text-sm text-black/40 hover:text-black/70 transition-colors">
           Voir les services
         </a>
       </div>
@@ -36,25 +36,25 @@
 <section class="px-4 sm:px-6 pb-24 sm:pb-40">
   <div class="mx-auto max-w-5xl">
     <div class="grid sm:grid-cols-3 gap-4 sm:gap-6">
-      <div class="os-window bg-deep-800/50 backdrop-blur-sm sm:col-span-2">
+      <div class="os-window border border-black/[0.04] sm:col-span-2">
         <div class="os-titlebar">
           <span class="os-dot red" />
           <span class="os-dot yellow" />
           <span class="os-dot green" />
-          <span class="ml-3 text-xs text-white/25">Savoir-faire</span>
+          <span class="ml-3 text-xs text-black/25">Savoir-faire</span>
         </div>
         <div class="p-6 sm:p-8 grid gap-8">
           {[
-            { num: '01', title: 'WordPress', desc: 'Thèmes sur mesure, WooCommerce, plugins. Pas de template pré-fait.', color: 'text-white/80' },
-            { num: '02', title: 'Sites sur mesure', desc: 'Next.js, Astro, React. Ultra-rapides, modernes, évolutifs.', color: 'text-white/80' },
-            { num: '03', title: 'Maintenance & SEO', desc: 'Audit, sécurité, performance. Votre site en bonne santé.', color: 'text-white/80' },
+            { num: '01', title: 'WordPress', desc: 'Thèmes sur mesure, WooCommerce, plugins. Pas de template pré-fait.', color: 'text-black/80' },
+            { num: '02', title: 'Sites sur mesure', desc: 'Next.js, Astro, React. Ultra-rapides, modernes, évolutifs.', color: 'text-black/80' },
+            { num: '03', title: 'Maintenance & SEO', desc: 'Audit, sécurité, performance. Votre site en bonne santé.', color: 'text-black/80' },
           ].map((item, i) => (
             <div class="reveal group" style={`transition-delay: ${i * 0.12}s`}>
               <div class="flex items-start gap-5">
-                <span class="text-3xl font-bold text-white/10 group-hover:text-amber-400/30 transition-colors">{item.num}</span>
+                <span class="text-3xl font-bold text-black/10 group-hover:text-amber-400/50 transition-colors">{item.num}</span>
                 <div>
-                  <h3 class="text-base font-semibold text-white group-hover:text-amber-300 transition-colors">{item.title}</h3>
-                  <p class="mt-1.5 text-sm text-white/35 leading-relaxed">{item.desc}</p>
+                  <h3 class="text-base font-semibold text-[#1d1d1f] group-hover:text-amber-600 transition-colors">{item.title}</h3>
+                  <p class="mt-1.5 text-sm text-black/40 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             </div>
@@ -62,29 +62,29 @@
         </div>
       </div>
 
-      <div class="os-window bg-deep-800/50 backdrop-blur-sm">
+      <div class="os-window border border-black/[0.04]">
         <div class="os-titlebar">
           <span class="os-dot red" />
           <span class="os-dot yellow" />
           <span class="os-dot green" />
-          <span class="ml-3 text-xs text-white/25">À propos</span>
+          <span class="ml-3 text-xs text-black/25">À propos</span>
         </div>
         <div class="p-6 sm:p-8">
-          <p class="reveal text-sm text-white/50 leading-relaxed">
+          <p class="reveal text-sm text-black/50 leading-relaxed">
           Développeur indépendant basé à Toulouse. Je travaille seul ou en collaboration avec vos équipes.
           </p>
           <div class="reveal reveal-delay-1 mt-8 space-y-5">
             <div>
-              <div class="text-3xl font-bold text-amber-300">10+</div>
-              <div class="text-xs text-white/30 mt-1">Projets livrés</div>
+              <div class="text-3xl font-bold text-amber-600">10+</div>
+              <div class="text-xs text-black/30 mt-1">Projets livrés</div>
             </div>
             <div>
-              <div class="text-3xl font-bold text-amber-300">100%</div>
-              <div class="text-xs text-white/30 mt-1">Satisfait ou corrigé</div>
+              <div class="text-3xl font-bold text-amber-600">100%</div>
+              <div class="text-xs text-black/30 mt-1">Satisfait ou corrigé</div>
             </div>
             <div>
-              <div class="text-3xl font-bold text-amber-300">24h</div>
-              <div class="text-xs text-white/30 mt-1">Délai de réponse</div>
+              <div class="text-3xl font-bold text-amber-600">24h</div>
+              <div class="text-xs text-black/30 mt-1">Délai de réponse</div>
             </div>
           </div>
         </div>
@@ -95,21 +95,21 @@
 
 <section class="px-4 sm:px-6 pb-32 sm:pb-40">
   <div class="mx-auto max-w-2xl">
-    <div class="os-window bg-deep-800/40 backdrop-blur-sm text-center">
+    <div class="os-window border border-black/[0.04] text-center">
       <div class="os-titlebar justify-center">
         <span class="os-dot red" />
         <span class="os-dot yellow" />
         <span class="os-dot green" />
-        <span class="ml-3 text-xs text-white/25">Contact</span>
+        <span class="ml-3 text-xs text-black/25">Contact</span>
       </div>
       <div class="px-8 sm:px-12 py-10 sm:py-14">
-        <h2 class="reveal text-2xl sm:text-3xl font-bold text-white">Un projet en tête ?</h2>
-        <p class="reveal reveal-delay-1 mt-3 text-sm text-white/40">
+        <h2 class="reveal text-2xl sm:text-3xl font-bold text-[#1d1d1f]">Un projet en tête ?</h2>
+        <p class="reveal reveal-delay-1 mt-3 text-sm text-black/40">
           Discutons-en sans engagement. Devis gratuit sous 48h.
         </p>
-        <a href="/contact" class="reveal reveal-delay-2 mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg text-sm font-medium text-white/80 hover:text-white transition-all duration-200">
+        <a href="/contact" class="reveal reveal-delay-2 mt-6 inline-flex items-center gap-2 px-6 py-2.5 bg-[#1d1d1f] text-white rounded-lg text-sm font-medium hover:bg-black transition-all duration-200">
           Me contacter
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
       </div>
     </div>

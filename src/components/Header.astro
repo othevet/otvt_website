@@ -7,24 +7,24 @@ const menus = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="menu-bar fixed top-0 left-0 right-0 z-50 bg-deep-900/60 border-b border-white/[0.06]">
+<header class="menu-bar fixed top-0 left-0 right-0 z-50 bg-white/70 border-b border-black/[0.06]">
   <div class="flex items-center justify-between px-4 sm:px-6 h-11">
     <div class="flex items-center gap-1 sm:gap-2">
-      <a href="/" class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-white/5 transition-colors">
-        <span class="text-xs font-semibold tracking-tight text-white/80">OV</span>
+      <a href="/" class="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-black/5 transition-colors">
+        <span class="text-xs font-bold tracking-tight text-[#1d1d1f]">OV</span>
       </a>
 
       <nav class="hidden sm:flex items-center gap-0.5">
         {menus.map((menu) => (
           <div class="relative group">
-            <button class="px-2.5 py-1 text-xs text-white/50 hover:text-white/80 hover:bg-white/5 rounded-md transition-colors">
+            <button class="px-2.5 py-1 text-xs text-black/40 hover:text-black/70 hover:bg-black/5 rounded-md transition-colors">
               {menu.label}
             </button>
-            <div class="absolute top-full left-0 mt-1 w-44 bg-deep-800/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-1 group-hover:translate-y-0 py-1">
+            <div class="absolute top-full left-0 mt-1 w-44 bg-white/95 backdrop-blur-xl border border-black/10 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-1 group-hover:translate-y-0 py-1">
               {menu.items.map((item) => (
                 item === '—'
-                  ? <div class="my-1 border-t border-white/10" />
-                  : <a href="#" class="block px-4 py-1.5 text-xs text-white/60 hover:text-white hover:bg-white/5 transition-colors">{item}</a>
+                  ? <div class="my-1 border-t border-black/10" />
+                  : <a href="#" class="block px-4 py-1.5 text-xs text-black/50 hover:text-black hover:bg-black/5 transition-colors">{item}</a>
               ))}
             </div>
           </div>
@@ -33,23 +33,23 @@ const currentPath = Astro.url.pathname;
     </div>
 
     <div class="flex items-center gap-1">
-      <span class="hidden sm:block text-xs text-white/30 px-2">lun. 6 juil. 2026</span>
+      <span class="hidden sm:block text-xs text-black/30 px-2">lun. 6 juil. 2026</span>
       <div class="flex items-center gap-1.5">
-        <span class="hidden sm:flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-semibold">D</span>
-        <span class="text-xs text-white/40 mr-1">Olivier</span>
+        <span class="hidden sm:flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-amber-600 text-[10px] font-semibold">D</span>
+        <span class="text-xs text-black/40 mr-1">Olivier</span>
       </div>
-      <button id="menu-toggle" class="sm:hidden p-1.5 text-white/50 hover:text-white/80 transition-colors">
+      <button id="menu-toggle" class="sm:hidden p-1.5 text-black/40 hover:text-black/70 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden sm:hidden border-t border-white/5 bg-deep-900/95 backdrop-blur-xl">
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-black/5 bg-white/95 backdrop-blur-xl">
     <div class="px-4 py-3 space-y-3">
-      <a href="/" class="block text-sm text-white/70 hover:text-white py-1">Accueil</a>
-      <a href="/services" class="block text-sm text-white/70 hover:text-white py-1">Services</a>
-      <a href="/blog" class="block text-sm text-white/70 hover:text-white py-1">Blog</a>
-      <a href="/contact" class="block text-sm text-white/70 hover:text-white py-1">Contact</a>
+      <a href="/" class="block text-sm text-black/60 hover:text-black py-1">Accueil</a>
+      <a href="/services" class="block text-sm text-black/60 hover:text-black py-1">Services</a>
+      <a href="/blog" class="block text-sm text-black/60 hover:text-black py-1">Blog</a>
+      <a href="/contact" class="block text-sm text-black/60 hover:text-black py-1">Contact</a>
     </div>
   </div>
 </header>
