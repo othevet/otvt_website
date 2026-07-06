@@ -3,84 +3,63 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Contact">
-  <section class="relative pt-32 pb-24 sm:pb-32">
-    <div class="absolute inset-0 bg-gradient-to-b from-indigo-600/5 via-deep-900 to-transparent" />
-
+  <section class="py-24 sm:py-32">
     <div class="mx-auto max-w-2xl px-4 sm:px-6">
       <div class="text-center">
-        <p class="reveal visible text-xs font-semibold uppercase tracking-widest text-indigo-400 font-['JetBrains_Mono',monospace]">// ./contact.sh</p>
-        <h1 class="reveal visible reveal-delay-1 mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl font-['Inter',sans-serif]">Contact</h1>
-        <p class="reveal visible reveal-delay-2 mt-4 text-lg text-gray-400 font-['JetBrains_Mono',monospace]">
-          <span class="text-indigo-400">❯</span> ./contact.sh <span class="text-green-400">--free-quote</span>
+        <p class="reveal visible text-sm font-semibold uppercase tracking-widest text-indigo-600">Contact</p>
+        <h1 class="reveal visible reveal-delay-1 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Parlons de votre projet</h1>
+        <p class="reveal visible reveal-delay-2 mt-4 text-lg text-gray-500">
+          Devis gratuit sous 48h. Remplissez le formulaire ou écrivez-moi directement.
         </p>
       </div>
 
-      <div class="reveal visible reveal-delay-2 mt-12 rounded-xl border border-white/10 bg-deep-800/50 p-6 sm:p-8 font-['JetBrains_Mono',monospace] text-sm">
-        <div class="flex items-center gap-2 border-b border-white/5 pb-3 mb-6">
-          <span class="text-indigo-400">❯</span>
-          <span class="text-gray-300 font-semibold">mail</span>
-          <span class="text-indigo-300">contact@otvt.dev</span>
-          <span class="text-gray-600 text-xs ml-auto">--interactive</span>
+      <form class="reveal visible reveal-delay-2 mt-12 space-y-6" data-netlify="true" name="contact" method="POST">
+        <input type="hidden" name="form-name" value="contact" />
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Nom *</label>
+            <input type="text" id="name" name="name" required
+              class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              placeholder="Votre nom" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+            <input type="email" id="email" name="email" required
+              class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              placeholder="vous@exemple.fr" />
+          </div>
         </div>
 
-        <form data-netlify="true" name="contact" method="POST" class="space-y-5">
-          <input type="hidden" name="form-name" value="contact" />
-
-          <div class="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label for="name" class="block text-xs text-gray-500 mb-1">
-                <span class="text-indigo-400">❯</span> name <span class="text-red-400">*</span>
-              </label>
-              <input type="text" id="name" name="name" required
-                class="w-full rounded-lg border border-white/10 bg-deep-900 px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 transition-all duration-200 focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-                placeholder="Votre nom" />
-            </div>
-            <div>
-              <label for="email" class="block text-xs text-gray-500 mb-1">
-                <span class="text-indigo-400">❯</span> email <span class="text-red-400">*</span>
-              </label>
-              <input type="email" id="email" name="email" required
-                class="w-full rounded-lg border border-white/10 bg-deep-900 px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 transition-all duration-200 focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-                placeholder="vous@exemple.fr" />
-            </div>
-          </div>
-
-          <div>
-            <label for="project-type" class="block text-xs text-gray-500 mb-1">
-              <span class="text-indigo-400">❯</span> project-type
-            </label>
-            <select id="project-type" name="project-type"
-              class="w-full rounded-lg border border-white/10 bg-deep-900 px-4 py-2.5 text-sm text-gray-200 transition-all duration-200 focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
-              <option value="" class="bg-deep-900">Sélectionnez...</option>
-              <option value="wordpress" class="bg-deep-900">--wordpress</option>
-              <option value="sur-mesure" class="bg-deep-900">--custom</option>
-              <option value="maintenance" class="bg-deep-900">--maintain</option>
-              <option value="autre" class="bg-deep-900">--other</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="message" class="block text-xs text-gray-500 mb-1">
-              <span class="text-indigo-400">❯</span> message <span class="text-red-400">*</span>
-            </label>
-            <textarea id="message" name="message" rows={4} required
-              class="w-full rounded-lg border border-white/10 bg-deep-900 px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 transition-all duration-200 focus:border-indigo-500/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-              placeholder="Parlez-moi de votre projet..."></textarea>
-          </div>
-
-          <button type="submit"
-            class="group w-full rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:shadow-indigo-500/40">
-            <span class="inline-flex items-center justify-center gap-2">
-              <span class="text-indigo-200 group-hover:text-white transition-colors">❯</span>
-              ./contact.sh --send
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </span>
-          </button>
-        </form>
-
-        <div class="mt-6 border-t border-white/5 pt-4 text-xs text-gray-600">
-          <p><span class="text-indigo-400">❯</span> Ou en direct : <a href="mailto:contact@otvt.dev" class="text-indigo-400 hover:text-indigo-300 transition-colors">contact@otvt.dev</a></p>
+        <div>
+          <label for="project-type" class="block text-sm font-medium text-gray-700">Type de projet</label>
+          <select id="project-type" name="project-type"
+            class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+            <option value="">Sélectionnez...</option>
+            <option value="wordpress">Site WordPress</option>
+            <option value="sur-mesure">Site sur mesure (Next.js / Astro)</option>
+            <option value="maintenance">Maintenance / Évolution</option>
+            <option value="autre">Autre</option>
+          </select>
         </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700">Message *</label>
+          <textarea id="message" name="message" rows={5} required
+            class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+            placeholder="Parlez-moi de votre projet..."></textarea>
+        </div>
+
+        <button type="submit"
+          class="w-full rounded-xl bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-gray-800 hover:shadow-lg">
+          Envoyer le message
+        </button>
+      </form>
+
+      <div class="reveal visible reveal-delay-3 mt-12 border-t border-gray-100 pt-8 text-center">
+        <p class="text-sm text-gray-500">
+          Vous pouvez aussi m'écrire à <a href="mailto:contact@otvt.dev" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">contact@otvt.dev</a>
+        </p>
       </div>
     </div>
   </section>
