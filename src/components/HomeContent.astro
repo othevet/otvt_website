@@ -1,49 +1,37 @@
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-ivoire">
-  <div class="relative w-full max-w-7xl mx-auto px-6 py-20">
-    <div class="relative flex items-center justify-center min-h-[85vh]">
-
-      <!-- Layer 1: Full title behind -->
-      <div class="absolute inset-0 flex items-center justify-center z-0 select-none pointer-events-none">
-        <div class="w-full text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center">
+<section class="relative min-h-screen flex items-center overflow-hidden bg-ivoire">
+  <div class="mx-auto w-full max-w-7xl px-6 py-20">
+    <div class="grid sm:grid-cols-2 gap-12 sm:gap-16 items-center">
+      <div class="flex flex-col">
+        <p class="text-xs font-medium tracking-[0.15em] text-vert uppercase mb-6">Studio de développement</p>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[0.9] text-[#2d2a24]">
           <div>DONNER VIE</div>
-          <div>À VOS IDÉES</div>
+          <div class="text-vert">À VOS IDÉES</div>
+        </h1>
+        <p class="mt-6 text-base sm:text-lg text-[#2d2a24]/50 max-w-md">
+          WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec soin.
+        </p>
+        <div class="mt-8 flex items-center gap-4">
+          <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm hover:shadow-md">
+            Démarrer un projet
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="/services" class="text-sm text-[#2d2a24]/40 hover:text-[#2d2a24] transition-colors">
+            En savoir plus
+          </a>
         </div>
       </div>
-
-      <!-- Layer 2: Cutout photo -->
-      <div class="relative z-10 flex items-center justify-center">
-        <img
-          src="/me.png"
-          alt="Olivier"
-          class="h-[55vh] sm:h-[72vh] w-auto object-contain"
-          loading="eager"
-        />
-      </div>
-
-      <!-- Layer 3: Clipped title copy over the shoulder -->
-      <div class="absolute inset-0 flex items-center justify-center z-20 select-none pointer-events-none">
-        <div class="w-full text-[clamp(2.8rem,14vw,11rem)] font-black tracking-[-0.06em] leading-[0.82] text-vert-fonce text-center clip-shoulder">
-          <div>DONNER VIE</div>
-          <div>À VOS IDÉES</div>
+      <div class="flex justify-center sm:justify-end">
+        <div class="relative">
+          <div class="absolute -inset-6 bg-jaune/25 rounded-full blur-3xl" />
+          <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+            <img
+              src="/me.png"
+              alt="Olivier"
+              class="w-full h-full rounded-full object-cover object-top shadow-xl"
+              loading="eager"
+            />
+          </div>
         </div>
-      </div>
-
-    </div>
-
-    <!-- CTA -->
-    <div class="relative z-10 mt-12 sm:mt-16 flex flex-col items-center text-center">
-      <p class="text-base sm:text-lg text-[#2d2a24]/50 max-w-md">
-        WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec soin.
-      </p>
-
-      <div class="mt-8 flex items-center gap-4">
-        <a href="/contact" class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm hover:shadow-md">
-          Démarrer un projet
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <a href="/services" class="text-sm text-[#2d2a24]/40 hover:text-[#2d2a24] transition-colors">
-          En savoir plus
-        </a>
       </div>
     </div>
   </div>
