@@ -2,30 +2,27 @@
 const pages = [
   { path: '/', label: 'Accueil' },
   { path: '/services', label: 'Services' },
-  { path: '/blog', label: 'Blog' },
+  { path: '/blog', label: 'Journal' },
   { path: '/contact', label: 'Contact' },
 ];
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-lg">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-    <a href="/" class="flex items-center gap-2.5 group">
-      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition-shadow group-hover:shadow-indigo-500/40">
-        O
-      </span>
-      <span class="text-lg font-bold text-gray-900">OTVT</span>
+<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <a href="/" class="text-sm font-medium tracking-wider text-white/80 hover:text-white transition-colors uppercase">
+      OTVT
     </a>
 
-    <ul class="hidden sm:flex items-center gap-1">
+    <ul class="hidden sm:flex items-center gap-8">
       {pages.map(({ path, label }) => (
         <li>
           <a
             href={path}
-            class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200"
+            class="text-sm tracking-wide transition-all duration-200"
             class:list={currentPath === path
-              ? 'text-indigo-600 bg-indigo-50'
-              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+              ? 'text-white'
+              : 'text-white/50 hover:text-white/80'
             }
           >
             {label}
@@ -36,33 +33,32 @@ const currentPath = Astro.url.pathname;
 
     <a
       href="/contact"
-      class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-gray-800 hover:shadow-md"
+      class="hidden sm:inline text-sm tracking-wide text-white/80 hover:text-white transition-colors"
     >
-      Devis gratuit
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      Devis gratuit →
     </a>
 
-    <button id="menu-toggle" class="sm:hidden p-2 text-gray-500 hover:text-gray-900 transition-colors" aria-label="Menu">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button id="menu-toggle" class="sm:hidden p-2 text-white/60 hover:text-white transition-colors" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </nav>
 
-  <div id="mobile-menu" class="hidden border-t border-gray-100 bg-white px-4 pb-4 sm:hidden">
+  <div id="mobile-menu" class="hidden bg-deep-900/95 backdrop-blur-xl px-6 pb-6 sm:hidden">
     <ul class="flex flex-col gap-1 pt-2">
       {pages.map(({ path, label }) => (
         <li>
           <a
             href={path}
-            class="block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
-            class:list={currentPath === path ? 'text-indigo-600 bg-indigo-50' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'}
+            class="block rounded-lg px-4 py-3 text-sm tracking-wide transition-colors"
+            class:list={currentPath === path ? 'text-white bg-white/10' : 'text-white/50 hover:text-white hover:bg-white/5'}
           >
             {label}
           </a>
         </li>
       ))}
       <li class="mt-2">
-        <a href="/contact" class="block rounded-xl bg-gray-900 px-3 py-2.5 text-sm font-semibold text-white text-center">
-          Devis gratuit
+        <a href="/contact" class="block rounded-lg bg-white/10 px-4 py-3 text-sm text-white text-center">
+          Devis gratuit →
         </a>
       </li>
     </ul>

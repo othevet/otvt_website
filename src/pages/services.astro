@@ -3,72 +3,72 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Services">
-  <section class="py-24 sm:py-32">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="mx-auto max-w-2xl text-center">
-        <p class="reveal visible text-sm font-semibold uppercase tracking-widest text-indigo-600">Services</p>
-        <h1 class="reveal visible reveal-delay-1 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Ce que je peux faire pour vous</h1>
-        <p class="reveal visible reveal-delay-2 mt-4 text-lg text-gray-500">
-          Du site vitrine à l'application complexe, je m'adapte à vos besoins et votre budget.
-        </p>
-      </div>
+  <section class="pt-40 pb-32 sm:pb-40">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid sm:grid-cols-12 gap-8 sm:gap-16">
+        <div class="sm:col-span-5">
+          <p class="reveal visible text-xs font-medium tracking-[0.2em] text-white/30 uppercase">Services</p>
+          <h1 class="reveal visible reveal-delay-1 mt-6 text-5xl sm:text-7xl font-['DM_Serif_Display',serif] leading-tight text-white">
+            Ce que je<br />
+            <span class="italic text-gradient-ember">propose</span>
+          </h1>
+          <div class="reveal visible reveal-delay-2 mt-6 w-16 h-0.5 bg-amber-500/50" />
+          <p class="reveal visible reveal-delay-2 mt-6 text-base text-white/40 leading-relaxed max-w-md">
+            Du site vitrine à l'application complexe, chaque projet est unique. Voici comment je peux vous aider.
+          </p>
+        </div>
 
-      <div class="mt-20 space-y-6">
-        <div class="reveal visible reveal-delay-1 group rounded-2xl border border-gray-100 bg-white p-8 sm:p-10 shadow-sm transition-all duration-200 hover:shadow-lg">
-          <div class="flex items-start gap-6">
-            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-            </div>
-            <div>
-              <h2 class="text-xl font-bold text-gray-900">Sites WordPress</h2>
-              <p class="mt-3 text-gray-500 leading-relaxed">
-                Thème sur mesure, WooCommerce, intégration de plugins, optimisation des performances.
-                Je ne me contente pas d'installer un thème pré-fait — chaque site est pensé pour vos objectifs.
-              </p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">Thème sur mesure</span>
-                <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">WooCommerce</span>
-                <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">Optimisation</span>
+        <div class="sm:col-span-6 sm:col-start-7 space-y-12">
+          <div class="reveal visible">
+            <div class="flex items-start gap-6">
+              <span class="text-5xl font-['DM_Serif_Display',serif] text-white/10 leading-none shrink-0">01</span>
+              <div>
+                <h2 class="text-xl font-medium text-white">WordPress</h2>
+                <p class="mt-3 text-sm text-white/40 leading-relaxed">
+                  Thème sur mesure, WooCommerce, plugins. Je construis chaque site depuis zéro, 
+                  pas de template pré-fait. Design sur mesure, performance optimisée, maintenance incluse.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Thème sur mesure</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">WooCommerce</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Performance</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="reveal visible reveal-delay-2 group rounded-2xl border border-gray-100 bg-white p-8 sm:p-10 shadow-sm transition-all duration-200 hover:shadow-lg">
-          <div class="flex items-start gap-6">
-            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            </div>
-            <div>
-              <h2 class="text-xl font-bold text-gray-900">Développement sur mesure</h2>
-              <p class="mt-3 text-gray-500 leading-relaxed">
-                Next.js, Astro, React, Node.js. Des sites statiques ultra-rapides aux applications dynamiques.
-                Stack moderne, déploiement continu, performance optimale.
-              </p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <span class="rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700">Next.js / Astro</span>
-                <span class="rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700">React / TypeScript</span>
-                <span class="rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700">API & CMS headless</span>
+          <div class="reveal visible reveal-delay-1">
+            <div class="flex items-start gap-6">
+              <span class="text-5xl font-['DM_Serif_Display',serif] text-white/10 leading-none shrink-0">02</span>
+              <div>
+                <h2 class="text-xl font-medium text-white">Développement sur mesure</h2>
+                <p class="mt-3 text-sm text-white/40 leading-relaxed">
+                  Next.js, Astro, React, Node.js. Des sites statiques ultra-rapides aux applications dynamiques.
+                  Stack moderne, déploiement continu via Git, hébergement sur Vercel.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Next.js / Astro</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">React / TypeScript</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Vercel</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="reveal visible reveal-delay-3 group rounded-2xl border border-gray-100 bg-white p-8 sm:p-10 shadow-sm transition-all duration-200 hover:shadow-lg">
-          <div class="flex items-start gap-6">
-            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            </div>
-            <div>
-              <h2 class="text-xl font-bold text-gray-900">Maintenance & Évolution</h2>
-              <p class="mt-3 text-gray-500 leading-relaxed">
-                Audit technique, corrections de sécurité, mise à jour, ajout de fonctionnalités.
-                Je peux aussi reprendre un site existant et le faire passer à la vitesse supérieure.
-              </p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">Audit & Sécurité</span>
-                <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">Migration</span>
-                <span class="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700">Performance</span>
+          <div class="reveal visible reveal-delay-2">
+            <div class="flex items-start gap-6">
+              <span class="text-5xl font-['DM_Serif_Display',serif] text-white/10 leading-none shrink-0">03</span>
+              <div>
+                <h2 class="text-xl font-medium text-white">Maintenance & Évolution</h2>
+                <p class="mt-3 text-sm text-white/40 leading-relaxed">
+                  Audit technique, mises à jour de sécurité, amélioration des performances.
+                  Je reprends aussi des sites existants pour les moderniser.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Audit & Sécurité</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Migration</span>
+                  <span class="text-xs px-3 py-1 rounded-full bg-white/5 text-white/40">Performance</span>
+                </div>
               </div>
             </div>
           </div>
@@ -77,18 +77,19 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <section class="bg-gray-900 py-20 sm:py-28">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 sm:p-12">
-        <div class="max-w-2xl">
-          <h2 class="text-2xl font-bold text-white sm:text-3xl">Vous ne savez pas par où commencer ?</h2>
-          <p class="mt-3 text-lg text-indigo-100">
-            C'est normal. On en parle 30 minutes sans engagement, je vous conseille et vous repartez avec une vision claire.
-          </p>
-          <a href="/contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-base font-semibold text-indigo-600 shadow-sm transition-all duration-200 hover:bg-gray-100 hover:shadow-lg">
-            Réserver un appel gratuit
-          </a>
-        </div>
+  <section class="relative border-t border-white/5 py-32 sm:py-40 bg-deep-800">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="max-w-2xl">
+        <h2 class="reveal text-4xl sm:text-5xl font-['DM_Serif_Display',serif] leading-tight text-white">
+          Vous ne savez pas par où commencer ?
+        </h2>
+        <p class="reveal reveal-delay-1 mt-4 text-base text-white/40">
+          C'est normal. On en parle 30 minutes sans engagement. Vous repartez avec une vision claire.
+        </p>
+        <a href="/contact" class="reveal reveal-delay-2 mt-8 inline-flex items-center gap-3 px-8 py-3.5 bg-white text-deep-900 text-sm font-medium rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-xl hover:shadow-amber-500/20">
+          Réserver un appel
+          <span>→</span>
+        </a>
       </div>
     </div>
   </section>

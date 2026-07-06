@@ -3,63 +3,71 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Contact">
-  <section class="py-24 sm:py-32">
-    <div class="mx-auto max-w-2xl px-4 sm:px-6">
-      <div class="text-center">
-        <p class="reveal visible text-sm font-semibold uppercase tracking-widest text-indigo-600">Contact</p>
-        <h1 class="reveal visible reveal-delay-1 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Parlons de votre projet</h1>
-        <p class="reveal visible reveal-delay-2 mt-4 text-lg text-gray-500">
-          Devis gratuit sous 48h. Remplissez le formulaire ou écrivez-moi directement.
-        </p>
-      </div>
-
-      <form class="reveal visible reveal-delay-2 mt-12 space-y-6" data-netlify="true" name="contact" method="POST">
-        <input type="hidden" name="form-name" value="contact" />
-
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Nom *</label>
-            <input type="text" id="name" name="name" required
-              class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-              placeholder="Votre nom" />
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
-            <input type="email" id="email" name="email" required
-              class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-              placeholder="vous@exemple.fr" />
+  <section class="pt-40 pb-32 sm:pb-40">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid sm:grid-cols-12 gap-8 sm:gap-16">
+        <div class="sm:col-span-5">
+          <p class="reveal visible text-xs font-medium tracking-[0.2em] text-white/30 uppercase">Contact</p>
+          <h1 class="reveal visible reveal-delay-1 mt-6 text-5xl sm:text-7xl font-['DM_Serif_Display',serif] leading-tight text-white">
+            Parlons de<br />
+            <span class="italic text-gradient-ember">votre projet</span>
+          </h1>
+          <div class="reveal visible reveal-delay-2 mt-6 w-16 h-0.5 bg-amber-500/50" />
+          <p class="reveal visible reveal-delay-2 mt-6 text-base text-white/40 leading-relaxed max-w-md">
+            Devis gratuit sous 48h. Remplissez le formulaire et je reviens vers vous rapidement.
+          </p>
+          <div class="reveal visible reveal-delay-3 mt-8 text-sm text-white/30 space-y-2">
+            <p>contact@otvt.dev</p>
+            <p>06 00 00 00 00</p>
+            <p>Toulouse, France</p>
           </div>
         </div>
 
-        <div>
-          <label for="project-type" class="block text-sm font-medium text-gray-700">Type de projet</label>
-          <select id="project-type" name="project-type"
-            class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
-            <option value="">Sélectionnez...</option>
-            <option value="wordpress">Site WordPress</option>
-            <option value="sur-mesure">Site sur mesure (Next.js / Astro)</option>
-            <option value="maintenance">Maintenance / Évolution</option>
-            <option value="autre">Autre</option>
-          </select>
+        <div class="sm:col-span-6 sm:col-start-7">
+          <form class="reveal visible space-y-6" data-netlify="true" name="contact" method="POST">
+            <input type="hidden" name="form-name" value="contact" />
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label for="name" class="block text-xs font-medium text-white/40 tracking-wide uppercase">Nom</label>
+                <input type="text" id="name" name="name" required
+                  class="mt-2 block w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 transition-all duration-200 focus:outline-none focus:border-amber-500/50 focus:bg-white/10"
+                  placeholder="Votre nom" />
+              </div>
+              <div>
+                <label for="email" class="block text-xs font-medium text-white/40 tracking-wide uppercase">Email</label>
+                <input type="email" id="email" name="email" required
+                  class="mt-2 block w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 transition-all duration-200 focus:outline-none focus:border-amber-500/50 focus:bg-white/10"
+                  placeholder="vous@exemple.fr" />
+              </div>
+            </div>
+
+            <div>
+              <label for="project-type" class="block text-xs font-medium text-white/40 tracking-wide uppercase">Type de projet</label>
+              <select id="project-type" name="project-type"
+                class="mt-2 block w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white transition-all duration-200 focus:outline-none focus:border-amber-500/50 focus:bg-white/10">
+                <option value="" class="bg-deep-800">Sélectionnez...</option>
+                <option value="wordpress" class="bg-deep-800">WordPress</option>
+                <option value="sur-mesure" class="bg-deep-800">Site sur mesure</option>
+                <option value="maintenance" class="bg-deep-800">Maintenance / Évolution</option>
+                <option value="autre" class="bg-deep-800">Autre</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message" class="block text-xs font-medium text-white/40 tracking-wide uppercase">Message</label>
+              <textarea id="message" name="message" rows={5} required
+                class="mt-2 block w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 transition-all duration-200 focus:outline-none focus:border-amber-500/50 focus:bg-white/10"
+                placeholder="Parlez-moi de votre projet..."></textarea>
+            </div>
+
+            <button type="submit"
+              class="group inline-flex items-center gap-3 px-8 py-3.5 bg-white text-deep-900 text-sm font-medium rounded-full transition-all duration-300 hover:bg-amber-400 hover:shadow-xl hover:shadow-amber-500/20">
+              Envoyer
+              <span class="group-hover:translate-x-1 transition-transform">→</span>
+            </button>
+          </form>
         </div>
-
-        <div>
-          <label for="message" class="block text-sm font-medium text-gray-700">Message *</label>
-          <textarea id="message" name="message" rows={5} required
-            class="mt-1.5 block w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm transition-all duration-200 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-            placeholder="Parlez-moi de votre projet..."></textarea>
-        </div>
-
-        <button type="submit"
-          class="w-full rounded-xl bg-gray-900 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-gray-800 hover:shadow-lg">
-          Envoyer le message
-        </button>
-      </form>
-
-      <div class="reveal visible reveal-delay-3 mt-12 border-t border-gray-100 pt-8 text-center">
-        <p class="text-sm text-gray-500">
-          Vous pouvez aussi m'écrire à <a href="mailto:contact@otvt.dev" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">contact@otvt.dev</a>
-        </p>
       </div>
     </div>
   </section>
