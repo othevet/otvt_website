@@ -1,0 +1,65 @@
+---
+const pages = [
+  { path: '/', label: 'Accueil' },
+  { path: '/services', label: 'Services' },
+  { path: '/blog', label: 'Blog' },
+  { path: '/contact', label: 'Contact' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+    <a href="/" class="text-xl font-extrabold tracking-tight">
+      <span class="text-indigo-600">OTVT</span>
+      <span class="ml-1 text-gray-400 font-medium text-sm">Dev</span>
+    </a>
+
+    <ul class="hidden sm:flex items-center gap-8">
+      {pages.map(({ path, label }) => (
+        <li>
+          <a
+            href={path}
+            class="text-sm font-medium transition-colors duration-200"
+            class:list={[currentPath === path ? 'text-indigo-600' : 'text-gray-600 hover:text-gray-900']}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <a
+      href="/contact"
+      class="hidden sm:inline-flex rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-indigo-500 hover:shadow-md"
+    >
+      Devis gratuit
+    </a>
+
+    <button id="menu-toggle" class="sm:hidden p-2 text-gray-600" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-gray-100 bg-white px-4 pb-4 sm:hidden">
+    <ul class="flex flex-col gap-2 pt-2">
+      {pages.map(({ path, label }) => (
+        <li>
+          <a
+            href={path}
+            class="block rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+            class:list="block rounded-lg px-3 py-2 text-sm font-medium transition-colors".split(' ').concat(currentPath === path ? ['bg-indigo-50', 'text-indigo-600'] : ['text-gray-600', 'hover:bg-gray-50']).join(' ').split(' ')
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  document.getElementById('menu-toggle')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+</script>

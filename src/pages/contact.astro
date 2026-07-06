@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact">
+  <section class="py-20 sm:py-28">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="mx-auto max-w-2xl">
+        <div class="text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">Contact</p>
+          <h1 class="mt-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Parlons de votre projet</h1>
+          <p class="mt-4 text-lg text-gray-600">
+            Devis gratuit sous 48h. Remplissez le formulaire ou écrivez-moi directement.
+          </p>
+        </div>
+
+        <form class="mt-12 space-y-6" data-netlify="true" name="contact" method="POST">
+          <input type="hidden" name="form-name" value="contact" />
+
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700">Nom *</label>
+              <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Votre nom" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+              <input type="email" id="email" name="email" required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="vous@exemple.fr" />
+            </div>
+          </div>
+
+          <div>
+            <label for="project-type" class="block text-sm font-medium text-gray-700">Type de projet</label>
+            <select id="project-type" name="project-type" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+              <option value="">Sélectionnez...</option>
+              <option value="wordpress">Site WordPress</option>
+              <option value="sur-mesure">Site sur mesure (Next.js / Astro)</option>
+              <option value="maintenance">Maintenance / Évolution</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-gray-700">Message *</label>
+            <textarea id="message" name="message" rows={5} required class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 text-sm placeholder-gray-400 shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Parlez-moi de votre projet..."></textarea>
+          </div>
+
+          <button type="submit" class="w-full rounded-xl bg-indigo-600 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-indigo-500 hover:shadow-lg">
+            Envoyer le message
+          </button>
+        </form>
+
+        <div class="mt-12 border-t border-gray-200 pt-8">
+          <p class="text-center text-sm text-gray-500">
+            Vous pouvez aussi m'écrire à <a href="mailto:contact@otvt.dev" class="font-medium text-indigo-600 hover:text-indigo-500">contact@otvt.dev</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
