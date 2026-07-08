@@ -1,16 +1,31 @@
 <div id="scroll-indicator" class="scroll-indicator fixed bottom-8 right-8 z-40">
-  <div class="flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur border border-vert/15 rounded-lg shadow-sm">
-    <span class="w-1.5 h-4 bg-vert animate-pulse" />
+  <div
+    class="flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur border border-vert/15 rounded-lg shadow-sm"
+  >
+    <span class="w-1.5 h-4 bg-vert animate-pulse"></span>
     <span class="text-xs text-vert/60 font-mono tracking-wide">scroll</span>
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-vert animate-bounce">
-      <path d="m6 9 6 6 6-6"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="text-vert animate-bounce"
+    >
+      <path d="m6 9 6 6 6-6"></path>
     </svg>
   </div>
 </div>
 
 <style is:global>
   #scroll-indicator {
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
   }
   #scroll-indicator.is-hidden {
     opacity: 0 !important;

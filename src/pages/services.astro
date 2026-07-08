@@ -5,61 +5,139 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Services">
   <section class="pt-28 pb-20 sm:pb-28 px-6">
     <div class="mx-auto max-w-7xl">
-      <div class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm">
+      <div
+        class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+      >
         <!-- Terminal title bar -->
-        <div class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]">
-          <span class="w-3 h-3 rounded-full bg-[#ff5f56]" />
-          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-          <span class="w-3 h-3 rounded-full bg-[#28c840]" />
-          <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium">olivier@otvt:~/services</span>
+        <div
+          class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+        >
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+          <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium"
+            >olivier@otvt:~/services</span
+          >
         </div>
         <!-- Content -->
         <div class="px-6 sm:px-12 py-8 sm:py-14">
-          <p class="text-xs text-vert/70 font-mono mb-8 sm:mb-10 leading-relaxed">
-            <span class="text-vert font-semibold">olivier@otvt</span>:<span class="text-jaune">~</span><span class="text-[#2d2a24]/25">$ </span><span class="text-[#2d2a24]/40">cat services.txt</span>
+          <p
+            class="text-xs text-vert/70 font-mono mb-8 sm:mb-10 leading-relaxed"
+          >
+            <span class="text-vert font-semibold">olivier@otvt</span>:<span
+              class="text-jaune">~</span
+            ><span class="text-[#2d2a24]/25">$ </span><span
+              class="text-[#2d2a24]/40">cat services.txt</span
+            >
           </p>
           <div class="grid sm:grid-cols-3 gap-12 sm:gap-16">
             <div class="sm:col-span-1">
-              <p class="text-xs font-medium tracking-[0.15em] text-vert/80 uppercase">Services</p>
-              <h1 class="mt-4 text-4xl sm:text-5xl font-bold text-[#2d2a24]">Ce que je propose</h1>
-              <p class="mt-4 text-sm text-[#2d2a24]/50 leading-relaxed">Du site vitrine à l'application complexe, chaque projet est unique.</p>
-              <a href="/contact" class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200">
+              <p
+                class="text-xs font-medium tracking-[0.15em] text-vert/80 uppercase"
+              >
+                Services
+              </p>
+              <h1 class="mt-4 text-4xl sm:text-5xl font-bold text-[#2d2a24]">
+                Ce que je propose
+              </h1>
+              <p class="mt-4 text-sm text-[#2d2a24]/50 leading-relaxed">
+                Du site vitrine à l'application complexe, chaque projet est
+                unique.
+              </p>
+              <a
+                href="/contact"
+                class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200"
+              >
                 Démarrer
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                  ></path></svg
+                >
               </a>
             </div>
             <div class="sm:col-span-2 space-y-10">
               <div>
                 <h2 class="text-lg font-semibold text-[#2d2a24]">WordPress</h2>
-                <p class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">
-                  Thème sur mesure, WooCommerce, plugins. Je construis chaque site depuis zéro, pas de template pré-fait. Design sur mesure, performance optimisée.
+                <p
+                  class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg"
+                >
+                  Thème sur mesure, WooCommerce, plugins. Je construis chaque
+                  site depuis zéro, pas de template pré-fait. Design sur mesure,
+                  performance optimisée.
                 </p>
                 <div class="mt-3 flex flex-wrap gap-2">
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Thème sur mesure</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">WooCommerce</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Performance</span>
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Thème sur mesure</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >WooCommerce</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Performance</span
+                  >
                 </div>
               </div>
               <div>
-                <h2 class="text-lg font-semibold text-[#2d2a24]">Développement sur mesure</h2>
-                <p class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">
-                  Next.js, Astro, React, Node.js. Des sites ultra-rapides aux applications dynamiques. Stack moderne, déploiement continu.
+                <h2 class="text-lg font-semibold text-[#2d2a24]">
+                  Développement sur mesure
+                </h2>
+                <p
+                  class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg"
+                >
+                  Next.js, Astro, React, Node.js. Des sites ultra-rapides aux
+                  applications dynamiques. Stack moderne, déploiement continu.
                 </p>
                 <div class="mt-3 flex flex-wrap gap-2">
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Next.js / Astro</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">React / TypeScript</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Vercel</span>
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Next.js / Astro</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >React / TypeScript</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Vercel</span
+                  >
                 </div>
               </div>
               <div>
-                <h2 class="text-lg font-semibold text-[#2d2a24]">Maintenance & Évolution</h2>
-                <p class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">
-                  Audit technique, mises à jour de sécurité, amélioration des performances. Je reprends aussi des sites existants pour les moderniser.
+                <h2 class="text-lg font-semibold text-[#2d2a24]">
+                  Maintenance & Évolution
+                </h2>
+                <p
+                  class="mt-2 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg"
+                >
+                  Audit technique, mises à jour de sécurité, amélioration des
+                  performances. Je reprends aussi des sites existants pour les
+                  moderniser.
                 </p>
                 <div class="mt-3 flex flex-wrap gap-2">
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Audit & Sécurité</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Migration</span>
-                  <span class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full">Performance</span>
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Audit & Sécurité</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Migration</span
+                  >
+                  <span
+                    class="text-xs text-vert bg-vert/10 px-3 py-1 rounded-full"
+                    >Performance</span
+                  >
                 </div>
               </div>
             </div>
@@ -72,40 +150,87 @@ import Layout from '../layouts/Layout.astro';
   <!-- Process -->
   <section class="pb-20 sm:pb-28 px-6">
     <div class="mx-auto max-w-7xl">
-      <div class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm">
-        <div class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]">
-          <span class="w-3 h-3 rounded-full bg-[#ff5f56]" />
-          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-          <span class="w-3 h-3 rounded-full bg-[#28c840]" />
-          <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium">olivier@otvt:~/methodology</span>
+      <div
+        class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+      >
+        <div
+          class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+        >
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+          <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium"
+            >olivier@otvt:~/methodology</span
+          >
         </div>
         <div class="px-6 sm:px-12 py-8 sm:py-14">
-          <p class="text-xs text-vert/70 font-mono mb-8 sm:mb-10 leading-relaxed">
-            <span class="text-vert font-semibold">olivier@otvt</span>:<span class="text-jaune">~</span><span class="text-[#2d2a24]/25">$ </span><span class="text-[#2d2a24]/40">cat process.sh</span>
+          <p
+            class="text-xs text-vert/70 font-mono mb-8 sm:mb-10 leading-relaxed"
+          >
+            <span class="text-vert font-semibold">olivier@otvt</span>:<span
+              class="text-jaune">~</span
+            ><span class="text-[#2d2a24]/25">$ </span><span
+              class="text-[#2d2a24]/40">cat process.sh</span
+            >
           </p>
-          <p class="text-xs font-medium tracking-[0.15em] text-vert/80 uppercase mb-6">Méthode</p>
-          <h2 class="text-4xl sm:text-5xl font-bold text-[#2d2a24]">Comment je travaille</h2>
-          <p class="mt-4 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">Transparence, itérations rapides et qualité. Un process simple et efficace.</p>
+          <p
+            class="text-xs font-medium tracking-[0.15em] text-vert/80 uppercase mb-6"
+          >
+            Méthode
+          </p>
+          <h2 class="text-4xl sm:text-5xl font-bold text-[#2d2a24]">
+            Comment je travaille
+          </h2>
+          <p class="mt-4 text-sm text-[#2d2a24]/50 leading-relaxed max-w-lg">
+            Transparence, itérations rapides et qualité. Un process simple et
+            efficace.
+          </p>
           <div class="mt-12 grid sm:grid-cols-4 gap-6 sm:gap-8">
             <div class="text-center">
-              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-vert/10 text-vert text-lg font-bold mb-4">01</span>
+              <span
+                class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-vert/10 text-vert text-lg font-bold mb-4"
+                >01</span
+              >
               <h3 class="text-base font-semibold text-[#2d2a24]">Découverte</h3>
-              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">Analyse de vos besoins, objectifs et contraintes. Un cahier des charges clair pour partir sur de bonnes bases.</p>
+              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">
+                Analyse de vos besoins, objectifs et contraintes. Un cahier des
+                charges clair pour partir sur de bonnes bases.
+              </p>
             </div>
             <div class="text-center">
-              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-jaune/20 text-jaune text-lg font-bold mb-4">02</span>
+              <span
+                class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-jaune/20 text-jaune text-lg font-bold mb-4"
+                >02</span
+              >
               <h3 class="text-base font-semibold text-[#2d2a24]">Conception</h3>
-              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">Maquettes, validation et architecture technique. Vous approuvez chaque étape avant le développement.</p>
+              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">
+                Maquettes, validation et architecture technique. Vous approuvez
+                chaque étape avant le développement.
+              </p>
             </div>
             <div class="text-center">
-              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-vert/10 text-vert text-lg font-bold mb-4">03</span>
-              <h3 class="text-base font-semibold text-[#2d2a24]">Développement</h3>
-              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">Itérations courtes, tests continus. Vous suivez l'avancement en temps réel et donnez votre feedback.</p>
+              <span
+                class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-vert/10 text-vert text-lg font-bold mb-4"
+                >03</span
+              >
+              <h3 class="text-base font-semibold text-[#2d2a24]">
+                Développement
+              </h3>
+              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">
+                Itérations courtes, tests continus. Vous suivez l'avancement en
+                temps réel et donnez votre feedback.
+              </p>
             </div>
             <div class="text-center">
-              <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-jaune/20 text-jaune text-lg font-bold mb-4">04</span>
+              <span
+                class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-jaune/20 text-jaune text-lg font-bold mb-4"
+                >04</span
+              >
               <h3 class="text-base font-semibold text-[#2d2a24]">Lancement</h3>
-              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">Mise en ligne, formation et suivi. Je reste disponible après la livraison pour assurer la tranquillité.</p>
+              <p class="mt-2 text-xs text-[#2d2a24]/50 leading-relaxed">
+                Mise en ligne, formation et suivi. Je reste disponible après la
+                livraison pour assurer la tranquillité.
+              </p>
             </div>
           </div>
         </div>
@@ -117,29 +242,72 @@ import Layout from '../layouts/Layout.astro';
   <section class="relative py-20 sm:py-28 px-6">
     <div class="mx-auto max-w-7xl">
       <!-- Backdrop overlay -->
-      <div class="absolute inset-0 bg-[#F0EFEC] opacity-60" />
+      <div class="absolute inset-0 bg-[#F0EFEC] opacity-60"></div>
       <div class="relative max-w-xl mx-auto">
-        <div class="border border-vert/25 rounded-2xl overflow-hidden bg-white shadow-lg shadow-vert/5">
+        <div
+          class="border border-vert/25 rounded-2xl overflow-hidden bg-white shadow-lg shadow-vert/5"
+        >
           <!-- Title bar -->
-          <div class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]">
-            <span class="w-3 h-3 rounded-full bg-[#ff5f56]" />
-            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-            <span class="w-3 h-3 rounded-full bg-[#28c840]" />
-            <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium">olivier@otvt:~/call</span>
+          <div
+            class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+          >
+            <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+            <span class="ml-3 text-xs text-[#2d2a24]/30 font-medium"
+              >olivier@otvt:~/call</span
+            >
           </div>
           <!-- Content -->
           <div class="px-6 sm:px-10 py-8 sm:py-10 text-center">
             <p class="text-xs text-vert/70 font-mono mb-6 leading-relaxed">
-              <span class="text-vert font-semibold">olivier@otvt</span>:<span class="text-jaune">~</span><span class="text-[#2d2a24]/25">$ </span><span class="text-[#2d2a24]/40">./call-to-action.sh</span>
+              <span class="text-vert font-semibold">olivier@otvt</span>:<span
+                class="text-jaune">~</span
+              ><span class="text-[#2d2a24]/25">$ </span><span
+                class="text-[#2d2a24]/40">./call-to-action.sh</span
+              >
             </p>
-            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-vert/10 text-vert mb-5">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span
+              class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-vert/10 text-vert mb-5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path></svg
+              >
             </span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-[#2d2a24]">Vous ne savez pas par où commencer ?</h2>
-            <p class="mt-3 text-sm text-[#2d2a24]/50">On en parle 30 minutes sans engagement.</p>
-            <a href="/contact" class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm">
+            <h2 class="text-2xl sm:text-3xl font-bold text-[#2d2a24]">
+              Vous ne savez pas par où commencer ?
+            </h2>
+            <p class="mt-3 text-sm text-[#2d2a24]/50">
+              On en parle 30 minutes sans engagement.
+            </p>
+            <a
+              href="/contact"
+              class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm"
+            >
               Réserver un appel
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+              >
             </a>
           </div>
         </div>
