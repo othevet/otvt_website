@@ -42,6 +42,9 @@ const currentPath = Astro.url.pathname;
       <button
         id="menu-toggle"
         class="sm:hidden p-2 text-[#2d2a24]/60 hover:text-[#2d2a24] transition-colors"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Ouvrir le menu"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +91,19 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
-  document.getElementById('menu-toggle')?.addEventListener('click', () => {
-    document.getElementById('mobile-menu')?.classList.toggle('hidden');
-  });
+  function initMenuToggle() {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    toggle?.addEventListener('click', () => {
+      const isHidden = menu?.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', String(!isHidden));
+      toggle.setAttribute(
+        'aria-label',
+        isHidden ? 'Ouvrir le menu' : 'Fermer le menu',
+      );
+    });
+  }
+
+  initMenuToggle();
+  document.addEventListener('astro:page-load', initMenuToggle);
 </script>

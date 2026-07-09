@@ -47,11 +47,17 @@ import Layout from '../layouts/Layout.astro';
               <div class="mt-8 text-sm text-[#2d2a24]/50 space-y-2">
                 <p class="flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-vert"></span>
-                  contact@otvt.fr
+                  <a
+                    href="mailto:contact@otvt.fr"
+                    class="hover:text-vert transition-colors">contact@otvt.fr</a
+                  >
                 </p>
                 <p class="flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-jaune"></span>
-                  06 35 22 92 46
+                  <a
+                    href="tel:+33635229246"
+                    class="hover:text-vert transition-colors">06 35 22 92 46</a
+                  >
                 </p>
                 <p class="flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-vert"></span>
@@ -172,7 +178,8 @@ import Layout from '../layouts/Layout.astro';
                   class="text-sm hidden"
                   role="status"
                   aria-live="polite"
-                ></p>
+                >
+                </p>
               </form>
             </div>
           </div>
@@ -184,7 +191,9 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   function initContactForm() {
-    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const form = document.getElementById(
+      'contact-form',
+    ) as HTMLFormElement | null;
     const status = document.getElementById('form-status');
     const submitButton = form?.querySelector('button[type="submit"]');
     const submitLabel = submitButton?.querySelector('.submit-label');
