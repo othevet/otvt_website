@@ -26,6 +26,8 @@ const ogImage = await getImage({
   width: 1200,
   height: 1200,
   format: 'jpg',
+  fit: 'cover',
+  position: 'top',
 });
 const ogImageUrl = new URL(ogImage.src, Astro.url.origin).toString();
 
