@@ -127,11 +127,21 @@ const t = ui.fr.account;
             <h2 class="text-lg font-semibold text-ink">
               {t.messagesTitle}
             </h2>
+            <p
+              id="messages-empty"
+              class="hidden mt-3 text-sm text-ink/70"
+            >
+              {t.messagesEmpty}
+            </p>
+            <ul
+              id="messages-thread"
+              class="mt-4 max-h-96 overflow-y-auto space-y-2 pr-1"
+            ></ul>
             <form id="message-form" class="mt-4 space-y-3">
               <textarea
                 id="message-body"
                 name="message"
-                rows={4}
+                rows={3}
                 required
                 class="w-full bg-bg border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-ink placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
                 placeholder={t.messagePlaceholder}></textarea>
@@ -182,6 +192,15 @@ const t = ui.fr.account;
   </li>
 </template>
 
+<template id="message-bubble-template">
+  <li class="flex message-row">
+    <div class="max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed message-bubble">
+      <p class="message-body"></p>
+      <p class="mt-1 text-[10px] opacity-70 message-time"></p>
+    </div>
+  </li>
+</template>
+
 <script
   is:inline
   type="application/json"
@@ -202,8 +221,28 @@ const t = ui.fr.account;
 
   const loginPath = '/connexion';
 
+  type Message = {
+    id: string;
+    client_id: string;
+    sender: 'client' | 'olivier';
+    body: string;
+    created_at: string;
+  };
+
+  let messagesChannel: ReturnType<typeof supabase.channel> | null = null;
+  const renderedMessageIds = new Set<string>();
+
   function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString('fr-FR');
+  }
+
+  function formatMessageTime(dateStr: string) {
+    return new Date(dateStr).toLocaleString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   }
 
   function showSection(id: string) {
@@ -300,7 +339,87 @@ const t = ui.fr.account;
     }
   }
 
-  function initMessageForm(clientName: string, clientEmail: string) {
+  function scrollThreadToBottom() {
+    const thread = document.getElementById('messages-thread');
+    if (thread) thread.scrollTop = thread.scrollHeight;
+  }
+
+  function appendMessageBubble(message: Message) {
+    const thread = document.getElementById('messages-thread');
+    const template = document.getElementById(
+      'message-bubble-template',
+    ) as HTMLTemplateElement | null;
+    if (!thread || !template) return;
+
+    const node = template.content.cloneNode(true) as DocumentFragment;
+    const row = node.querySelector('.message-row') as HTMLElement;
+    const bubble = node.querySelector('.message-bubble') as HTMLElement;
+    const isOwn = message.sender === 'client';
+
+    row.classList.add(isOwn ? 'justify-end' : 'justify-start');
+    bubble.classList.add(
+      ...(isOwn
+        ? ['bg-vert', 'text-white', 'rounded-br-sm']
+        : ['bg-surface-alt', 'text-ink', 'rounded-bl-sm']),
+    );
+    const bodyEl = node.querySelector('.message-body');
+    const timeEl = node.querySelector('.message-time');
+    if (bodyEl) bodyEl.textContent = message.body;
+    if (timeEl) timeEl.textContent = formatMessageTime(message.created_at);
+
+    thread.appendChild(node);
+    renderedMessageIds.add(message.id);
+  }
+
+  async function renderMessages(clientId: string) {
+    const thread = document.getElementById('messages-thread');
+    if (!thread) return;
+
+    const { data: messages } = await supabase
+      .from('messages')
+      .select('id, client_id, sender, body, created_at')
+      .eq('client_id', clientId)
+      .order('created_at', { ascending: true });
+
+    thread.innerHTML = '';
+    renderedMessageIds.clear();
+
+    if (!messages || messages.length === 0) {
+      showSection('messages-empty');
+      return;
+    }
+    hideSection('messages-empty');
+
+    for (const message of messages as Message[]) {
+      appendMessageBubble(message);
+    }
+    scrollThreadToBottom();
+  }
+
+  function subscribeToMessages(clientId: string) {
+    if (messagesChannel) supabase.removeChannel(messagesChannel);
+    messagesChannel = supabase
+      .channel(`messages-client-${clientId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `client_id=eq.${clientId}`,
+        },
+        (payload) => {
+          const message = payload.new as Message;
+          if (renderedMessageIds.has(message.id)) return;
+          hideSection('messages-empty');
+          appendMessageBubble(message);
+          scrollThreadToBottom();
+        },
+      )
+      .subscribe();
+  }
+
+  function initMessageForm(clientId: string, clientName: string, clientEmail: string) {
     const form = document.getElementById(
       'message-form',
     ) as HTMLFormElement | null;
@@ -323,8 +442,25 @@ const t = ui.fr.account;
       submitLabel.textContent = t.sendingMessage;
       status.classList.add('hidden');
 
-      try {
-        const response = await fetch('https://api.web3forms.com/submit', {
+      const { data, error } = await supabase
+        .from('messages')
+        .insert({ client_id: clientId, sender: 'client', body })
+        .select('id, client_id, sender, body, created_at')
+        .single();
+
+      if (error || !data) {
+        status.textContent = t.messageError;
+        status.className = 'text-sm text-danger';
+        status.classList.remove('hidden');
+      } else {
+        hideSection('messages-empty');
+        appendMessageBubble(data as Message);
+        scrollThreadToBottom();
+        form.reset();
+
+        // Notification email best-effort : la persistance en base est ce
+        // qui compte, l'email n'est qu'un rappel pour Olivier.
+        fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -338,20 +474,8 @@ const t = ui.fr.account;
             replyto: clientEmail,
             message: body,
           }),
-        });
-        const result = await response.json();
-        if (response.ok && result.success) {
-          status.textContent = t.messageSent;
-          status.className = 'text-sm text-vert';
-          form.reset();
-        } else {
-          throw new Error(result.message || 'error');
-        }
-      } catch {
-        status.textContent = t.messageError;
-        status.className = 'text-sm text-danger';
+        }).catch(() => {});
       }
-      status.classList.remove('hidden');
 
       submitButton.removeAttribute('disabled');
       submitLabel.textContent = t.send;
@@ -412,8 +536,13 @@ const t = ui.fr.account;
     const nameEl = document.getElementById('client-name');
     if (nameEl) nameEl.textContent = client.name;
 
-    await Promise.all([renderProjects(client.id), renderInvoices(client.id)]);
-    initMessageForm(client.name, client.email);
+    await Promise.all([
+      renderProjects(client.id),
+      renderInvoices(client.id),
+      renderMessages(client.id),
+    ]);
+    subscribeToMessages(client.id);
+    initMessageForm(client.id, client.name, client.email);
     initLogout();
 
     hideSection('account-checking');
@@ -421,4 +550,10 @@ const t = ui.fr.account;
   }
 
   document.addEventListener('astro:page-load', init);
+  document.addEventListener('astro:before-swap', () => {
+    if (messagesChannel) {
+      supabase.removeChannel(messagesChannel);
+      messagesChannel = null;
+    }
+  });
 </script>

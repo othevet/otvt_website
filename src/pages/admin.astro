@@ -1,0 +1,1052 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const inputClass =
+  'w-full bg-bg border border-vert/15 rounded-xl px-3 py-2 text-sm text-ink placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20';
+const primaryButtonClass =
+  'inline-flex items-center gap-2 px-5 py-2.5 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed';
+const tabButtonClass =
+  'admin-tab-button px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200 text-ink/70 hover:text-ink hover:bg-hairline';
+---
+
+<Layout title="Admin" description="Back-office otvt" noindex>
+  <section class="pt-28 pb-20 sm:pb-28 px-6">
+    <div class="mx-auto max-w-5xl space-y-8">
+      <!-- Checking session -->
+      <div
+        id="admin-checking"
+        class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+      >
+        <div class="px-6 sm:px-12 py-14 text-center">
+          <p class="text-sm text-ink/70 font-mono">
+            Vérification de la session...
+          </p>
+        </div>
+      </div>
+
+      <!-- Not authorized -->
+      <div
+        id="admin-unauthorized"
+        class="hidden border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+      >
+        <div class="px-6 sm:px-12 py-14 text-center">
+          <p id="admin-unauthorized-message" class="text-sm text-ink/70">
+            Vous devez vous connecter pour accéder à cet espace.
+          </p>
+          <button
+            id="admin-back-to-login"
+            type="button"
+            class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm"
+          >
+            Se connecter
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin content -->
+      <div id="admin-content" class="hidden space-y-8">
+        <div
+          class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+        >
+          <div
+            class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-surface-alt"
+          >
+            <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+            <span class="ml-3 text-xs text-ink/70 font-medium"
+              >olivier@otvt:~/admin</span
+            >
+          </div>
+          <div
+            class="px-6 sm:px-12 py-8 sm:py-10 flex items-center justify-between gap-4 flex-wrap"
+          >
+            <div>
+              <p
+                class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase"
+              >
+                Back-office
+              </p>
+              <h1 class="mt-3 text-3xl sm:text-4xl font-bold text-ink">
+                Admin
+              </h1>
+            </div>
+            <button
+              id="admin-logout-button"
+              type="button"
+              class="shrink-0 px-4 py-2 text-xs font-semibold rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
+            >
+              Se déconnecter
+            </button>
+          </div>
+          <div class="px-6 sm:px-12 pb-6 flex flex-wrap gap-2">
+            <button type="button" class={tabButtonClass} data-tab="clients"
+              >Clients</button
+            >
+            <button type="button" class={tabButtonClass} data-tab="projects"
+              >Projets</button
+            >
+            <button type="button" class={tabButtonClass} data-tab="invoices"
+              >Factures</button
+            >
+            <button type="button" class={tabButtonClass} data-tab="messages"
+              >Messages</button
+            >
+          </div>
+        </div>
+
+        <!-- Clients tab -->
+        <div id="admin-tab-clients" class="admin-tab space-y-6">
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Ajouter un client</h2>
+              <form id="client-form" class="mt-4 grid gap-3 sm:grid-cols-2">
+                <input
+                  id="client-name-input"
+                  type="text"
+                  required
+                  placeholder="Nom"
+                  class={inputClass}
+                />
+                <input
+                  id="client-email-input"
+                  type="email"
+                  required
+                  placeholder="email@exemple.fr"
+                  class={inputClass}
+                />
+                <button
+                  type="submit"
+                  class={`${primaryButtonClass} sm:col-span-2 justify-self-start`}
+                >
+                  <span class="submit-label">Ajouter</span>
+                </button>
+                <p
+                  id="client-form-status"
+                  class="hidden text-sm sm:col-span-2"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </form>
+            </div>
+          </div>
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Clients</h2>
+              <p id="clients-empty" class="hidden mt-3 text-sm text-ink/70">
+                Aucun client pour le moment.
+              </p>
+              <ul id="clients-list" class="mt-4 space-y-3"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects tab -->
+        <div id="admin-tab-projects" class="admin-tab hidden space-y-6">
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Ajouter un projet</h2>
+              <form id="project-form" class="mt-4 grid gap-3 sm:grid-cols-2">
+                <select
+                  id="project-client-select"
+                  required
+                  class={inputClass}
+                >
+                  <option value="">Choisir un client</option>
+                </select>
+                <input
+                  id="project-name-input"
+                  type="text"
+                  required
+                  placeholder="Nom du projet"
+                  class={inputClass}
+                />
+                <select id="project-status-select" class={inputClass}>
+                  <option value="in_progress">En cours</option>
+                  <option value="completed">Terminé</option>
+                </select>
+                <input
+                  id="project-notes-input"
+                  type="text"
+                  placeholder="Notes (optionnel)"
+                  class={inputClass}
+                />
+                <button
+                  type="submit"
+                  class={`${primaryButtonClass} sm:col-span-2 justify-self-start`}
+                >
+                  <span class="submit-label">Ajouter</span>
+                </button>
+                <p
+                  id="project-form-status"
+                  class="hidden text-sm sm:col-span-2"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </form>
+            </div>
+          </div>
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Projets</h2>
+              <p
+                id="projects-admin-empty"
+                class="hidden mt-3 text-sm text-ink/70"
+              >
+                Aucun projet pour le moment.
+              </p>
+              <ul id="projects-admin-list" class="mt-4 space-y-3"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invoices tab -->
+        <div id="admin-tab-invoices" class="admin-tab hidden space-y-6">
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">
+                Ajouter une facture
+              </h2>
+              <form
+                id="invoice-form"
+                class="mt-4 grid gap-3 sm:grid-cols-2"
+                enctype="multipart/form-data"
+              >
+                <select
+                  id="invoice-client-select"
+                  required
+                  class={inputClass}
+                >
+                  <option value="">Choisir un client</option>
+                </select>
+                <select id="invoice-project-select" class={inputClass}>
+                  <option value="">Projet (optionnel)</option>
+                </select>
+                <input
+                  id="invoice-label-input"
+                  type="text"
+                  required
+                  placeholder="Libellé (ex : Facture n°003)"
+                  class={inputClass}
+                />
+                <input
+                  id="invoice-amount-input"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="Montant (€)"
+                  class={inputClass}
+                />
+                <input
+                  id="invoice-date-input"
+                  type="date"
+                  required
+                  class={inputClass}
+                />
+                <input
+                  id="invoice-file-input"
+                  type="file"
+                  accept="application/pdf"
+                  required
+                  class={`${inputClass} file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-vert file:text-white file:text-xs`}
+                />
+                <button
+                  type="submit"
+                  class={`${primaryButtonClass} sm:col-span-2 justify-self-start`}
+                >
+                  <span class="submit-label">Ajouter</span>
+                </button>
+                <p
+                  id="invoice-form-status"
+                  class="hidden text-sm sm:col-span-2"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </form>
+            </div>
+          </div>
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Factures</h2>
+              <p
+                id="invoices-admin-empty"
+                class="hidden mt-3 text-sm text-ink/70"
+              >
+                Aucune facture pour le moment.
+              </p>
+              <ul id="invoices-admin-list" class="mt-4 space-y-3"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Messages tab -->
+        <div id="admin-tab-messages" class="admin-tab hidden space-y-6">
+          <div
+            class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+          >
+            <div class="px-6 sm:px-12 py-8 sm:py-10">
+              <h2 class="text-lg font-semibold text-ink">Messages</h2>
+              <div class="mt-4 grid gap-6 sm:grid-cols-[220px_1fr]">
+                <div>
+                  <p
+                    id="admin-clients-empty"
+                    class="hidden text-sm text-ink/70"
+                  >
+                    Aucun client pour le moment.
+                  </p>
+                  <ul id="admin-client-picker" class="space-y-1"></ul>
+                </div>
+                <div>
+                  <p id="admin-thread-empty" class="text-sm text-ink/70">
+                    Sélectionnez un client pour voir la conversation.
+                  </p>
+                  <ul
+                    id="admin-messages-thread"
+                    class="hidden max-h-96 overflow-y-auto space-y-2 pr-1"
+                  ></ul>
+                  <form
+                    id="admin-message-form"
+                    class="hidden mt-4 space-y-3"
+                  >
+                    <textarea
+                      id="admin-message-body"
+                      rows={3}
+                      required
+                      class={inputClass}
+                      placeholder="Répondre..."></textarea>
+                    <button type="submit" class={primaryButtonClass}>
+                      <span class="submit-label">Envoyer</span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<!-- Templates -->
+<template id="admin-client-row-template">
+  <li
+    class="flex items-center justify-between gap-4 border-b border-vert/10 pb-3 last:border-0 last:pb-0"
+  >
+    <div>
+      <p class="text-sm text-ink client-name"></p>
+      <p class="text-xs text-ink/70 client-email"></p>
+    </div>
+    <button
+      type="button"
+      class="delete-button shrink-0 px-3 py-1 text-xs font-semibold rounded-full border border-vert/20 text-danger hover:border-danger/40 transition-colors"
+      >Supprimer</button
+    >
+  </li>
+</template>
+
+<template id="admin-project-row-template">
+  <li
+    class="flex items-center justify-between gap-4 border-b border-vert/10 pb-3 last:border-0 last:pb-0"
+  >
+    <div>
+      <p class="text-sm text-ink project-name"></p>
+      <p class="text-xs text-ink/70 project-client"></p>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <button
+        type="button"
+        class="toggle-status-button text-xs font-medium px-3 py-1 rounded-full project-status"
+      ></button>
+      <button
+        type="button"
+        class="delete-button px-3 py-1 text-xs font-semibold rounded-full border border-vert/20 text-danger hover:border-danger/40 transition-colors"
+        >Supprimer</button
+      >
+    </div>
+  </li>
+</template>
+
+<template id="admin-invoice-row-template">
+  <li
+    class="flex items-center justify-between gap-4 border-b border-vert/10 pb-3 last:border-0 last:pb-0"
+  >
+    <div>
+      <p class="text-sm text-ink invoice-label"></p>
+      <p class="text-xs text-ink/70 invoice-meta"></p>
+    </div>
+    <button
+      type="button"
+      class="delete-button shrink-0 px-3 py-1 text-xs font-semibold rounded-full border border-vert/20 text-danger hover:border-danger/40 transition-colors"
+      >Supprimer</button
+    >
+  </li>
+</template>
+
+<template id="admin-client-picker-row-template">
+  <li>
+    <button
+      type="button"
+      class="picker-button w-full flex items-center justify-between gap-2 px-3 py-2 text-sm text-left rounded-xl text-ink/70 hover:bg-hairline transition-colors"
+    >
+      <span class="client-name"></span>
+      <span class="unread-dot hidden w-2 h-2 rounded-full bg-vert"></span>
+    </button>
+  </li>
+</template>
+
+<template id="admin-message-bubble-template">
+  <li class="flex message-row">
+    <div
+      class="max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed message-bubble"
+    >
+      <p class="message-body"></p>
+      <p class="mt-1 text-[10px] opacity-70 message-time"></p>
+    </div>
+  </li>
+</template>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  const ADMIN_EMAIL = 'contact@otvt.fr';
+  const loginPath = '/connexion?redirect=/admin';
+
+  type Client = { id: string; name: string; email: string };
+  type Project = {
+    id: string;
+    name: string;
+    status: 'in_progress' | 'completed';
+    notes: string | null;
+    client_id: string;
+    clients: { name: string } | null;
+  };
+  type Invoice = {
+    id: string;
+    label: string;
+    amount: number | null;
+    issued_date: string;
+    file_path: string;
+    client_id: string;
+    clients: { name: string } | null;
+  };
+  type Message = {
+    id: string;
+    client_id: string;
+    sender: 'client' | 'olivier';
+    body: string;
+    created_at: string;
+  };
+
+  let clients: Client[] = [];
+  let selectedClientId: string | null = null;
+  let adminChannel: ReturnType<typeof supabase.channel> | null = null;
+  const renderedMessageIds = new Set<string>();
+  const unreadClientIds = new Set<string>();
+
+  function showSection(id: string) {
+    document.getElementById(id)?.classList.remove('hidden');
+  }
+  function hideSection(id: string) {
+    document.getElementById(id)?.classList.add('hidden');
+  }
+
+  function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString('fr-FR');
+  }
+
+  function formatMessageTime(dateStr: string) {
+    return new Date(dateStr).toLocaleString('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  function slugifyFilename(name: string) {
+    return name.replace(/[^a-zA-Z0-9.-]+/g, '-').toLowerCase();
+  }
+
+  // --- Tabs -----------------------------------------------------------
+
+  function initTabs() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      '.admin-tab-button',
+    );
+    if (buttons.length === 0 || buttons[0].dataset.initialized) return;
+    buttons.forEach((button) => {
+      button.dataset.initialized = 'true';
+      button.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('bg-vert', 'text-white'));
+        button.classList.add('bg-vert', 'text-white');
+        document
+          .querySelectorAll('.admin-tab')
+          .forEach((tab) => tab.classList.add('hidden'));
+        document
+          .getElementById(`admin-tab-${button.dataset.tab}`)
+          ?.classList.remove('hidden');
+      });
+    });
+    buttons[0].click();
+  }
+
+  // --- Clients ----------------------------------------------------------
+
+  async function loadClients() {
+    const { data } = await supabase
+      .from('clients')
+      .select('id, name, email')
+      .order('name', { ascending: true });
+    clients = data ?? [];
+    renderClientsList();
+    populateClientSelects();
+    renderClientPicker();
+  }
+
+  function renderClientsList() {
+    const list = document.getElementById('clients-list');
+    const template = document.getElementById(
+      'admin-client-row-template',
+    ) as HTMLTemplateElement | null;
+    if (!list || !template) return;
+
+    list.innerHTML = '';
+    if (clients.length === 0) {
+      showSection('clients-empty');
+      return;
+    }
+    hideSection('clients-empty');
+
+    for (const client of clients) {
+      const node = template.content.cloneNode(true) as DocumentFragment;
+      node.querySelector('.client-name')!.textContent = client.name;
+      node.querySelector('.client-email')!.textContent = client.email;
+      const deleteButton = node.querySelector(
+        '.delete-button',
+      ) as HTMLButtonElement;
+      deleteButton.addEventListener('click', async () => {
+        if (!confirm(`Supprimer ${client.name} ? Cette action est définitive.`))
+          return;
+        await supabase.from('clients').delete().eq('id', client.id);
+        await loadClients();
+        await loadProjects();
+        await loadInvoices();
+      });
+      list.appendChild(node);
+    }
+  }
+
+  function populateClientSelects() {
+    for (const selectId of ['project-client-select', 'invoice-client-select']) {
+      const select = document.getElementById(selectId) as HTMLSelectElement | null;
+      if (!select) continue;
+      const current = select.value;
+      select.innerHTML = '<option value="">Choisir un client</option>';
+      for (const client of clients) {
+        const option = document.createElement('option');
+        option.value = client.id;
+        option.textContent = client.name;
+        select.appendChild(option);
+      }
+      select.value = current;
+    }
+  }
+
+  function initClientForm() {
+    const form = document.getElementById('client-form') as HTMLFormElement | null;
+    const status = document.getElementById('client-form-status');
+    const nameInput = document.getElementById(
+      'client-name-input',
+    ) as HTMLInputElement | null;
+    const emailInput = document.getElementById(
+      'client-email-input',
+    ) as HTMLInputElement | null;
+    if (!form || !status || !nameInput || !emailInput) return;
+    if (form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      if (!name || !email) return;
+
+      const { error } = await supabase.from('clients').insert({ name, email });
+      if (error) {
+        status.textContent = "Erreur lors de l'ajout.";
+        status.className = 'text-sm text-danger sm:col-span-2';
+      } else {
+        status.textContent = 'Client ajouté.';
+        status.className = 'text-sm text-vert sm:col-span-2';
+        form.reset();
+        await loadClients();
+      }
+      status.classList.remove('hidden');
+    });
+  }
+
+  // --- Projects -----------------------------------------------------------
+
+  async function loadProjects() {
+    const { data } = await supabase
+      .from('projects')
+      .select('id, name, status, notes, client_id, clients(name)')
+      .order('created_at', { ascending: false });
+    renderProjectsList((data ?? []) as unknown as Project[]);
+  }
+
+  function renderProjectsList(projects: Project[]) {
+    const list = document.getElementById('projects-admin-list');
+    const template = document.getElementById(
+      'admin-project-row-template',
+    ) as HTMLTemplateElement | null;
+    if (!list || !template) return;
+
+    list.innerHTML = '';
+    if (projects.length === 0) {
+      showSection('projects-admin-empty');
+      return;
+    }
+    hideSection('projects-admin-empty');
+
+    for (const project of projects) {
+      const node = template.content.cloneNode(true) as DocumentFragment;
+      node.querySelector('.project-name')!.textContent = project.name;
+      node.querySelector('.project-client')!.textContent =
+        project.clients?.name ?? '';
+      const statusButton = node.querySelector(
+        '.toggle-status-button',
+      ) as HTMLButtonElement;
+      const isDone = project.status === 'completed';
+      statusButton.textContent = isDone ? 'Terminé' : 'En cours';
+      statusButton.classList.add(
+        isDone ? 'bg-vert/10' : 'bg-jaune/20',
+        isDone ? 'text-vert' : 'text-amber-ink',
+      );
+      statusButton.addEventListener('click', async () => {
+        await supabase
+          .from('projects')
+          .update({ status: isDone ? 'in_progress' : 'completed' })
+          .eq('id', project.id);
+        await loadProjects();
+      });
+      const deleteButton = node.querySelector(
+        '.delete-button',
+      ) as HTMLButtonElement;
+      deleteButton.addEventListener('click', async () => {
+        if (!confirm(`Supprimer le projet "${project.name}" ?`)) return;
+        await supabase.from('projects').delete().eq('id', project.id);
+        await loadProjects();
+      });
+      list.appendChild(node);
+    }
+  }
+
+  function initProjectForm() {
+    const form = document.getElementById(
+      'project-form',
+    ) as HTMLFormElement | null;
+    const status = document.getElementById('project-form-status');
+    const clientSelect = document.getElementById(
+      'project-client-select',
+    ) as HTMLSelectElement | null;
+    const nameInput = document.getElementById(
+      'project-name-input',
+    ) as HTMLInputElement | null;
+    const statusSelect = document.getElementById(
+      'project-status-select',
+    ) as HTMLSelectElement | null;
+    const notesInput = document.getElementById(
+      'project-notes-input',
+    ) as HTMLInputElement | null;
+    if (!form || !status || !clientSelect || !nameInput || !statusSelect || !notesInput)
+      return;
+    if (form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const clientId = clientSelect.value;
+      const name = nameInput.value.trim();
+      if (!clientId || !name) return;
+
+      const { error } = await supabase.from('projects').insert({
+        client_id: clientId,
+        name,
+        status: statusSelect.value,
+        notes: notesInput.value.trim() || null,
+      });
+      if (error) {
+        status.textContent = "Erreur lors de l'ajout.";
+        status.className = 'text-sm text-danger sm:col-span-2';
+      } else {
+        status.textContent = 'Projet ajouté.';
+        status.className = 'text-sm text-vert sm:col-span-2';
+        form.reset();
+        await loadProjects();
+      }
+      status.classList.remove('hidden');
+    });
+  }
+
+  // --- Invoices -----------------------------------------------------------
+
+  async function loadInvoices() {
+    const { data } = await supabase
+      .from('invoices')
+      .select('id, label, amount, issued_date, file_path, client_id, clients(name)')
+      .order('issued_date', { ascending: false });
+    renderInvoicesList((data ?? []) as unknown as Invoice[]);
+  }
+
+  function renderInvoicesList(invoices: Invoice[]) {
+    const list = document.getElementById('invoices-admin-list');
+    const template = document.getElementById(
+      'admin-invoice-row-template',
+    ) as HTMLTemplateElement | null;
+    if (!list || !template) return;
+
+    list.innerHTML = '';
+    if (invoices.length === 0) {
+      showSection('invoices-admin-empty');
+      return;
+    }
+    hideSection('invoices-admin-empty');
+
+    for (const invoice of invoices) {
+      const node = template.content.cloneNode(true) as DocumentFragment;
+      node.querySelector('.invoice-label')!.textContent = invoice.label;
+      const amount = invoice.amount != null ? `${invoice.amount} € — ` : '';
+      node.querySelector('.invoice-meta')!.textContent =
+        `${invoice.clients?.name ?? ''} — ${amount}${formatDate(invoice.issued_date)}`;
+      const deleteButton = node.querySelector(
+        '.delete-button',
+      ) as HTMLButtonElement;
+      deleteButton.addEventListener('click', async () => {
+        if (!confirm(`Supprimer la facture "${invoice.label}" ?`)) return;
+        await supabase.storage.from('invoices').remove([invoice.file_path]);
+        await supabase.from('invoices').delete().eq('id', invoice.id);
+        await loadInvoices();
+      });
+      list.appendChild(node);
+    }
+  }
+
+  function initInvoiceForm() {
+    const form = document.getElementById(
+      'invoice-form',
+    ) as HTMLFormElement | null;
+    const status = document.getElementById('invoice-form-status');
+    const clientSelect = document.getElementById(
+      'invoice-client-select',
+    ) as HTMLSelectElement | null;
+    const projectSelect = document.getElementById(
+      'invoice-project-select',
+    ) as HTMLSelectElement | null;
+    const labelInput = document.getElementById(
+      'invoice-label-input',
+    ) as HTMLInputElement | null;
+    const amountInput = document.getElementById(
+      'invoice-amount-input',
+    ) as HTMLInputElement | null;
+    const dateInput = document.getElementById(
+      'invoice-date-input',
+    ) as HTMLInputElement | null;
+    const fileInput = document.getElementById(
+      'invoice-file-input',
+    ) as HTMLInputElement | null;
+    if (
+      !form ||
+      !status ||
+      !clientSelect ||
+      !projectSelect ||
+      !labelInput ||
+      !amountInput ||
+      !dateInput ||
+      !fileInput
+    )
+      return;
+    if (form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const clientId = clientSelect.value;
+      const label = labelInput.value.trim();
+      const file = fileInput.files?.[0];
+      if (!clientId || !label || !file || !dateInput.value) return;
+
+      const submitButton = form.querySelector('button[type="submit"]');
+      const submitLabel = submitButton?.querySelector('.submit-label');
+      submitButton?.setAttribute('disabled', 'true');
+      if (submitLabel) submitLabel.textContent = 'Envoi...';
+      status.classList.add('hidden');
+
+      const path = `${clientId}/${Date.now()}-${slugifyFilename(file.name)}`;
+      const { error: uploadError } = await supabase.storage
+        .from('invoices')
+        .upload(path, file);
+
+      if (uploadError) {
+        status.textContent = "Erreur lors de l'upload du fichier.";
+        status.className = 'text-sm text-danger sm:col-span-2';
+        status.classList.remove('hidden');
+        submitButton?.removeAttribute('disabled');
+        if (submitLabel) submitLabel.textContent = 'Ajouter';
+        return;
+      }
+
+      const { error } = await supabase.from('invoices').insert({
+        client_id: clientId,
+        project_id: projectSelect.value || null,
+        label,
+        amount: amountInput.value ? Number(amountInput.value) : null,
+        issued_date: dateInput.value,
+        file_path: path,
+      });
+
+      if (error) {
+        status.textContent = "Erreur lors de l'ajout.";
+        status.className = 'text-sm text-danger sm:col-span-2';
+      } else {
+        status.textContent = 'Facture ajoutée.';
+        status.className = 'text-sm text-vert sm:col-span-2';
+        form.reset();
+        await loadInvoices();
+      }
+      status.classList.remove('hidden');
+      submitButton?.removeAttribute('disabled');
+      if (submitLabel) submitLabel.textContent = 'Ajouter';
+    });
+  }
+
+  // --- Messages -----------------------------------------------------------
+
+  function scrollThreadToBottom() {
+    const thread = document.getElementById('admin-messages-thread');
+    if (thread) thread.scrollTop = thread.scrollHeight;
+  }
+
+  function appendMessageBubble(message: Message) {
+    const thread = document.getElementById('admin-messages-thread');
+    const template = document.getElementById(
+      'admin-message-bubble-template',
+    ) as HTMLTemplateElement | null;
+    if (!thread || !template) return;
+
+    const node = template.content.cloneNode(true) as DocumentFragment;
+    const row = node.querySelector('.message-row') as HTMLElement;
+    const bubble = node.querySelector('.message-bubble') as HTMLElement;
+    const isOwn = message.sender === 'olivier';
+
+    row.classList.add(isOwn ? 'justify-end' : 'justify-start');
+    bubble.classList.add(
+      ...(isOwn
+        ? ['bg-vert', 'text-white', 'rounded-br-sm']
+        : ['bg-surface-alt', 'text-ink', 'rounded-bl-sm']),
+    );
+    node.querySelector('.message-body')!.textContent = message.body;
+    node.querySelector('.message-time')!.textContent = formatMessageTime(
+      message.created_at,
+    );
+
+    thread.appendChild(node);
+    renderedMessageIds.add(message.id);
+  }
+
+  function renderClientPicker() {
+    const list = document.getElementById('admin-client-picker');
+    const template = document.getElementById(
+      'admin-client-picker-row-template',
+    ) as HTMLTemplateElement | null;
+    if (!list || !template) return;
+
+    list.innerHTML = '';
+    if (clients.length === 0) {
+      showSection('admin-clients-empty');
+      return;
+    }
+    hideSection('admin-clients-empty');
+
+    for (const client of clients) {
+      const node = template.content.cloneNode(true) as DocumentFragment;
+      node.querySelector('.client-name')!.textContent = client.name;
+      const button = node.querySelector('.picker-button') as HTMLButtonElement;
+      const dot = node.querySelector('.unread-dot') as HTMLElement;
+      if (unreadClientIds.has(client.id)) dot.classList.remove('hidden');
+      if (client.id === selectedClientId) {
+        button.classList.add('bg-hairline', 'text-ink');
+      }
+      button.addEventListener('click', () => openThread(client.id));
+      list.appendChild(node);
+    }
+  }
+
+  async function openThread(clientId: string) {
+    selectedClientId = clientId;
+    unreadClientIds.delete(clientId);
+    renderClientPicker();
+
+    showSection('admin-messages-thread');
+    showSection('admin-message-form');
+    hideSection('admin-thread-empty');
+
+    const thread = document.getElementById('admin-messages-thread');
+    if (thread) thread.innerHTML = '';
+    renderedMessageIds.clear();
+
+    const { data: messages } = await supabase
+      .from('messages')
+      .select('id, client_id, sender, body, created_at')
+      .eq('client_id', clientId)
+      .order('created_at', { ascending: true });
+
+    for (const message of (messages ?? []) as Message[]) {
+      appendMessageBubble(message);
+    }
+    scrollThreadToBottom();
+  }
+
+  function initAdminMessageForm() {
+    const form = document.getElementById(
+      'admin-message-form',
+    ) as HTMLFormElement | null;
+    const textarea = document.getElementById(
+      'admin-message-body',
+    ) as HTMLTextAreaElement | null;
+    if (!form || !textarea) return;
+    if (form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const body = textarea.value.trim();
+      if (!body || !selectedClientId) return;
+
+      const { data, error } = await supabase
+        .from('messages')
+        .insert({ client_id: selectedClientId, sender: 'olivier', body })
+        .select('id, client_id, sender, body, created_at')
+        .single();
+
+      if (!error && data) {
+        appendMessageBubble(data as Message);
+        scrollThreadToBottom();
+        form.reset();
+      }
+    });
+  }
+
+  function subscribeAdminInbox() {
+    if (adminChannel) return;
+    adminChannel = supabase
+      .channel('admin-messages-inbox')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'messages' },
+        (payload) => {
+          const message = payload.new as Message;
+          if (message.sender === 'olivier') return;
+          if (renderedMessageIds.has(message.id)) return;
+          if (message.client_id === selectedClientId) {
+            appendMessageBubble(message);
+            scrollThreadToBottom();
+          } else {
+            unreadClientIds.add(message.client_id);
+            renderClientPicker();
+          }
+        },
+      )
+      .subscribe();
+  }
+
+  // --- Auth -----------------------------------------------------------
+
+  function initBackToLogin() {
+    const button = document.getElementById('admin-back-to-login');
+    if (!button || button.dataset.initialized) return;
+    button.dataset.initialized = 'true';
+    button.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = loginPath;
+    });
+  }
+
+  function initLogout() {
+    const button = document.getElementById('admin-logout-button');
+    if (!button || button.dataset.initialized) return;
+    button.dataset.initialized = 'true';
+    button.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = loginPath;
+    });
+  }
+
+  async function init() {
+    hideSection('admin-content');
+    hideSection('admin-unauthorized');
+    showSection('admin-checking');
+    initBackToLogin();
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    const unauthorizedMessage = document.getElementById(
+      'admin-unauthorized-message',
+    );
+
+    if (!session) {
+      if (unauthorizedMessage)
+        unauthorizedMessage.textContent =
+          'Vous devez vous connecter pour accéder à cet espace.';
+      hideSection('admin-checking');
+      showSection('admin-unauthorized');
+      return;
+    }
+
+    if (session.user.email?.toLowerCase() !== ADMIN_EMAIL) {
+      if (unauthorizedMessage)
+        unauthorizedMessage.textContent =
+          "Cet espace est réservé à l'administrateur.";
+      hideSection('admin-checking');
+      showSection('admin-unauthorized');
+      return;
+    }
+
+    initTabs();
+    initClientForm();
+    initProjectForm();
+    initInvoiceForm();
+    initAdminMessageForm();
+    initLogout();
+
+    await loadClients();
+    await Promise.all([loadProjects(), loadInvoices()]);
+    subscribeAdminInbox();
+
+    hideSection('admin-checking');
+    showSection('admin-content');
+  }
+
+  document.addEventListener('astro:page-load', init);
+  document.addEventListener('astro:before-swap', () => {
+    if (adminChannel) {
+      supabase.removeChannel(adminChannel);
+      adminChannel = null;
+    }
+  });
+</script>

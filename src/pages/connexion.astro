@@ -148,9 +148,17 @@ const t = ui.fr.account;
     document.getElementById('login-i18n')?.textContent ?? '{}',
   );
 
-  const accountPath = '/compte';
+  function getAccountPath() {
+    const redirectParam = new URLSearchParams(window.location.search).get(
+      'redirect',
+    );
+    return redirectParam && redirectParam.startsWith('/')
+      ? redirectParam
+      : '/compte';
+  }
 
   async function redirectIfLoggedIn() {
+    const accountPath = getAccountPath();
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -242,7 +250,7 @@ const t = ui.fr.account;
         codeSubmit.removeAttribute('disabled');
         codeLabel.textContent = t.verifyCode;
       } else {
-        window.location.href = accountPath;
+        window.location.href = getAccountPath();
       }
     });
 

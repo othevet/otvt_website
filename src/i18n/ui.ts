@@ -50,13 +50,13 @@ export const ui = {
       noInvoices: 'Aucune facture pour le moment.',
       download: 'Télécharger',
       downloadError: 'Téléchargement indisponible, réessayez.',
-      messagesTitle: 'Un message pour moi ?',
+      messagesTitle: 'Messagerie',
+      messagesEmpty: 'Aucun message pour le moment. Écrivez-moi !',
       messagePlaceholder: 'Écrivez votre message...',
       send: 'Envoyer',
       sendingMessage: 'Envoi...',
-      messageSent: 'Message envoyé !',
       messageError:
-        "Erreur lors de l'envoi. Écrivez-moi directement à contact@otvt.fr.",
+        "Erreur lors de l'envoi. Réessayez ou écrivez-moi directement à contact@otvt.fr.",
     },
   },
   en: {
@@ -109,13 +109,13 @@ export const ui = {
       noInvoices: 'No invoices yet.',
       download: 'Download',
       downloadError: 'Download unavailable, please try again.',
-      messagesTitle: 'A message for me?',
+      messagesTitle: 'Messages',
+      messagesEmpty: 'No messages yet. Say hello!',
       messagePlaceholder: 'Write your message...',
       send: 'Send',
       sendingMessage: 'Sending...',
-      messageSent: 'Message sent!',
       messageError:
-        'Something went wrong. Please email me directly at contact@otvt.fr.',
+        'Something went wrong. Try again or email me directly at contact@otvt.fr.',
     },
   },
 } as const;

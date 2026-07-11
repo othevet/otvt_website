@@ -86,3 +86,93 @@ create policy "client reads own invoice files" on storage.objects
       select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
     )
   );
+
+-- Messagerie client <-> Olivier -------------------------------------------
+--
+-- Un fil de discussion par client. "sender" distingue les messages envoyés
+-- par le client de ceux envoyés par Olivier depuis /admin.
+
+create table messages (
+  id uuid primary key default gen_random_uuid(),
+  client_id uuid not null references clients (id) on delete cascade,
+  sender text not null check (sender in ('client', 'olivier')),
+  body text not null,
+  created_at timestamptz not null default now()
+);
+
+create index messages_client_id_created_at_idx
+  on messages (client_id, created_at);
+
+alter table messages enable row level security;
+
+-- Un client voit tous les messages de son propre fil.
+create policy "client reads own messages" on messages
+  for select
+  using (
+    client_id in (
+      select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
+    )
+  );
+
+-- Un client ne peut écrire QUE dans son propre fil, et uniquement en tant
+-- que "client" : impossible d'usurper l'identité d'Olivier ou d'écrire dans
+-- le fil d'un autre client (les deux conditions sont dans le MÊME
+-- with check, pas deux policies séparées, sinon Postgres les combine par OR
+-- et l'une des deux garanties pourrait être contournée).
+create policy "client sends own messages" on messages
+  for insert
+  with check (
+    sender = 'client'
+    and client_id in (
+      select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
+    )
+  );
+
+-- Back-office : accès complet pour Olivier depuis /admin -------------------
+--
+-- Ces policies s'ajoutent aux policies clients ci-dessus sans les modifier :
+-- Postgres combine plusieurs policies permissives par OR pour une même
+-- action, donc l'accès admin vient en plus, jamais à la place, de l'accès
+-- client existant. "for all" couvre select/insert/update/delete en une
+-- seule policy (using s'applique à select/update/delete, with check à
+-- insert/update).
+--
+-- L'email de comparaison est écrit en dur, en minuscules, dans le SQL — il
+-- n'est jamais transmis ni modifiable depuis le client.
+
+create policy "admin full access clients" on clients
+  for all
+  using (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr')
+  with check (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr');
+
+create policy "admin full access projects" on projects
+  for all
+  using (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr')
+  with check (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr');
+
+create policy "admin full access invoices" on invoices
+  for all
+  using (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr')
+  with check (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr');
+
+create policy "admin full access messages" on messages
+  for all
+  using (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr')
+  with check (lower(auth.jwt() ->> 'email') = 'contact@otvt.fr');
+
+create policy "admin full access invoice files" on storage.objects
+  for all
+  using (
+    bucket_id = 'invoices'
+    and lower(auth.jwt() ->> 'email') = 'contact@otvt.fr'
+  )
+  with check (
+    bucket_id = 'invoices'
+    and lower(auth.jwt() ->> 'email') = 'contact@otvt.fr'
+  );
+
+-- Realtime (optionnel) ------------------------------------------------------
+-- Pour que les nouveaux messages apparaissent en direct sans recharger la
+-- page, activer le toggle "Enable Realtime" sur la table messages dans le
+-- dashboard Supabase, ou décommenter la ligne suivante :
+-- alter publication supabase_realtime add table messages;
