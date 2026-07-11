@@ -254,8 +254,6 @@ const t = ui.en.account;
     });
   }
 
-  redirectIfLoggedIn();
-  initLoginFlow();
   document.addEventListener('astro:page-load', () => {
     redirectIfLoggedIn();
     initLoginFlow();

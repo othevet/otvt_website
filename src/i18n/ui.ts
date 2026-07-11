@@ -35,6 +35,8 @@ export const ui = {
       changeEmail: "Changer d'adresse email",
       checkingSession: 'Vérification de la session...',
       notLoggedIn: 'Vous devez vous connecter pour accéder à cet espace.',
+      noProfile:
+        "Vous êtes connecté, mais aucun profil client n'est associé à cette adresse. Contactez-moi si vous pensez qu'il s'agit d'une erreur.",
       backToLogin: 'Retour à la connexion',
       logout: 'Se déconnecter',
       accountEyebrow: 'Espace client',
@@ -94,6 +96,8 @@ export const ui = {
       changeEmail: 'Use a different email',
       checkingSession: 'Checking your session...',
       notLoggedIn: 'You need to log in to access this area.',
+      noProfile:
+        "You're logged in, but no client profile is linked to this email. Contact me if you think this is a mistake.",
       backToLogin: 'Back to login',
       logout: 'Log out',
       accountEyebrow: 'Client area',
