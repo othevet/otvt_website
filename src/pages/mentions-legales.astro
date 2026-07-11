@@ -2,7 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Mentions légales">
+<Layout
+  title="Mentions légales"
+  description="Mentions légales et informations RGPD du site otvt.fr, studio web d'Olivier Thévet."
+>
   <section class="pt-28 pb-20 sm:pb-28 px-6">
     <div class="mx-auto max-w-3xl">
       <div
@@ -118,8 +121,23 @@ import Layout from '../layouts/Layout.astro';
                   Vous pouvez demander la suppression de vos données à tout
                   moment par email.
                 </li>
-                <li>Aucun cookie tiers n'est déposé sur ce site.</li>
-                <li>Ce site n'utilise pas d'outil d'analyse ou de tracking.</li>
+                <li>Aucun cookie n'est déposé sur ce site.</li>
+                <li>
+                  Le formulaire de contact est traité par le prestataire
+                  tiers <a
+                    href="https://web3forms.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-vert hover:text-vert/80 transition-colors"
+                    >Web3Forms</a
+                  >, qui achemine votre message par email sans le stocker
+                  durablement.
+                </li>
+                <li>
+                  Le site utilise Vercel Web Analytics, une mesure d'audience
+                  anonymisée et sans cookie (aucune donnée personnelle ni
+                  adresse IP n'est conservée).
+                </li>
               </ul>
               <p class="mt-3">
                 Pour toute question concernant vos données : <a

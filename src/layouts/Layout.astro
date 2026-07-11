@@ -11,9 +11,10 @@ import meImage from '../assets/me.png';
 export interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex } = Astro.props;
 const siteTitle = title
   ? `${title} — OTVT`
   : 'OTVT — Studio Web | Développeur Web Indépendant';
@@ -66,7 +67,10 @@ const structuredData = {
     <ClientRouter />
     <title>{siteTitle}</title>
     <meta name="description" content={siteDescription} />
-    <meta name="robots" content="index, follow" />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'index, follow'}
+    />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
