@@ -16,10 +16,10 @@ const t = ui.en.account;
       <!-- Checking session -->
       <div
         id="account-checking"
-        class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+        class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
       >
         <div class="px-6 sm:px-12 py-14 text-center">
-          <p class="text-sm text-[#2d2a24]/70 font-mono">
+          <p class="text-sm text-ink/70 font-mono">
             {t.checkingSession}
           </p>
         </div>
@@ -28,10 +28,10 @@ const t = ui.en.account;
       <!-- Not logged in -->
       <div
         id="account-guest"
-        class="hidden border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+        class="hidden border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
       >
         <div class="px-6 sm:px-12 py-14 text-center">
-          <p id="account-guest-message" class="text-sm text-[#2d2a24]/70">
+          <p id="account-guest-message" class="text-sm text-ink/70">
             {t.notLoggedIn}
           </p>
           <a
@@ -48,15 +48,15 @@ const t = ui.en.account;
       <div id="account-content" class="hidden space-y-8">
         <!-- Header -->
         <div
-          class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+          class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
         >
           <div
-            class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+            class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-surface-alt"
           >
             <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
             <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
             <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
-            <span class="ml-3 text-xs text-[#2d2a24]/70 font-medium"
+            <span class="ml-3 text-xs text-ink/70 font-medium"
               >olivier@otvt:~/account</span
             >
           </div>
@@ -69,14 +69,14 @@ const t = ui.en.account;
               >
                 {t.accountEyebrow}
               </p>
-              <h1 class="mt-3 text-3xl sm:text-4xl font-bold text-[#2d2a24]">
+              <h1 class="mt-3 text-3xl sm:text-4xl font-bold text-ink">
                 {t.accountTitle}{' '}<span id="client-name"></span>
               </h1>
             </div>
             <button
               id="logout-button"
               type="button"
-              class="shrink-0 px-4 py-2 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
+              class="shrink-0 px-4 py-2 text-xs font-semibold rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
             >
               {t.logout}
             </button>
@@ -85,15 +85,15 @@ const t = ui.en.account;
 
         <!-- Projects -->
         <div
-          class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+          class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
         >
           <div class="px-6 sm:px-12 py-8 sm:py-10">
-            <h2 class="text-lg font-semibold text-[#2d2a24]">
+            <h2 class="text-lg font-semibold text-ink">
               {t.projectsTitle}
             </h2>
             <p
               id="projects-empty"
-              class="hidden mt-3 text-sm text-[#2d2a24]/70"
+              class="hidden mt-3 text-sm text-ink/70"
             >
               {t.noProjects}
             </p>
@@ -103,15 +103,15 @@ const t = ui.en.account;
 
         <!-- Invoices -->
         <div
-          class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+          class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
         >
           <div class="px-6 sm:px-12 py-8 sm:py-10">
-            <h2 class="text-lg font-semibold text-[#2d2a24]">
+            <h2 class="text-lg font-semibold text-ink">
               {t.invoicesTitle}
             </h2>
             <p
               id="invoices-empty"
-              class="hidden mt-3 text-sm text-[#2d2a24]/70"
+              class="hidden mt-3 text-sm text-ink/70"
             >
               {t.noInvoices}
             </p>
@@ -121,10 +121,10 @@ const t = ui.en.account;
 
         <!-- Message -->
         <div
-          class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+          class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
         >
           <div class="px-6 sm:px-12 py-8 sm:py-10">
-            <h2 class="text-lg font-semibold text-[#2d2a24]">
+            <h2 class="text-lg font-semibold text-ink">
               {t.messagesTitle}
             </h2>
             <form id="message-form" class="mt-4 space-y-3">
@@ -133,7 +133,7 @@ const t = ui.en.account;
                 name="message"
                 rows={4}
                 required
-                class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
+                class="w-full bg-bg border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-ink placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
                 placeholder={t.messagePlaceholder}></textarea>
               <button
                 type="submit"
@@ -161,7 +161,7 @@ const t = ui.en.account;
   <li
     class="flex items-center justify-between gap-4 border-b border-vert/10 pb-3 last:border-0 last:pb-0"
   >
-    <span class="text-sm text-[#2d2a24] project-name"></span>
+    <span class="text-sm text-ink project-name"></span>
     <span class="text-xs font-medium px-3 py-1 rounded-full project-status"
     ></span>
   </li>
@@ -172,8 +172,8 @@ const t = ui.en.account;
     class="flex items-center justify-between gap-4 border-b border-vert/10 pb-3 last:border-0 last:pb-0"
   >
     <div>
-      <p class="text-sm text-[#2d2a24] invoice-label"></p>
-      <p class="text-xs text-[#2d2a24]/70 invoice-meta"></p>
+      <p class="text-sm text-ink invoice-label"></p>
+      <p class="text-xs text-ink/70 invoice-meta"></p>
     </div>
     <button
       type="button"
@@ -243,7 +243,7 @@ const t = ui.en.account;
         statusEl.textContent = isDone ? t.statusCompleted : t.statusInProgress;
         statusEl.classList.add(
           isDone ? 'bg-vert/10' : 'bg-jaune/20',
-          isDone ? 'text-vert' : 'text-[#7a5c00]',
+          isDone ? 'text-vert' : 'text-amber-ink',
         );
       }
       list.appendChild(node);
@@ -349,7 +349,7 @@ const t = ui.en.account;
         }
       } catch {
         status.textContent = t.messageError;
-        status.className = 'text-sm text-red-600';
+        status.className = 'text-sm text-danger';
       }
       status.classList.remove('hidden');
 

@@ -29,16 +29,16 @@ const t = copy[locale];
 <section class="relative min-h-screen flex items-center py-20 sm:py-24">
   <div class="mx-auto w-full max-w-7xl px-6">
     <div
-      class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+      class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
     >
       <!-- Terminal title bar -->
       <div
-        class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+        class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-surface-alt"
       >
         <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
         <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
         <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
-        <span class="ml-3 text-xs text-[#2d2a24]/70 font-medium"
+        <span class="ml-3 text-xs text-ink/70 font-medium"
           >olivier@otvt:~/studio</span
         >
       </div>
@@ -48,8 +48,8 @@ const t = copy[locale];
         <p class="text-xs text-vert/85 font-mono mb-8 sm:mb-10 leading-relaxed">
           <span class="text-vert font-semibold">olivier@otvt</span>:<span
             class="text-jaune">~</span
-          ><span class="text-[#2d2a24]/70">$ </span><span
-            class="text-[#2d2a24]/70">cat hero.txt</span
+          ><span class="text-ink/70">$ </span><span
+            class="text-ink/70">cat hero.txt</span
           >
         </p>
         <!-- Layout -->
@@ -61,12 +61,12 @@ const t = copy[locale];
               {t.eyebrow}
             </p>
             <h1
-              class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[0.9] text-[#2d2a24]"
+              class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[0.9] text-ink"
             >
               <div>{t.headlineTop}</div>
               <div class="text-vert">{t.headlineBottom}</div>
             </h1>
-            <p class="mt-6 text-base sm:text-lg text-[#2d2a24]/70 max-w-md">
+            <p class="mt-6 text-base sm:text-lg text-ink/70 max-w-md">
               {t.lede}
             </p>
             <div class="mt-8 flex items-center gap-4">
@@ -91,7 +91,7 @@ const t = copy[locale];
               </a>
               <a
                 href={routes[locale].services}
-                class="text-sm text-[#2d2a24]/70 hover:text-[#2d2a24] transition-colors"
+                class="text-sm text-ink/70 hover:text-ink transition-colors"
               >
                 {t.more}
               </a>

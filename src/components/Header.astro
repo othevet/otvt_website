@@ -20,18 +20,18 @@ const pages = [
 ---
 
 <header
-  class="relative z-50 border-b border-vert/10 bg-[#F0EFEC]/80 backdrop-blur-sm"
+  class="relative z-50 border-b border-vert/10 bg-bg/80 backdrop-blur-sm"
 >
   <div class="mx-auto max-w-7xl px-6">
     <div class="flex items-center justify-between pt-4 pb-4 sm:pt-5 sm:pb-5">
       <a href={routes[locale].home} class="flex flex-col leading-tight">
-        <span class="text-sm font-semibold text-[#2d2a24]">Olivier Thévet</span>
-        <span class="text-xs text-[#2d2a24]/70">otvt</span>
+        <span class="text-sm font-semibold text-ink">Olivier Thévet</span>
+        <span class="text-xs text-ink/70">otvt</span>
       </a>
 
       <div class="hidden sm:flex items-center gap-3">
         <div
-          class="flex items-center gap-1 bg-white rounded-full px-2 py-1.5 shadow-sm border border-black/5"
+          class="flex items-center gap-1 bg-surface rounded-full px-2 py-1.5 shadow-sm border border-hairline"
         >
           {
             pages.map(({ path, label }) => (
@@ -41,7 +41,7 @@ const pages = [
                 class:list={
                   currentPath === path
                     ? 'bg-vert text-white'
-                    : 'text-[#2d2a24]/70 hover:text-[#2d2a24] hover:bg-black/5'
+                    : 'text-ink/70 hover:text-ink hover:bg-hairline'
                 }
               >
                 {label}
@@ -49,11 +49,48 @@ const pages = [
             ))
           }
         </div>
+        <button
+          type="button"
+          data-theme-toggle
+          aria-label={t.themeToggleLabel}
+          title={t.themeToggleLabel}
+          class="theme-toggle p-2 rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
+        >
+          <svg
+            class="icon-moon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+            ></path></svg
+          >
+          <svg
+            class="icon-sun"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><circle cx="12" cy="12" r="4"></circle><path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+            ></path></svg
+          >
+        </button>
         <a
           href={routes[locale].login}
           aria-label={accountLabel}
           title={accountLabel}
-          class="p-2 rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
+          class="p-2 rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -74,17 +111,53 @@ const pages = [
         <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
-          class="px-3 py-1.5 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
+          class="px-3 py-1.5 text-xs font-semibold rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
         >
           {t.langSwitch}
         </a>
       </div>
 
       <div class="flex items-center gap-1 sm:hidden">
+        <button
+          type="button"
+          data-theme-toggle
+          aria-label={t.themeToggleLabel}
+          class="theme-toggle p-2 rounded-full border border-vert/20 text-ink/70"
+        >
+          <svg
+            class="icon-moon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+            ></path></svg
+          >
+          <svg
+            class="icon-sun"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><circle cx="12" cy="12" r="4"></circle><path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+            ></path></svg
+          >
+        </button>
         <a
           href={routes[locale].login}
           aria-label={accountLabel}
-          class="p-2 rounded-full border border-vert/20 text-[#2d2a24]/70"
+          class="p-2 rounded-full border border-vert/20 text-ink/70"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -105,13 +178,13 @@ const pages = [
         <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
-          class="px-2.5 py-1 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70"
+          class="px-2.5 py-1 text-xs font-semibold rounded-full border border-vert/20 text-ink/70"
         >
           {t.langSwitch}
         </a>
         <button
           id="menu-toggle"
-          class="p-2 text-[#2d2a24]/60 hover:text-[#2d2a24] transition-colors"
+          class="p-2 text-ink/60 hover:text-ink transition-colors"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label={t.menuOpen}
@@ -141,7 +214,7 @@ const pages = [
 
   <div
     id="mobile-menu"
-    class="hidden sm:hidden bg-white mt-2 mx-6 rounded-2xl shadow-sm border border-black/5 overflow-hidden"
+    class="hidden sm:hidden bg-surface mt-2 mx-6 rounded-2xl shadow-sm border border-hairline overflow-hidden"
   >
     <div class="p-4 space-y-1">
       {
@@ -152,7 +225,7 @@ const pages = [
             class:list={
               currentPath === path
                 ? 'bg-vert text-white'
-                : 'text-[#2d2a24]/70 hover:bg-black/5'
+                : 'text-ink/70 hover:bg-hairline'
             }
           >
             {label}
@@ -163,7 +236,53 @@ const pages = [
   </div>
 </header>
 
+<style is:global>
+  .theme-toggle .icon-sun {
+    display: none;
+  }
+  .theme-toggle .icon-moon {
+    display: block;
+  }
+
+  :root[data-theme='dark'] .theme-toggle .icon-sun {
+    display: block;
+  }
+  :root[data-theme='dark'] .theme-toggle .icon-moon {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .theme-toggle .icon-sun {
+      display: block;
+    }
+    :root:not([data-theme='light']) .theme-toggle .icon-moon {
+      display: none;
+    }
+  }
+</style>
+
 <script>
+  function initThemeToggle() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      '[data-theme-toggle]',
+    );
+    buttons.forEach((button) => {
+      if (button.dataset.initialized) return;
+      button.dataset.initialized = 'true';
+      button.addEventListener('click', () => {
+        const root = document.documentElement;
+        const current =
+          root.dataset.theme ??
+          (matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        localStorage.setItem('theme', next);
+      });
+    });
+  }
+
   function initMenuToggle() {
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('mobile-menu');
@@ -179,6 +298,8 @@ const pages = [
     });
   }
 
+  initThemeToggle();
   initMenuToggle();
+  document.addEventListener('astro:page-load', initThemeToggle);
   document.addEventListener('astro:page-load', initMenuToggle);
 </script>

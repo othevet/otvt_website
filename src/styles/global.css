@@ -4,4 +4,36 @@
   --color-vert: #006b35;
   --color-jaune: #ffcc00;
   --color-ivoire: #faf5e9;
+
+  --color-bg: #f0efec;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8f8f6;
+  --color-ink: #2d2a24;
+  --color-amber-ink: #7a5c00;
+  --color-danger: #dc2626;
+  --color-hairline: rgb(0 0 0 / 5%);
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #16211b;
+  --color-surface: #1e2a23;
+  --color-surface-alt: #24322a;
+  --color-ink: #ece7da;
+  --color-amber-ink: #e0b73a;
+  --color-danger: #f87171;
+  --color-hairline: rgb(255 255 255 / 10%);
+  --color-vert: #2fa06a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #16211b;
+    --color-surface: #1e2a23;
+    --color-surface-alt: #24322a;
+    --color-ink: #ece7da;
+    --color-amber-ink: #e0b73a;
+    --color-danger: #f87171;
+    --color-hairline: rgb(255 255 255 / 10%);
+    --color-vert: #2fa06a;
+  }
 }

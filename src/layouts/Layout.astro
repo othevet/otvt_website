@@ -77,9 +77,26 @@ const structuredData = {
 <!doctype html>
 <html lang={locale}>
   <head>
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || stored === 'light') {
+          document.documentElement.dataset.theme = stored;
+        }
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#FAF5E9" />
+    <meta
+      name="theme-color"
+      content="#f0efec"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#16211b"
+      media="(prefers-color-scheme: dark)"
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <meta name="generator" content={Astro.generator} />
@@ -125,7 +142,7 @@ const structuredData = {
     />
   </head>
   <body
-    class="bg-[#F0EFEC] text-[#2d2a24] font-['Space_Grotesk',sans-serif] antialiased overflow-x-hidden min-h-screen"
+    class="bg-bg text-ink font-['Space_Grotesk',sans-serif] antialiased overflow-x-hidden min-h-screen"
   >
     <Header />
     <main class="min-h-screen">

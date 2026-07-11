@@ -14,12 +14,12 @@ const pages = [
 ];
 ---
 
-<footer class="border-t border-black/5 bg-white/40">
+<footer class="border-t border-hairline bg-surface/40">
   <div class="mx-auto max-w-7xl px-6 py-12">
     <div class="flex flex-col sm:flex-row items-start justify-between gap-8">
       <div class="flex flex-col leading-tight">
-        <span class="text-sm font-semibold text-[#2d2a24]">Olivier Thévet</span>
-        <span class="text-xs text-[#2d2a24]/70">otvt</span>
+        <span class="text-sm font-semibold text-ink">Olivier Thévet</span>
+        <span class="text-xs text-ink/70">otvt</span>
       </div>
       <div class="flex flex-wrap gap-10 text-sm">
         <div>
@@ -29,7 +29,7 @@ const pages = [
                 <li>
                   <a
                     href={path}
-                    class="text-[#2d2a24]/70 hover:text-vert transition-colors"
+                    class="text-ink/70 hover:text-vert transition-colors"
                   >
                     {label}
                   </a>
@@ -39,7 +39,7 @@ const pages = [
             <li>
               <a
                 href={routes[locale].login}
-                class="text-[#2d2a24]/70 hover:text-vert transition-colors"
+                class="text-ink/70 hover:text-vert transition-colors"
                 data-astro-reload
               >
                 {t.footer.clientArea}
@@ -48,7 +48,7 @@ const pages = [
           </ul>
         </div>
         <div>
-          <ul class="space-y-2 text-[#2d2a24]/70">
+          <ul class="space-y-2 text-ink/70">
             <li>
               <a
                 href="mailto:contact@otvt.fr"
@@ -61,7 +61,7 @@ const pages = [
       </div>
     </div>
     <div
-      class="mt-10 pt-6 border-t border-black/5 text-xs text-[#2d2a24]/70 flex items-center justify-between"
+      class="mt-10 pt-6 border-t border-hairline text-xs text-ink/70 flex items-center justify-between"
     >
       <p>&copy; {new Date().getFullYear()} OTVT</p>
       <a href={routes[locale].legal} class="hover:text-vert transition-colors"

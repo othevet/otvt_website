@@ -14,6 +14,7 @@ export const ui = {
     },
     langSwitch: 'EN',
     langSwitchLabel: 'Switch to English',
+    themeToggleLabel: 'Changer de thème clair/sombre',
     menuOpen: 'Ouvrir le menu',
     menuClose: 'Fermer le menu',
     account: {
@@ -73,6 +74,7 @@ export const ui = {
     },
     langSwitch: 'FR',
     langSwitchLabel: 'Passer en français',
+    themeToggleLabel: 'Toggle light/dark theme',
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
     account: {
