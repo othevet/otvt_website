@@ -34,13 +34,13 @@ const t = ui.fr.account;
           <p id="account-guest-message" class="text-sm text-[#2d2a24]/70">
             {t.notLoggedIn}
           </p>
-          <a
-            href="/connexion"
+          <button
+            id="guest-back-to-login"
+            type="button"
             class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm"
-            data-astro-reload
           >
             {t.backToLogin}
-          </a>
+          </button>
         </div>
       </div>
 
@@ -368,6 +368,16 @@ const t = ui.fr.account;
     });
   }
 
+  function initGuestBackToLogin() {
+    const button = document.getElementById('guest-back-to-login');
+    if (!button || button.dataset.initialized) return;
+    button.dataset.initialized = 'true';
+    button.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = loginPath;
+    });
+  }
+
   async function init() {
     hideSection('account-content');
     hideSection('account-guest');
@@ -378,6 +388,7 @@ const t = ui.fr.account;
     } = await supabase.auth.getSession();
 
     const guestMessage = document.getElementById('account-guest-message');
+    initGuestBackToLogin();
 
     if (!session) {
       if (guestMessage) guestMessage.textContent = t.notLoggedIn;
