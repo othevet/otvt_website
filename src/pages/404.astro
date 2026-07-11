@@ -1,12 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { routes, type Locale } from '../i18n/routes';
+
+const locale = (Astro.currentLocale ?? 'fr') as Locale;
+
+const copy = {
+  fr: {
+    title: 'Page introuvable',
+    description: "Cette page n'existe pas ou a été déplacée.",
+    eyebrow: 'Erreur 404',
+    heading: 'Page introuvable',
+    body: "Cette page n'existe pas ou a été déplacée.",
+    cta: "Retour à l'accueil",
+  },
+  en: {
+    title: 'Page not found',
+    description: 'This page does not exist or has been moved.',
+    eyebrow: '404 error',
+    heading: 'Page not found',
+    body: 'This page does not exist or has been moved.',
+    cta: 'Back to home',
+  },
+};
+const t = copy[locale];
 ---
 
-<Layout
-  title="Page introuvable"
-  description="Cette page n'existe pas ou a été déplacée."
-  noindex
->
+<Layout title={t.title} description={t.description} noindex>
   <section class="pt-28 pb-20 sm:pb-28 px-6">
     <div class="mx-auto max-w-3xl">
       <div
@@ -35,19 +54,19 @@ import Layout from '../layouts/Layout.astro';
           <p
             class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase mb-6"
           >
-            Erreur 404
+            {t.eyebrow}
           </p>
           <h1 class="text-5xl sm:text-6xl font-black text-[#2d2a24]">
-            Page introuvable
+            {t.heading}
           </h1>
           <p class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
-            Cette page n'existe pas ou a été déplacée.
+            {t.body}
           </p>
           <a
-            href="/"
+            href={routes[locale].home}
             class="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm"
           >
-            Retour à l'accueil
+            {t.cta}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"

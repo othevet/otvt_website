@@ -7,21 +7,40 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { getImage } from 'astro:assets';
 import meImage from '../assets/me.png';
+import { routes, getPageKeyFromPath, type Locale } from '../i18n/routes';
 
 export interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  pageKey?: keyof (typeof routes)['fr'];
 }
 
-const { title, description, noindex } = Astro.props;
-const siteTitle = title
-  ? `${title} — OTVT`
-  : 'OTVT — Studio Web | Développeur Web Indépendant';
-const siteDescription =
-  description ??
-  'Développeur web indépendant à Origny le Sec (Aube). WordPress, Next.js, Astro, applications sur mesure. Je donne vie à vos idées.';
+const { title, description, noindex, pageKey } = Astro.props;
+const locale = (Astro.currentLocale ?? 'fr') as Locale;
+const resolvedPageKey =
+  pageKey ??
+  getPageKeyFromPath(Astro.url.pathname.replace(/\/$/, '') || '/', locale);
+
+const defaultTitles = {
+  fr: 'OTVT — Studio Web | Développeur Web Indépendant',
+  en: 'OTVT — Web Studio | Independent Web Developer',
+};
+const defaultDescriptions = {
+  fr: 'Développeur web indépendant à Origny le Sec (Aube). WordPress, Next.js, Astro, applications sur mesure. Je donne vie à vos idées.',
+  en: 'Independent web developer based in France, working with clients worldwide. WordPress, Next.js, Astro, custom applications. I bring your ideas to life.',
+};
+
+const siteTitle = title ? `${title} — OTVT` : defaultTitles[locale];
+const siteDescription = description ?? defaultDescriptions[locale];
 const canonical = Astro.url.origin + Astro.url.pathname;
+
+const alternates = resolvedPageKey
+  ? (Object.keys(routes) as Locale[]).map((loc) => ({
+      lang: loc,
+      href: Astro.url.origin + routes[loc][resolvedPageKey],
+    }))
+  : [];
 
 const ogImage = await getImage({
   src: meImage,
@@ -56,7 +75,7 @@ const structuredData = {
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,11 +90,21 @@ const structuredData = {
       name="robots"
       content={noindex ? 'noindex, nofollow' : 'index, follow'}
     />
+    {
+      alternates.map(({ lang, href }) => (
+        <link rel="alternate" hreflang={lang} href={href} />
+      ))
+    }
+    {
+      alternates.length > 0 && (
+        <link rel="alternate" hreflang="x-default" href={Astro.url.origin + routes.fr[resolvedPageKey!]} />
+      )
+    }
     <meta property="og:type" content="website" />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1200" />

@@ -1,6 +1,29 @@
 ---
 import { Image } from 'astro:assets';
 import meImage from '../assets/me.png';
+import { routes, type Locale } from '../i18n/routes';
+
+const locale = (Astro.currentLocale ?? 'fr') as Locale;
+
+const copy = {
+  fr: {
+    eyebrow: 'Studio de développement',
+    headlineTop: 'DONNER VIE',
+    headlineBottom: 'À VOS IDÉES',
+    lede: 'WordPress, sites sur mesure, applications. Chaque projet est pensé, conçu et livré avec soin.',
+    cta: 'Démarrer un projet',
+    more: 'En savoir plus',
+  },
+  en: {
+    eyebrow: 'Web development studio',
+    headlineTop: 'BRINGING YOUR',
+    headlineBottom: 'IDEAS TO LIFE',
+    lede: 'WordPress, custom websites, applications. Every project is thoughtfully designed, built and delivered.',
+    cta: 'Start a project',
+    more: 'See my services',
+  },
+};
+const t = copy[locale];
 ---
 
 <section class="relative min-h-screen flex items-center py-20 sm:py-24">
@@ -35,24 +58,23 @@ import meImage from '../assets/me.png';
             <p
               class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase mb-6"
             >
-              Studio de développement
+              {t.eyebrow}
             </p>
             <h1
               class="text-5xl sm:text-6xl lg:text-7xl font-black tracking-[-0.04em] leading-[0.9] text-[#2d2a24]"
             >
-              <div>DONNER VIE</div>
-              <div class="text-vert">À VOS IDÉES</div>
+              <div>{t.headlineTop}</div>
+              <div class="text-vert">{t.headlineBottom}</div>
             </h1>
             <p class="mt-6 text-base sm:text-lg text-[#2d2a24]/70 max-w-md">
-              WordPress, sites sur mesure, applications. Chaque projet est
-              pensé, conçu et livré avec soin.
+              {t.lede}
             </p>
             <div class="mt-8 flex items-center gap-4">
               <a
-                href="/contact"
+                href={routes[locale].contact}
                 class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm hover:shadow-md"
               >
-                Démarrer un projet
+                {t.cta}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -68,10 +90,10 @@ import meImage from '../assets/me.png';
                 >
               </a>
               <a
-                href="/services"
+                href={routes[locale].services}
                 class="text-sm text-[#2d2a24]/70 hover:text-[#2d2a24] transition-colors"
               >
-                En savoir plus
+                {t.more}
               </a>
             </div>
           </div>

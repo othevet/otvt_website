@@ -1,12 +1,21 @@
 ---
-const pages = [
-  { path: '/', label: 'Accueil' },
-  { path: '/app', label: 'Réalisations' },
-  { path: '/services', label: 'Services' },
-  { path: '/a-propos', label: 'À propos' },
-  { path: '/contact', label: 'Contact' },
-];
+import { routes, getPageKeyFromPath, type Locale } from '../i18n/routes';
+import { ui } from '../i18n/ui';
+
+const locale = (Astro.currentLocale ?? 'fr') as Locale;
+const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
+const t = ui[locale];
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pageKey = getPageKeyFromPath(currentPath, locale) ?? 'home';
+const switchHref = routes[otherLocale][pageKey];
+
+const pages = [
+  { path: routes[locale].home, label: t.nav.home },
+  { path: routes[locale].work, label: t.nav.work },
+  { path: routes[locale].services, label: t.nav.services },
+  { path: routes[locale].about, label: t.nav.about },
+  { path: routes[locale].contact, label: t.nav.contact },
+];
 ---
 
 <header
@@ -14,55 +23,75 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 >
   <div class="mx-auto max-w-7xl px-6">
     <div class="flex items-center justify-between pt-4 pb-4 sm:pt-5 sm:pb-5">
-      <a href="/" class="flex flex-col leading-tight">
+      <a href={routes[locale].home} class="flex flex-col leading-tight">
         <span class="text-sm font-semibold text-[#2d2a24]">Olivier Thévet</span>
         <span class="text-xs text-[#2d2a24]/70">otvt</span>
       </a>
 
-      <div
-        class="hidden sm:flex items-center gap-1 bg-white rounded-full px-2 py-1.5 shadow-sm border border-black/5"
-      >
-        {
-          pages.map(({ path, label }) => (
-            <a
-              href={path}
-              class="px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200"
-              class:list={
-                currentPath === path
-                  ? 'bg-vert text-white'
-                  : 'text-[#2d2a24]/70 hover:text-[#2d2a24] hover:bg-black/5'
-              }
-            >
-              {label}
-            </a>
-          ))
-        }
+      <div class="hidden sm:flex items-center gap-3">
+        <div
+          class="flex items-center gap-1 bg-white rounded-full px-2 py-1.5 shadow-sm border border-black/5"
+        >
+          {
+            pages.map(({ path, label }) => (
+              <a
+                href={path}
+                class="px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200"
+                class:list={
+                  currentPath === path
+                    ? 'bg-vert text-white'
+                    : 'text-[#2d2a24]/70 hover:text-[#2d2a24] hover:bg-black/5'
+                }
+              >
+                {label}
+              </a>
+            ))
+          }
+        </div>
+        <a
+          href={switchHref}
+          aria-label={t.langSwitchLabel}
+          class="px-3 py-1.5 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
+        >
+          {t.langSwitch}
+        </a>
       </div>
 
-      <button
-        id="menu-toggle"
-        class="sm:hidden p-2 text-[#2d2a24]/60 hover:text-[#2d2a24] transition-colors"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label="Ouvrir le menu"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          ><line x1="3" y1="6" x2="21" y2="6"></line><line
-            x1="3"
-            y1="12"
-            x2="21"
-            y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
+      <div class="flex items-center gap-1 sm:hidden">
+        <a
+          href={switchHref}
+          aria-label={t.langSwitchLabel}
+          class="px-2.5 py-1 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70"
         >
-      </button>
+          {t.langSwitch}
+        </a>
+        <button
+          id="menu-toggle"
+          class="p-2 text-[#2d2a24]/60 hover:text-[#2d2a24] transition-colors"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label={t.menuOpen}
+          data-label-open={t.menuOpen}
+          data-label-close={t.menuClose}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><line x1="3" y1="6" x2="21" y2="6"></line><line
+              x1="3"
+              y1="12"
+              x2="21"
+              y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
+          >
+        </button>
+      </div>
     </div>
   </div>
 
@@ -99,7 +128,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       toggle.setAttribute('aria-expanded', String(!isHidden));
       toggle.setAttribute(
         'aria-label',
-        isHidden ? 'Ouvrir le menu' : 'Fermer le menu',
+        isHidden
+          ? (toggle.dataset.labelOpen ?? '')
+          : (toggle.dataset.labelClose ?? ''),
       );
     });
   }

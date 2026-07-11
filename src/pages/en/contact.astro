@@ -1,10 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout
   title="Contact"
-  description="Contactez Olivier Thévet pour discuter de votre projet web. Devis gratuit sous 48h."
+  description="Get in touch with Olivier Thévet to discuss your web project. Free quote within 48h."
   pageKey="contact"
 >
   <section class="pt-28 pb-20 sm:pb-28 px-6">
@@ -42,11 +42,11 @@ import Layout from '../layouts/Layout.astro';
                 Contact
               </p>
               <h1 class="mt-4 text-4xl sm:text-5xl font-bold text-[#2d2a24]">
-                Parlons de votre projet
+                Let's talk about your project
               </h1>
               <p class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
-                Devis gratuit sous 48h. Remplissez le formulaire et je reviens
-                vers vous rapidement.
+                Free quote within 48h. Fill in the form and I'll get back to
+                you quickly.
               </p>
               <div class="mt-8 text-sm text-[#2d2a24]/70 space-y-2">
                 <p class="flex items-center gap-2">
@@ -60,12 +60,13 @@ import Layout from '../layouts/Layout.astro';
                   <span class="w-1.5 h-1.5 rounded-full bg-jaune"></span>
                   <a
                     href="tel:+33635229246"
-                    class="hover:text-vert transition-colors">06 35 22 92 46</a
+                    class="hover:text-vert transition-colors"
+                    >+33 6 35 22 92 46</a
                   >
                 </p>
                 <p class="flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-vert"></span>
-                  Origny le Sec, Aube
+                  Origny le Sec, France
                 </p>
               </div>
             </div>
@@ -84,7 +85,7 @@ import Layout from '../layouts/Layout.astro';
                 <input
                   type="hidden"
                   name="subject"
-                  value="Nouveau message depuis otvt.fr"
+                  value="New message from otvt.fr"
                 />
                 <input
                   type="checkbox"
@@ -99,7 +100,7 @@ import Layout from '../layouts/Layout.astro';
                     <label
                       for="name"
                       class="block text-xs font-medium text-[#2d2a24]/70 mb-1"
-                      >Nom</label
+                      >Name</label
                     >
                     <input
                       type="text"
@@ -107,7 +108,7 @@ import Layout from '../layouts/Layout.astro';
                       name="name"
                       required
                       class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
-                      placeholder="Votre nom"
+                      placeholder="Your name"
                     />
                   </div>
                   <div>
@@ -122,7 +123,7 @@ import Layout from '../layouts/Layout.astro';
                       name="email"
                       required
                       class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
-                      placeholder="vous@exemple.fr"
+                      placeholder="you@example.com"
                     />
                   </div>
                 </div>
@@ -130,18 +131,18 @@ import Layout from '../layouts/Layout.astro';
                   <label
                     for="project-type"
                     class="block text-xs font-medium text-[#2d2a24]/70 mb-1"
-                    >Type de projet</label
+                    >Project type</label
                   >
                   <select
                     id="project-type"
                     name="project-type"
                     class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
                   >
-                    <option value="">Sélectionnez...</option>
+                    <option value="">Select...</option>
                     <option value="wordpress">WordPress</option>
-                    <option value="sur-mesure">Site sur mesure</option>
-                    <option value="maintenance">Maintenance / Évolution</option>
-                    <option value="autre">Autre</option>
+                    <option value="custom">Custom website</option>
+                    <option value="maintenance">Maintenance / Upgrade</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
                 <div>
@@ -156,13 +157,13 @@ import Layout from '../layouts/Layout.astro';
                     rows={5}
                     required
                     class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
-                    placeholder="Parlez-moi de votre projet..."></textarea>
+                    placeholder="Tell me about your project..."></textarea>
                 </div>
                 <button
                   type="submit"
                   class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span class="submit-label">Envoyer</span>
+                  <span class="submit-label">Send</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="14"
@@ -207,7 +208,7 @@ import Layout from '../layouts/Layout.astro';
       event.preventDefault();
 
       submitButton.setAttribute('disabled', 'true');
-      submitLabel.textContent = 'Envoi...';
+      submitLabel.textContent = 'Sending...';
       status.classList.add('hidden');
 
       try {
@@ -219,19 +220,19 @@ import Layout from '../layouts/Layout.astro';
         const result = await response.json();
 
         if (response.ok && result.success) {
-          status.textContent = 'Message envoyé ! Je vous réponds sous 48h.';
+          status.textContent = "Message sent! I'll reply within 48h.";
           status.className = 'text-sm text-vert';
           form.reset();
         } else {
-          throw new Error(result.message || 'Une erreur est survenue.');
+          throw new Error(result.message || 'Something went wrong.');
         }
       } catch {
         status.textContent =
-          "Erreur lors de l'envoi. Réessayez ou écrivez-moi directement à contact@otvt.fr.";
+          'Something went wrong. Please try again or email me directly at contact@otvt.fr.';
         status.className = 'text-sm text-red-600';
       } finally {
         submitButton.removeAttribute('disabled');
-        submitLabel.textContent = 'Envoyer';
+        submitLabel.textContent = 'Send';
       }
     });
   }
