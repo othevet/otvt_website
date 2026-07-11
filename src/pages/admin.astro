@@ -90,7 +90,10 @@ const tabButtonClass =
               >Factures</button
             >
             <button type="button" class={tabButtonClass} data-tab="messages"
-              >Messages</button
+              >Messages<span
+                id="messages-tab-badge"
+                class="hidden ml-1.5 inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 text-[10px] font-semibold rounded-full bg-vert text-white"
+              ></span></button
             >
           </div>
         </div>
@@ -454,7 +457,15 @@ const tabButtonClass =
   let selectedClientId: string | null = null;
   let adminChannel: ReturnType<typeof supabase.channel> | null = null;
   const renderedMessageIds = new Set<string>();
-  const unreadClientIds = new Set<string>();
+  const unreadCounts = new Map<string, number>();
+
+  function updateMessagesTabBadge() {
+    const badge = document.getElementById('messages-tab-badge');
+    if (!badge) return;
+    const total = [...unreadCounts.values()].reduce((sum, n) => sum + n, 0);
+    badge.textContent = String(total);
+    badge.classList.toggle('hidden', total === 0);
+  }
 
   function showSection(id: string) {
     document.getElementById(id)?.classList.remove('hidden');
@@ -514,6 +525,21 @@ const tabButtonClass =
     renderClientsList();
     populateClientSelects();
     renderClientPicker();
+  }
+
+  async function loadUnreadCounts() {
+    const { data } = await supabase
+      .from('messages')
+      .select('client_id')
+      .eq('sender', 'client')
+      .is('read_at', null);
+
+    unreadCounts.clear();
+    for (const row of data ?? []) {
+      unreadCounts.set(row.client_id, (unreadCounts.get(row.client_id) ?? 0) + 1);
+    }
+    renderClientPicker();
+    updateMessagesTabBadge();
   }
 
   function renderClientsList() {
@@ -886,7 +912,7 @@ const tabButtonClass =
       node.querySelector('.client-name')!.textContent = client.name;
       const button = node.querySelector('.picker-button') as HTMLButtonElement;
       const dot = node.querySelector('.unread-dot') as HTMLElement;
-      if (unreadClientIds.has(client.id)) dot.classList.remove('hidden');
+      if ((unreadCounts.get(client.id) ?? 0) > 0) dot.classList.remove('hidden');
       if (client.id === selectedClientId) {
         button.classList.add('bg-hairline', 'text-ink');
       }
@@ -897,8 +923,9 @@ const tabButtonClass =
 
   async function openThread(clientId: string) {
     selectedClientId = clientId;
-    unreadClientIds.delete(clientId);
+    unreadCounts.delete(clientId);
     renderClientPicker();
+    updateMessagesTabBadge();
 
     showSection('admin-messages-thread');
     showSection('admin-message-form');
@@ -918,6 +945,13 @@ const tabButtonClass =
       appendMessageBubble(message);
     }
     scrollThreadToBottom();
+
+    await supabase
+      .from('messages')
+      .update({ read_at: new Date().toISOString() })
+      .eq('client_id', clientId)
+      .eq('sender', 'client')
+      .is('read_at', null);
   }
 
   function initAdminMessageForm() {
@@ -964,9 +998,17 @@ const tabButtonClass =
           if (message.client_id === selectedClientId) {
             appendMessageBubble(message);
             scrollThreadToBottom();
+            supabase
+              .from('messages')
+              .update({ read_at: new Date().toISOString() })
+              .eq('id', message.id);
           } else {
-            unreadClientIds.add(message.client_id);
+            unreadCounts.set(
+              message.client_id,
+              (unreadCounts.get(message.client_id) ?? 0) + 1,
+            );
             renderClientPicker();
+            updateMessagesTabBadge();
           }
         },
       )
@@ -1035,7 +1077,7 @@ const tabButtonClass =
     initLogout();
 
     await loadClients();
-    await Promise.all([loadProjects(), loadInvoices()]);
+    await Promise.all([loadProjects(), loadInvoices(), loadUnreadCounts()]);
     subscribeAdminInbox();
 
     hideSection('admin-checking');

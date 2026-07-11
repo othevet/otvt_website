@@ -394,6 +394,13 @@ const t = ui.fr.account;
       appendMessageBubble(message);
     }
     scrollThreadToBottom();
+
+    await supabase
+      .from('messages')
+      .update({ read_at: new Date().toISOString() })
+      .eq('client_id', clientId)
+      .eq('sender', 'olivier')
+      .is('read_at', null);
   }
 
   function subscribeToMessages(clientId: string) {
