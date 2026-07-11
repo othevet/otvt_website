@@ -6,7 +6,7 @@ const pages = [
   { path: '/a-propos', label: 'À propos' },
   { path: '/contact', label: 'Contact' },
 ];
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header
