@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { routes, type Locale } from '../i18n/routes';
+import { ui } from '../i18n/ui';
 
 const locale = (Astro.currentLocale ?? 'fr') as Locale;
 
@@ -52,21 +53,26 @@ const t = copy[locale];
             >
           </p>
           <p
+            id="notfound-eyebrow"
             class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase mb-6"
           >
             {t.eyebrow}
           </p>
-          <h1 class="text-5xl sm:text-6xl font-black text-[#2d2a24]">
+          <h1
+            id="notfound-heading"
+            class="text-5xl sm:text-6xl font-black text-[#2d2a24]"
+          >
             {t.heading}
           </h1>
-          <p class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
+          <p id="notfound-body" class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
             {t.body}
           </p>
           <a
+            id="notfound-cta"
             href={routes[locale].home}
             class="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm"
           >
-            {t.cta}
+            <span id="notfound-cta-label">{t.cta}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
@@ -85,3 +91,74 @@ const t = copy[locale];
     </div>
   </section>
 </Layout>
+
+<script
+  is:inline
+  define:vars={{
+    routesFr: routes.fr,
+    routesEn: routes.en,
+    uiFr: ui.fr,
+    uiEn: ui.en,
+    enCopy: copy.en,
+  }}
+>
+  if (location.pathname.startsWith('/en')) {
+    document.documentElement.lang = 'en';
+    document.title = document.title.replace(
+      'Page introuvable',
+      'Page not found',
+    );
+
+    // 404 content
+    const eyebrow = document.getElementById('notfound-eyebrow');
+    const heading = document.getElementById('notfound-heading');
+    const body = document.getElementById('notfound-body');
+    const ctaLabel = document.getElementById('notfound-cta-label');
+    const cta = document.getElementById('notfound-cta');
+    if (eyebrow) eyebrow.textContent = enCopy.eyebrow;
+    if (heading) heading.textContent = enCopy.heading;
+    if (body) body.textContent = enCopy.body;
+    if (ctaLabel) ctaLabel.textContent = enCopy.cta;
+    if (cta) cta.setAttribute('href', routesEn.home);
+
+    // Header / footer nav links
+    const navPairs = [
+      [routesFr.home, routesEn.home, uiFr.nav.home, uiEn.nav.home],
+      [routesFr.work, routesEn.work, uiFr.nav.work, uiEn.nav.work],
+      [routesFr.services, routesEn.services, uiFr.nav.services, uiEn.nav.services],
+      [routesFr.about, routesEn.about, uiFr.nav.about, uiEn.nav.about],
+      [routesFr.contact, routesEn.contact, uiFr.nav.contact, uiEn.nav.contact],
+      [routesFr.legal, routesEn.legal, uiFr.footer.legal, uiEn.footer.legal],
+    ];
+    for (const [oldHref, newHref, oldLabel, newLabel] of navPairs) {
+      document.querySelectorAll(`a[href="${oldHref}"]`).forEach((el) => {
+        el.setAttribute('href', newHref);
+        if (el.textContent?.trim() === oldLabel) el.textContent = newLabel;
+      });
+    }
+
+    // Footer location text
+    document.querySelectorAll('footer li').forEach((el) => {
+      if (el.textContent?.trim() === uiFr.footer.location) {
+        el.textContent = uiEn.footer.location;
+      }
+    });
+
+    // Language switcher: now showing English, so it should offer French
+    document
+      .querySelectorAll(`a[aria-label="${uiFr.langSwitchLabel}"]`)
+      .forEach((el) => {
+        el.setAttribute('href', routesFr.home);
+        el.setAttribute('aria-label', uiEn.langSwitchLabel);
+        el.textContent = uiEn.langSwitch;
+      });
+
+    // Mobile menu toggle button
+    const menuToggle = document.getElementById('menu-toggle');
+    if (menuToggle) {
+      menuToggle.setAttribute('data-label-open', uiEn.menuOpen);
+      menuToggle.setAttribute('data-label-close', uiEn.menuClose);
+      menuToggle.setAttribute('aria-label', uiEn.menuOpen);
+    }
+  }
+</script>
