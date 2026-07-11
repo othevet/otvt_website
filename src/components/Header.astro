@@ -5,6 +5,7 @@ import { ui } from '../i18n/ui';
 const locale = (Astro.currentLocale ?? 'fr') as Locale;
 const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
 const t = ui[locale];
+const accountLabel = t.account.accountEyebrow;
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const pageKey = getPageKeyFromPath(currentPath, locale) ?? 'home';
 const switchHref = routes[otherLocale][pageKey];
@@ -49,6 +50,28 @@ const pages = [
           }
         </div>
         <a
+          href={routes[locale].login}
+          aria-label={accountLabel}
+          title={accountLabel}
+          class="p-2 rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+              cx="12"
+              cy="7"
+              r="4"></circle></svg
+          >
+        </a>
+        <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
           class="px-3 py-1.5 text-xs font-semibold rounded-full border border-vert/20 text-[#2d2a24]/70 hover:text-vert hover:border-vert/40 transition-colors"
@@ -58,6 +81,27 @@ const pages = [
       </div>
 
       <div class="flex items-center gap-1 sm:hidden">
+        <a
+          href={routes[locale].login}
+          aria-label={accountLabel}
+          class="p-2 rounded-full border border-vert/20 text-[#2d2a24]/70"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
+              cx="12"
+              cy="7"
+              r="4"></circle></svg
+          >
+        </a>
         <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
