@@ -1,0 +1,165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ui } from '../i18n/ui';
+
+const t = ui.fr.account;
+---
+
+<Layout title="Connexion" description={t.loginLede} pageKey="login" noindex>
+  <section class="pt-28 pb-20 sm:pb-28 px-6">
+    <div class="mx-auto max-w-xl">
+      <div
+        class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
+      >
+        <!-- Terminal title bar -->
+        <div
+          class="flex items-center gap-2 px-4 sm:px-5 py-3 border-b border-vert/10 bg-[#F8F8F6]"
+        >
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#28c840]"></span>
+          <span class="ml-3 text-xs text-[#2d2a24]/70 font-medium"
+            >olivier@otvt:~/login</span
+          >
+        </div>
+        <!-- Content -->
+        <div class="px-6 sm:px-12 py-8 sm:py-14">
+          <p
+            class="text-xs text-vert/85 font-mono mb-8 sm:mb-10 leading-relaxed"
+          >
+            <span class="text-vert font-semibold">olivier@otvt</span>:<span
+              class="text-jaune">~</span
+            ><span class="text-[#2d2a24]/70">$ </span><span
+              class="text-[#2d2a24]/70">./login.sh</span
+            >
+          </p>
+          <p
+            class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase"
+          >
+            {t.loginEyebrow}
+          </p>
+          <h1 class="mt-4 text-4xl sm:text-5xl font-bold text-[#2d2a24]">
+            {t.loginTitle}
+          </h1>
+          <p class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
+            {t.loginLede}
+          </p>
+
+          <form id="login-form" class="mt-8 space-y-5">
+            <div>
+              <label
+                for="email"
+                class="block text-xs font-medium text-[#2d2a24]/70 mb-1"
+                >{t.emailLabel}</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
+                placeholder={t.emailPlaceholder}
+              />
+            </div>
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <span class="submit-label">{t.sendLink}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+              >
+            </button>
+            <p
+              id="login-status"
+              class="text-sm hidden"
+              role="status"
+              aria-live="polite"
+            >
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  const copy = {
+    sending: 'Envoi...',
+    linkSent: 'Lien envoyé ! Vérifiez votre boîte mail.',
+    linkError: "Une erreur est survenue. Vérifiez l'adresse et réessayez.",
+    sendLink: 'Recevoir le lien',
+  };
+
+  const accountPath = '/compte';
+
+  async function redirectIfLoggedIn() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (session) window.location.href = accountPath;
+  }
+
+  function initLoginForm() {
+    const form = document.getElementById(
+      'login-form',
+    ) as HTMLFormElement | null;
+    const status = document.getElementById('login-status');
+    const submitButton = form?.querySelector('button[type="submit"]');
+    const submitLabel = submitButton?.querySelector('.submit-label');
+    if (!form || !status || !submitButton || !submitLabel) return;
+    if (form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const email = (
+        form.querySelector('#email') as HTMLInputElement
+      )?.value.trim();
+      if (!email) return;
+
+      submitButton.setAttribute('disabled', 'true');
+      submitLabel.textContent = copy.sending;
+      status.classList.add('hidden');
+
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: window.location.origin + accountPath,
+        },
+      });
+
+      if (error) {
+        status.textContent = copy.linkError;
+        status.className = 'text-sm text-red-600';
+      } else {
+        status.textContent = copy.linkSent;
+        status.className = 'text-sm text-vert';
+        form.reset();
+      }
+      status.classList.remove('hidden');
+
+      submitButton.removeAttribute('disabled');
+      submitLabel.textContent = copy.sendLink;
+    });
+  }
+
+  redirectIfLoggedIn();
+  initLoginForm();
+  document.addEventListener('astro:page-load', () => {
+    redirectIfLoggedIn();
+    initLoginForm();
+  });
+</script>

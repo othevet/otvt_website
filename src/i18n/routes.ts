@@ -6,6 +6,8 @@ export const routes = {
     about: '/a-propos',
     contact: '/contact',
     legal: '/mentions-legales',
+    login: '/connexion',
+    account: '/compte',
   },
   en: {
     home: '/en',
@@ -14,6 +16,8 @@ export const routes = {
     about: '/en/about',
     contact: '/en/contact',
     legal: '/en/legal-notice',
+    login: '/en/login',
+    account: '/en/account',
   },
 } as const;
 
