@@ -41,10 +41,14 @@ const t = ui.fr.account;
           <h1 class="mt-4 text-4xl sm:text-5xl font-bold text-[#2d2a24]">
             {t.loginTitle}
           </h1>
-          <p class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed">
+          <p
+            id="login-lede"
+            class="mt-4 text-sm text-[#2d2a24]/70 leading-relaxed"
+          >
             {t.loginLede}
           </p>
 
+          <!-- Step 1: email -->
           <form id="login-form" class="mt-8 space-y-5">
             <div>
               <label
@@ -79,29 +83,70 @@ const t = ui.fr.account;
                 ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
               >
             </button>
-            <p
-              id="login-status"
-              class="text-sm hidden"
-              role="status"
-              aria-live="polite"
-            >
-            </p>
           </form>
+
+          <!-- Step 2: code -->
+          <form id="code-form" class="hidden mt-8 space-y-5">
+            <div>
+              <label
+                for="code"
+                class="block text-xs font-medium text-[#2d2a24]/70 mb-1"
+                >{t.codeLabel}</label
+              >
+              <input
+                type="text"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                id="code"
+                name="code"
+                required
+                class="w-full bg-[#F0EFEC] border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-[#2d2a24] tracking-[0.3em] placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
+                placeholder={t.codePlaceholder}
+              />
+            </div>
+            <div class="flex items-center gap-4">
+              <button
+                type="submit"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span class="verify-label">{t.verifyCode}</span>
+              </button>
+              <button
+                type="button"
+                id="change-email"
+                class="text-sm text-[#2d2a24]/70 hover:text-[#2d2a24] transition-colors"
+              >
+                {t.changeEmail}
+              </button>
+            </div>
+          </form>
+
+          <p
+            id="login-status"
+            class="mt-5 text-sm hidden"
+            role="status"
+            aria-live="polite"
+          >
+          </p>
         </div>
       </div>
     </div>
   </section>
 </Layout>
 
+<script
+  type="application/json"
+  is:inline
+  id="login-i18n"
+  set:html={JSON.stringify(t)}
+/>
+
 <script>
   import { supabase } from '../lib/supabase';
 
-  const copy = {
-    sending: 'Envoi...',
-    linkSent: 'Lien envoyé ! Vérifiez votre boîte mail.',
-    linkError: "Une erreur est survenue. Vérifiez l'adresse et réessayez.",
-    sendLink: 'Recevoir le lien',
-  };
+  const t = JSON.parse(
+    document.getElementById('login-i18n')?.textContent ?? '{}',
+  );
 
   const accountPath = '/compte';
 
@@ -112,54 +157,107 @@ const t = ui.fr.account;
     if (session) window.location.href = accountPath;
   }
 
-  function initLoginForm() {
-    const form = document.getElementById(
+  function initLoginFlow() {
+    const emailForm = document.getElementById(
       'login-form',
     ) as HTMLFormElement | null;
+    const codeForm = document.getElementById(
+      'code-form',
+    ) as HTMLFormElement | null;
     const status = document.getElementById('login-status');
-    const submitButton = form?.querySelector('button[type="submit"]');
-    const submitLabel = submitButton?.querySelector('.submit-label');
-    if (!form || !status || !submitButton || !submitLabel) return;
-    if (form.dataset.initialized) return;
-    form.dataset.initialized = 'true';
+    const emailInput = document.getElementById(
+      'email',
+    ) as HTMLInputElement | null;
+    const codeInput = document.getElementById(
+      'code',
+    ) as HTMLInputElement | null;
+    const changeEmailButton = document.getElementById('change-email');
+    if (
+      !emailForm ||
+      !codeForm ||
+      !status ||
+      !emailInput ||
+      !codeInput ||
+      !changeEmailButton
+    )
+      return;
+    if (emailForm.dataset.initialized) return;
+    emailForm.dataset.initialized = 'true';
 
-    form.addEventListener('submit', async (event) => {
+    const emailSubmit = emailForm.querySelector('button[type="submit"]');
+    const emailLabel = emailSubmit?.querySelector('.submit-label');
+    const codeSubmit = codeForm.querySelector('button[type="submit"]');
+    const codeLabel = codeSubmit?.querySelector('.verify-label');
+
+    emailForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const email = (
-        form.querySelector('#email') as HTMLInputElement
-      )?.value.trim();
-      if (!email) return;
+      const email = emailInput.value.trim();
+      if (!email || !emailSubmit || !emailLabel) return;
 
-      submitButton.setAttribute('disabled', 'true');
-      submitLabel.textContent = copy.sending;
+      emailSubmit.setAttribute('disabled', 'true');
+      emailLabel.textContent = t.sending;
       status.classList.add('hidden');
 
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: {
-          emailRedirectTo: window.location.origin + accountPath,
-        },
+        options: { shouldCreateUser: true },
       });
 
       if (error) {
-        status.textContent = copy.linkError;
-        status.className = 'text-sm text-red-600';
+        status.textContent = t.linkError;
+        status.className = 'mt-5 text-sm text-red-600';
+        status.classList.remove('hidden');
       } else {
-        status.textContent = copy.linkSent;
-        status.className = 'text-sm text-vert';
-        form.reset();
+        status.textContent = t.codeSent;
+        status.className = 'mt-5 text-sm text-vert';
+        status.classList.remove('hidden');
+        emailForm.classList.add('hidden');
+        codeForm.classList.remove('hidden');
+        codeInput.focus();
       }
-      status.classList.remove('hidden');
 
-      submitButton.removeAttribute('disabled');
-      submitLabel.textContent = copy.sendLink;
+      emailSubmit.removeAttribute('disabled');
+      emailLabel.textContent = t.sendLink;
+    });
+
+    codeForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+      const code = codeInput.value.trim();
+      if (!code || !codeSubmit || !codeLabel) return;
+
+      codeSubmit.setAttribute('disabled', 'true');
+      codeLabel.textContent = t.verifying;
+
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: code,
+        type: 'email',
+      });
+
+      if (error) {
+        status.textContent = t.codeInvalid;
+        status.className = 'mt-5 text-sm text-red-600';
+        status.classList.remove('hidden');
+        codeSubmit.removeAttribute('disabled');
+        codeLabel.textContent = t.verifyCode;
+      } else {
+        window.location.href = accountPath;
+      }
+    });
+
+    changeEmailButton.addEventListener('click', () => {
+      codeForm.classList.add('hidden');
+      emailForm.classList.remove('hidden');
+      status.classList.add('hidden');
+      codeForm.reset();
     });
   }
 
   redirectIfLoggedIn();
-  initLoginForm();
+  initLoginFlow();
   document.addEventListener('astro:page-load', () => {
     redirectIfLoggedIn();
-    initLoginForm();
+    initLoginFlow();
   });
 </script>
