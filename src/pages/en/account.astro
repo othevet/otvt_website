@@ -119,7 +119,7 @@ const t = ui.en.account;
           </div>
         </div>
 
-        <!-- Messages -->
+        <!-- Message -->
         <div
           class="border border-vert/20 rounded-2xl overflow-hidden bg-white shadow-sm"
         >
@@ -127,15 +127,7 @@ const t = ui.en.account;
             <h2 class="text-lg font-semibold text-[#2d2a24]">
               {t.messagesTitle}
             </h2>
-            <p
-              id="messages-empty"
-              class="hidden mt-3 text-sm text-[#2d2a24]/70"
-            >
-              {t.noMessages}
-            </p>
-            <ul id="messages-list" class="mt-4 space-y-3"></ul>
-
-            <form id="message-form" class="mt-6 space-y-3">
+            <form id="message-form" class="mt-4 space-y-3">
               <textarea
                 id="message-body"
                 name="message"
@@ -187,13 +179,6 @@ const t = ui.en.account;
       type="button"
       class="download-button shrink-0 px-4 py-2 text-xs font-semibold rounded-full border border-vert/20 text-vert hover:border-vert/40 transition-colors"
     ></button>
-  </li>
-</template>
-
-<template id="message-row-template">
-  <li class="border-b border-vert/10 pb-3 last:border-0 last:pb-0">
-    <p class="text-xs text-[#2d2a24]/70 message-meta"></p>
-    <p class="mt-1 text-sm text-[#2d2a24] message-body"></p>
   </li>
 </template>
 
@@ -315,39 +300,7 @@ const t = ui.en.account;
     }
   }
 
-  async function renderMessages(clientId: string) {
-    const list = document.getElementById('messages-list');
-    const template = document.getElementById(
-      'message-row-template',
-    ) as HTMLTemplateElement | null;
-    if (!list || !template) return;
-
-    const { data: messages } = await supabase
-      .from('messages')
-      .select('id, sender, body, created_at')
-      .eq('client_id', clientId)
-      .order('created_at', { ascending: false });
-
-    list.innerHTML = '';
-    if (!messages || messages.length === 0) {
-      showSection('messages-empty');
-      return;
-    }
-    hideSection('messages-empty');
-
-    for (const message of messages) {
-      const node = template.content.cloneNode(true) as DocumentFragment;
-      const metaEl = node.querySelector('.message-meta');
-      const bodyEl = node.querySelector('.message-body');
-      const author = message.sender === 'olivier' ? 'Olivier' : 'You';
-      if (metaEl)
-        metaEl.textContent = `${author} — ${formatDate(message.created_at)}`;
-      if (bodyEl) bodyEl.textContent = message.body;
-      list.appendChild(node);
-    }
-  }
-
-  function initMessageForm(clientId: string) {
+  function initMessageForm(clientName: string, clientEmail: string) {
     const form = document.getElementById(
       'message-form',
     ) as HTMLFormElement | null;
@@ -370,41 +323,33 @@ const t = ui.en.account;
       submitLabel.textContent = t.sendingMessage;
       status.classList.add('hidden');
 
-      const { error: insertError } = await supabase.from('messages').insert({
-        client_id: clientId,
-        sender: 'client',
-        body,
-      });
-
-      if (insertError) {
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `Client area — message from ${clientName}`,
+            name: clientName,
+            email: clientEmail,
+            replyto: clientEmail,
+            message: body,
+          }),
+        });
+        const result = await response.json();
+        if (response.ok && result.success) {
+          status.textContent = t.messageSent;
+          status.className = 'text-sm text-vert';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'error');
+        }
+      } catch {
         status.textContent = t.messageError;
         status.className = 'text-sm text-red-600';
-      } else {
-        form.reset();
-        await renderMessages(clientId);
-
-        let emailOk: boolean;
-        try {
-          const response = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              access_key: WEB3FORMS_ACCESS_KEY,
-              subject: 'New message from the otvt.fr client area',
-              message: body,
-            }),
-          });
-          const result = await response.json();
-          emailOk = response.ok && result.success;
-        } catch {
-          emailOk = false;
-        }
-
-        status.textContent = emailOk ? t.messageSent : t.emailNotice;
-        status.className = emailOk ? 'text-sm text-vert' : 'text-sm text-jaune';
       }
       status.classList.remove('hidden');
 
@@ -443,7 +388,7 @@ const t = ui.en.account;
 
     const { data: client } = await supabase
       .from('clients')
-      .select('id, name')
+      .select('id, name, email')
       .maybeSingle();
 
     if (!client) {
@@ -456,12 +401,8 @@ const t = ui.en.account;
     const nameEl = document.getElementById('client-name');
     if (nameEl) nameEl.textContent = client.name;
 
-    await Promise.all([
-      renderProjects(client.id),
-      renderInvoices(client.id),
-      renderMessages(client.id),
-    ]);
-    initMessageForm(client.id);
+    await Promise.all([renderProjects(client.id), renderInvoices(client.id)]);
+    initMessageForm(client.name, client.email);
     initLogout();
 
     hideSection('account-checking');

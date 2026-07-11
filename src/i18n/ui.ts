@@ -56,9 +56,6 @@ export const ui = {
       messageSent: 'Message envoyé !',
       messageError:
         "Erreur lors de l'envoi. Écrivez-moi directement à contact@otvt.fr.",
-      emailNotice:
-        "La notification par email n'a peut-être pas été délivrée, mais votre message est bien enregistré.",
-      noMessages: 'Aucun message pour le moment.',
     },
   },
   en: {
@@ -117,9 +114,6 @@ export const ui = {
       messageSent: 'Message sent!',
       messageError:
         'Something went wrong. Please email me directly at contact@otvt.fr.',
-      emailNotice:
-        'The email notification may not have gone through, but your message has been saved.',
-      noMessages: 'No messages yet.',
     },
   },
 } as const;

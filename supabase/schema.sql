@@ -38,29 +38,21 @@ create table invoices (
   created_at timestamptz not null default now()
 );
 
-create table messages (
-  id uuid primary key default gen_random_uuid(),
-  client_id uuid not null references clients (id) on delete cascade,
-  project_id uuid references projects (id) on delete set null,
-  sender text not null default 'client' check (sender in ('client', 'olivier')),
-  body text not null,
-  created_at timestamptz not null default now()
-);
-
 -- Row Level Security -----------------------------------------------------
 
 alter table clients enable row level security;
 alter table projects enable row level security;
 alter table invoices enable row level security;
-alter table messages enable row level security;
 
 -- Un client ne voit que sa propre ligne.
 create policy "client reads own row" on clients
   for select
   using (lower(email) = lower(auth.jwt() ->> 'email'));
 
--- Projets, factures, messages : visibles uniquement s'ils appartiennent au
--- client dont l'email correspond à la session connectée.
+-- Projets et factures : visibles uniquement s'ils appartiennent au client
+-- dont l'email correspond à la session connectée. Aucune écriture n'est
+-- autorisée côté client sur ces tables — tout se gère depuis le Table
+-- Editor, qui utilise la clé service_role et contourne RLS.
 create policy "client reads own projects" on projects
   for select
   using (
@@ -73,27 +65,6 @@ create policy "client reads own invoices" on invoices
   for select
   using (
     client_id in (
-      select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
-    )
-  );
-
-create policy "client reads own messages" on messages
-  for select
-  using (
-    client_id in (
-      select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
-    )
-  );
-
--- Seule écriture autorisée côté client : ajouter un message qui lui est
--- propre. Tout le reste (clients/projects/invoices, et les messages
--- d'Olivier) se gère depuis le Table Editor, qui utilise la clé
--- service_role et contourne RLS.
-create policy "client inserts own messages" on messages
-  for insert
-  with check (
-    sender = 'client'
-    and client_id in (
       select id from clients where lower(email) = lower(auth.jwt() ->> 'email')
     )
   );
