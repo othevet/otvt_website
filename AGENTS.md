@@ -1,3 +1,7 @@
+## Project documentation
+
+This is not a fresh Astro starter — read [docs/architecture.md](docs/architecture.md) before making non-trivial changes (auth, RLS, messaging, `/admin`, theming, i18n). [README.md](README.md) has the project overview and local setup; [docs/admin-guide.md](docs/admin-guide.md) is the end-user guide for `/admin`.
+
 ## Development
 
 When starting the dev server, use background mode:
