@@ -142,15 +142,22 @@ const t = ui.en.account;
                 id="message-body"
                 name="message"
                 rows={3}
-                required
                 class="w-full bg-bg border border-vert/15 rounded-xl px-4 py-2.5 text-sm text-ink placeholder-[#2d2a24]/30 transition-all duration-200 focus:outline-none focus:border-vert focus:ring-2 focus:ring-vert/20"
                 placeholder={t.messagePlaceholder}></textarea>
-              <button
-                type="submit"
-                class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <span class="submit-label">{t.send}</span>
-              </button>
+              <input
+                id="message-file"
+                type="file"
+                accept="application/pdf,image/*"
+                class="block w-full text-xs text-ink/70 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-vert file:text-white file:text-xs"
+              />
+              <div class="flex items-center gap-3">
+                <button
+                  type="submit"
+                  class="inline-flex items-center gap-2 px-6 py-3 bg-vert text-white text-sm font-medium rounded-full hover:bg-vert/90 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span class="submit-label">{t.send}</span>
+                </button>
+              </div>
               <p
                 id="message-status"
                 class="text-sm hidden"
@@ -196,6 +203,7 @@ const t = ui.en.account;
   <li class="flex message-row">
     <div class="max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed message-bubble">
       <p class="message-body"></p>
+      <div class="message-attachment hidden mt-2"></div>
       <p class="mt-1 text-[10px] opacity-70 message-time"></p>
     </div>
   </li>
@@ -225,9 +233,20 @@ const t = ui.en.account;
     id: string;
     client_id: string;
     sender: 'client' | 'olivier';
-    body: string;
+    body: string | null;
     created_at: string;
+    attachment_path: string | null;
+    attachment_name: string | null;
+    attachment_mime: string | null;
   };
+
+  const MESSAGE_COLUMNS =
+    'id, client_id, sender, body, created_at, attachment_path, attachment_name, attachment_mime';
+  const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024;
+
+  function slugifyFilename(name: string) {
+    return name.replace(/[^a-zA-Z0-9.-]+/g, '-').toLowerCase();
+  }
 
   let messagesChannel: ReturnType<typeof supabase.channel> | null = null;
   const renderedMessageIds = new Set<string>();
@@ -344,6 +363,32 @@ const t = ui.en.account;
     if (thread) thread.scrollTop = thread.scrollHeight;
   }
 
+  async function renderAttachment(container: HTMLElement, message: Message) {
+    if (!message.attachment_path) return;
+    const { data, error } = await supabase.storage
+      .from('message-attachments')
+      .createSignedUrl(message.attachment_path, 3600);
+    if (error || !data) return;
+
+    container.classList.remove('hidden');
+    const link = document.createElement('a');
+    link.href = data.signedUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    if (message.attachment_mime?.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = data.signedUrl;
+      img.alt = message.attachment_name ?? '';
+      img.className = 'max-h-48 rounded-lg object-cover';
+      link.appendChild(img);
+    } else {
+      link.className = 'text-xs underline underline-offset-2';
+      link.textContent = message.attachment_name ?? t.download;
+    }
+    container.appendChild(link);
+  }
+
   function appendMessageBubble(message: Message) {
     const thread = document.getElementById('messages-thread');
     const template = document.getElementById(
@@ -362,10 +407,16 @@ const t = ui.en.account;
         ? ['bg-vert', 'text-white', 'rounded-br-sm']
         : ['bg-surface-alt', 'text-ink', 'rounded-bl-sm']),
     );
-    const bodyEl = node.querySelector('.message-body');
+    const bodyEl = node.querySelector('.message-body') as HTMLElement;
     const timeEl = node.querySelector('.message-time');
-    if (bodyEl) bodyEl.textContent = message.body;
+    const attachmentEl = node.querySelector('.message-attachment') as HTMLElement;
+    if (message.body) {
+      bodyEl.textContent = message.body;
+    } else {
+      bodyEl.classList.add('hidden');
+    }
     if (timeEl) timeEl.textContent = formatMessageTime(message.created_at);
+    if (message.attachment_path) renderAttachment(attachmentEl, message);
 
     thread.appendChild(node);
     renderedMessageIds.add(message.id);
@@ -377,7 +428,7 @@ const t = ui.en.account;
 
     const { data: messages } = await supabase
       .from('messages')
-      .select('id, client_id, sender, body, created_at')
+      .select(MESSAGE_COLUMNS)
       .eq('client_id', clientId)
       .order('created_at', { ascending: true });
 
@@ -436,23 +487,59 @@ const t = ui.en.account;
     const textarea = document.getElementById(
       'message-body',
     ) as HTMLTextAreaElement | null;
-    if (!form || !status || !submitButton || !submitLabel || !textarea) return;
+    const fileInput = document.getElementById(
+      'message-file',
+    ) as HTMLInputElement | null;
+    if (!form || !status || !submitButton || !submitLabel || !textarea || !fileInput)
+      return;
     if (form.dataset.initialized) return;
     form.dataset.initialized = 'true';
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const body = textarea.value.trim();
-      if (!body) return;
+      const file = fileInput.files?.[0] ?? null;
+      if (!body && !file) return;
+
+      if (file && file.size > MAX_ATTACHMENT_SIZE) {
+        status.textContent = t.attachmentTooLarge;
+        status.className = 'text-sm text-danger';
+        status.classList.remove('hidden');
+        return;
+      }
 
       submitButton.setAttribute('disabled', 'true');
       submitLabel.textContent = t.sendingMessage;
       status.classList.add('hidden');
 
+      let attachmentPath: string | null = null;
+      if (file) {
+        const path = `${clientId}/${Date.now()}-${slugifyFilename(file.name)}`;
+        const { error: uploadError } = await supabase.storage
+          .from('message-attachments')
+          .upload(path, file);
+        if (uploadError) {
+          status.textContent = t.messageError;
+          status.className = 'text-sm text-danger';
+          status.classList.remove('hidden');
+          submitButton.removeAttribute('disabled');
+          submitLabel.textContent = t.send;
+          return;
+        }
+        attachmentPath = path;
+      }
+
       const { data, error } = await supabase
         .from('messages')
-        .insert({ client_id: clientId, sender: 'client', body })
-        .select('id, client_id, sender, body, created_at')
+        .insert({
+          client_id: clientId,
+          sender: 'client',
+          body: body || null,
+          attachment_path: attachmentPath,
+          attachment_name: file?.name ?? null,
+          attachment_mime: file?.type ?? null,
+        })
+        .select(MESSAGE_COLUMNS)
         .single();
 
       if (error || !data) {
@@ -479,7 +566,7 @@ const t = ui.en.account;
             name: clientName,
             email: clientEmail,
             replyto: clientEmail,
-            message: body,
+            message: body || `[Attachment] ${file?.name ?? ''}`,
           }),
         }).catch(() => {});
       }

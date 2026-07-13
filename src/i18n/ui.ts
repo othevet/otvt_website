@@ -30,6 +30,7 @@ export const ui = {
       linkError: "Une erreur est survenue. Vérifiez l'adresse et réessayez.",
       codeLabel: 'Code de connexion',
       codePlaceholder: '123456',
+      checkSpam: "Pas reçu ? Pensez à vérifier vos courriers indésirables.",
       verifyCode: 'Valider',
       verifying: 'Vérification...',
       codeInvalid: 'Code invalide ou expiré. Redemandez un code.',
@@ -57,6 +58,7 @@ export const ui = {
       sendingMessage: 'Envoi...',
       messageError:
         "Erreur lors de l'envoi. Réessayez ou écrivez-moi directement à contact@otvt.fr.",
+      attachmentTooLarge: 'Fichier trop volumineux (10 Mo maximum).',
     },
   },
   en: {
@@ -89,6 +91,7 @@ export const ui = {
       linkError: 'Something went wrong. Check the address and try again.',
       codeLabel: 'Login code',
       codePlaceholder: '123456',
+      checkSpam: "Didn't get it? Check your spam folder.",
       verifyCode: 'Verify',
       verifying: 'Verifying...',
       codeInvalid: 'Invalid or expired code. Request a new one.',
@@ -116,6 +119,7 @@ export const ui = {
       sendingMessage: 'Sending...',
       messageError:
         'Something went wrong. Try again or email me directly at contact@otvt.fr.',
+      attachmentTooLarge: 'File too large (10 MB maximum).',
     },
   },
 } as const;

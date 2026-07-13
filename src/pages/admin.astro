@@ -326,12 +326,23 @@ const tabButtonClass =
                     <textarea
                       id="admin-message-body"
                       rows={3}
-                      required
                       class={inputClass}
                       placeholder="Répondre..."></textarea>
+                    <input
+                      id="admin-message-file"
+                      type="file"
+                      accept="application/pdf,image/*"
+                      class="block w-full text-xs text-ink/70 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:bg-vert file:text-white file:text-xs"
+                    />
                     <button type="submit" class={primaryButtonClass}>
                       <span class="submit-label">Envoyer</span>
                     </button>
+                    <p
+                      id="admin-message-status"
+                      class="text-sm hidden"
+                      role="status"
+                      aria-live="polite"
+                    ></p>
                   </form>
                 </div>
               </div>
@@ -416,6 +427,7 @@ const tabButtonClass =
       class="max-w-[75%] rounded-2xl px-4 py-2 text-sm leading-relaxed message-bubble"
     >
       <p class="message-body"></p>
+      <div class="message-attachment hidden mt-2"></div>
       <p class="mt-1 text-[10px] opacity-70 message-time"></p>
     </div>
   </li>
@@ -449,9 +461,16 @@ const tabButtonClass =
     id: string;
     client_id: string;
     sender: 'client' | 'olivier';
-    body: string;
+    body: string | null;
     created_at: string;
+    attachment_path: string | null;
+    attachment_name: string | null;
+    attachment_mime: string | null;
   };
+
+  const MESSAGE_COLUMNS =
+    'id, client_id, sender, body, created_at, attachment_path, attachment_name, attachment_mime';
+  const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024;
 
   let clients: Client[] = [];
   let selectedClientId: string | null = null;
@@ -866,6 +885,32 @@ const tabButtonClass =
     if (thread) thread.scrollTop = thread.scrollHeight;
   }
 
+  async function renderAttachment(container: HTMLElement, message: Message) {
+    if (!message.attachment_path) return;
+    const { data, error } = await supabase.storage
+      .from('message-attachments')
+      .createSignedUrl(message.attachment_path, 3600);
+    if (error || !data) return;
+
+    container.classList.remove('hidden');
+    const link = document.createElement('a');
+    link.href = data.signedUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    if (message.attachment_mime?.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = data.signedUrl;
+      img.alt = message.attachment_name ?? '';
+      img.className = 'max-h-48 rounded-lg object-cover';
+      link.appendChild(img);
+    } else {
+      link.className = 'text-xs underline underline-offset-2';
+      link.textContent = message.attachment_name ?? 'Télécharger';
+    }
+    container.appendChild(link);
+  }
+
   function appendMessageBubble(message: Message) {
     const thread = document.getElementById('admin-messages-thread');
     const template = document.getElementById(
@@ -884,10 +929,17 @@ const tabButtonClass =
         ? ['bg-vert', 'text-white', 'rounded-br-sm']
         : ['bg-surface-alt', 'text-ink', 'rounded-bl-sm']),
     );
-    node.querySelector('.message-body')!.textContent = message.body;
+    const bodyEl = node.querySelector('.message-body') as HTMLElement;
+    const attachmentEl = node.querySelector('.message-attachment') as HTMLElement;
+    if (message.body) {
+      bodyEl.textContent = message.body;
+    } else {
+      bodyEl.classList.add('hidden');
+    }
     node.querySelector('.message-time')!.textContent = formatMessageTime(
       message.created_at,
     );
+    if (message.attachment_path) renderAttachment(attachmentEl, message);
 
     thread.appendChild(node);
     renderedMessageIds.add(message.id);
@@ -937,7 +989,7 @@ const tabButtonClass =
 
     const { data: messages } = await supabase
       .from('messages')
-      .select('id, client_id, sender, body, created_at')
+      .select(MESSAGE_COLUMNS)
       .eq('client_id', clientId)
       .order('created_at', { ascending: true });
 
@@ -958,28 +1010,67 @@ const tabButtonClass =
     const form = document.getElementById(
       'admin-message-form',
     ) as HTMLFormElement | null;
+    const status = document.getElementById('admin-message-status');
     const textarea = document.getElementById(
       'admin-message-body',
     ) as HTMLTextAreaElement | null;
-    if (!form || !textarea) return;
+    const fileInput = document.getElementById(
+      'admin-message-file',
+    ) as HTMLInputElement | null;
+    if (!form || !status || !textarea || !fileInput) return;
     if (form.dataset.initialized) return;
     form.dataset.initialized = 'true';
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const body = textarea.value.trim();
-      if (!body || !selectedClientId) return;
+      const file = fileInput.files?.[0] ?? null;
+      if ((!body && !file) || !selectedClientId) return;
+
+      if (file && file.size > MAX_ATTACHMENT_SIZE) {
+        status.textContent = 'Fichier trop volumineux (10 Mo maximum).';
+        status.className = 'text-sm text-danger';
+        status.classList.remove('hidden');
+        return;
+      }
+      status.classList.add('hidden');
+
+      let attachmentPath: string | null = null;
+      if (file) {
+        const path = `${selectedClientId}/${Date.now()}-${slugifyFilename(file.name)}`;
+        const { error: uploadError } = await supabase.storage
+          .from('message-attachments')
+          .upload(path, file);
+        if (uploadError) {
+          status.textContent = "Erreur lors de l'upload du fichier.";
+          status.className = 'text-sm text-danger';
+          status.classList.remove('hidden');
+          return;
+        }
+        attachmentPath = path;
+      }
 
       const { data, error } = await supabase
         .from('messages')
-        .insert({ client_id: selectedClientId, sender: 'olivier', body })
-        .select('id, client_id, sender, body, created_at')
+        .insert({
+          client_id: selectedClientId,
+          sender: 'olivier',
+          body: body || null,
+          attachment_path: attachmentPath,
+          attachment_name: file?.name ?? null,
+          attachment_mime: file?.type ?? null,
+        })
+        .select(MESSAGE_COLUMNS)
         .single();
 
       if (!error && data) {
         appendMessageBubble(data as Message);
         scrollThreadToBottom();
         form.reset();
+      } else {
+        status.textContent = "Erreur lors de l'envoi.";
+        status.className = 'text-sm text-danger';
+        status.classList.remove('hidden');
       }
     });
   }
