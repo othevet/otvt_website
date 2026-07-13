@@ -20,8 +20,7 @@ export const ui = {
     account: {
       loginEyebrow: 'Espace client',
       loginTitle: 'Connexion',
-      loginLede:
-        'Entrez votre email, vous recevrez un code de connexion à 6 chiffres.',
+      loginLede: 'Entrez votre email, vous recevrez un code de connexion.',
       emailLabel: 'Email',
       emailPlaceholder: 'vous@exemple.fr',
       sendLink: 'Recevoir un code',
@@ -29,7 +28,7 @@ export const ui = {
       codeSent: 'Code envoyé ! Vérifiez votre boîte mail.',
       linkError: "Une erreur est survenue. Vérifiez l'adresse et réessayez.",
       codeLabel: 'Code de connexion',
-      codePlaceholder: '123456',
+      codePlaceholder: 'Code reçu par email',
       checkSpam: "Pas reçu ? Pensez à vérifier vos courriers indésirables.",
       verifyCode: 'Valider',
       verifying: 'Vérification...',
@@ -82,7 +81,7 @@ export const ui = {
     account: {
       loginEyebrow: 'Client area',
       loginTitle: 'Log in',
-      loginLede: "Enter your email and you'll receive a 6-digit login code.",
+      loginLede: "Enter your email and you'll receive a login code.",
       emailLabel: 'Email',
       emailPlaceholder: 'you@example.com',
       sendLink: 'Send me a code',
@@ -90,7 +89,7 @@ export const ui = {
       codeSent: 'Code sent! Check your inbox.',
       linkError: 'Something went wrong. Check the address and try again.',
       codeLabel: 'Login code',
-      codePlaceholder: '123456',
+      codePlaceholder: 'Code from your email',
       checkSpam: "Didn't get it? Check your spam folder.",
       verifyCode: 'Verify',
       verifying: 'Verifying...',
