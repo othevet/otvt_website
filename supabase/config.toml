@@ -12,6 +12,11 @@ entrypoint = "./functions/notify-client-message/index.ts"
 
 [functions.log-login-device]
 enabled = true
-verify_jwt = true
+# false (pas true) : appelée depuis le navigateur, la requête préliminaire
+# OPTIONS n'a pas d'Authorization — avec true, la plateforme la rejetterait
+# avant même d'atteindre le handler OPTIONS. Le JWT est vérifié
+# manuellement dans le code via getUser(), tout aussi strict. Voir le
+# commentaire en tête de index.ts.
+verify_jwt = false
 import_map = "./functions/log-login-device/deno.json"
 entrypoint = "./functions/log-login-device/index.ts"

@@ -3,12 +3,16 @@
 // via Resend si le couple (email, user-agent + IP) n'a jamais été vu — un
 // signal "nouvel appareil", best-effort, pas une preuve cryptographique.
 //
-// verify_jwt = true (voir config.toml) : contrairement à
-// notify-client-message, l'appelant a déjà une session valide à ce stade
-// (on vient de terminer signInWithOtp/verifyOtp) — Supabase vérifie le JWT
-// avant même d'invoquer cette fonction. L'email vient du JWT vérifié via
-// getUser(), jamais d'un paramètre fourni par l'appelant : impossible de
-// déclencher un faux événement/email pour quelqu'un d'autre.
+// verify_jwt = false (voir config.toml) — pas pour la même raison que
+// notify-client-message. Cette fonction est appelée depuis le navigateur,
+// qui envoie une requête préliminaire OPTIONS sans Authorization ; avec
+// verify_jwt=true la plateforme rejette cette requête AVANT même
+// d'atteindre le code (donc avant le handler OPTIONS ci-dessous). La
+// vérification du JWT est donc faite manuellement ici via getUser() — tout
+// aussi stricte (signature vérifiée par le SDK), juste déplacée du niveau
+// plateforme au niveau applicatif. L'email vient de ce JWT vérifié, jamais
+// d'un paramètre fourni par l'appelant : impossible de déclencher un faux
+// événement/email pour quelqu'un d'autre.
 //
 // Secrets requis (supabase secrets set ...) : RESEND_API_KEY (déjà utilisé
 // par notify-client-message). SUPABASE_URL / SUPABASE_ANON_KEY /
@@ -22,6 +26,17 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
+// Contrairement à notify-client-message (appelée par un trigger Postgres,
+// jamais par un navigateur), cette fonction est appelée directement depuis
+// le client via supabase.functions.invoke() — le navigateur envoie donc une
+// requête préliminaire OPTIONS qu'il faut gérer explicitement, sinon l'appel
+// échoue avant même d'atteindre le code ci-dessous.
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type',
+};
+
 async function hashDeviceKey(input: string) {
   const digest = await crypto.subtle.digest(
     'SHA-256',
@@ -33,6 +48,10 @@ async function hashDeviceKey(input: string) {
 }
 
 Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   // Le runtime Supabase a déjà refusé la requête si le JWT est absent ou
   // invalide (verify_jwt=true) ; on le revalide ici pour récupérer l'email
   // de façon fiable, jamais fourni par le corps de la requête.
@@ -44,7 +63,7 @@ Deno.serve(async (req) => {
   } = await callerClient.auth.getUser();
 
   if (!user?.email) {
-    return new Response('unauthorized', { status: 401 });
+    return new Response('unauthorized', { status: 401, headers: corsHeaders });
   }
   const email = user.email.toLowerCase();
 
@@ -74,7 +93,7 @@ Deno.serve(async (req) => {
   });
 
   if (!isNewDevice) {
-    return new Response('known device', { status: 200 });
+    return new Response('known device', { status: 200, headers: corsHeaders });
   }
 
   const { data: client } = await supabase
@@ -105,8 +124,14 @@ Deno.serve(async (req) => {
 
   if (!emailResponse.ok) {
     const errorText = await emailResponse.text();
-    return new Response(`resend error: ${errorText}`, { status: 502 });
+    return new Response(`resend error: ${errorText}`, {
+      status: 502,
+      headers: corsHeaders,
+    });
   }
 
-  return new Response('new device notified', { status: 200 });
+  return new Response('new device notified', {
+    status: 200,
+    headers: corsHeaders,
+  });
 });

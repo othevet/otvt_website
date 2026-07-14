@@ -329,10 +329,14 @@ create policy "admin full access tasks" on tasks
 --
 -- Alimenté uniquement par la Edge Function log-login-device (clé
 -- service_role, contourne RLS), jamais en écriture directe côté client.
--- verify_jwt=true sur cette fonction (contrairement à notify-client-message)
--- : elle est appelée juste après une connexion réussie, donc une session
--- valide existe déjà — l'email vient du JWT vérifié par Supabase, jamais
--- d'un paramètre fourni par l'appelant.
+-- verify_jwt=false sur cette fonction (comme notify-client-message, mais
+-- pas pour la même raison : elle est appelée depuis le navigateur, dont la
+-- requête préliminaire OPTIONS n'a pas d'Authorization — avec
+-- verify_jwt=true la plateforme la rejetterait avant même d'atteindre le
+-- handler OPTIONS). Le JWT est vérifié manuellement dans le code via
+-- getUser() — tout aussi strict, juste déplacé au niveau applicatif.
+-- L'email vient de ce JWT vérifié, jamais d'un paramètre fourni par
+-- l'appelant.
 --
 -- "device" = hash(user-agent + ip) calculé côté fonction (pas par le
 -- client) : heuristique, pas une empreinte cryptographique infalsifiable,
