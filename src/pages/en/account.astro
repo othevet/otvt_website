@@ -650,27 +650,13 @@ const t = ui.en.account;
 
       status.classList.add('hidden');
       try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_ACCESS_KEY,
-            subject: `GDPR deletion request — ${clientName}`,
-            name: clientName,
-            email: clientEmail,
-            replyto: clientEmail,
-            message: `Client ${clientName} (${clientEmail}) is requesting deletion of their account and data from their client area.`,
-            // Honeypot: a bot would fill this field, a human/our JS leaves
-            // it empty — helps Web3Forms avoid classifying this as spam.
-            botcheck: '',
-          }),
-        });
-        const result = await response.json();
-        if (!response.ok || !result.success)
-          throw new Error(result.message || 'error');
+        // Goes through Resend (like the new-login notifications), not
+        // Web3Forms: its free-tier spam filter kept classifying this
+        // specific notification as spam, with no option to disable it.
+        const { error } = await supabase.functions.invoke(
+          'request-account-deletion',
+        );
+        if (error) throw error;
 
         status.textContent = t.deleteRequestSent;
         status.className = 'mt-3 text-sm text-vert';

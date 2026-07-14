@@ -650,27 +650,14 @@ const t = ui.fr.account;
 
       status.classList.add('hidden');
       try {
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_ACCESS_KEY,
-            subject: `Demande de suppression RGPD — ${clientName}`,
-            name: clientName,
-            email: clientEmail,
-            replyto: clientEmail,
-            message: `Le client ${clientName} (${clientEmail}) demande la suppression de son compte et de ses données depuis son espace client.`,
-            // Honeypot : un bot remplirait ce champ, un humain/notre JS le
-            // laisse vide — aide Web3Forms à ne pas classer en spam.
-            botcheck: '',
-          }),
-        });
-        const result = await response.json();
-        if (!response.ok || !result.success)
-          throw new Error(result.message || 'error');
+        // Passe par Resend (comme les notifications de nouvelle
+        // connexion), pas Web3Forms : son filtre anti-spam gratuit
+        // classait systématiquement cette notification précise en spam,
+        // sans option pour le désactiver sur ce plan.
+        const { error } = await supabase.functions.invoke(
+          'request-account-deletion',
+        );
+        if (error) throw error;
 
         status.textContent = t.deleteRequestSent;
         status.className = 'mt-3 text-sm text-vert';
