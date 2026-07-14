@@ -545,6 +545,9 @@ const t = ui.en.account;
             email: clientEmail,
             replyto: clientEmail,
             message: body || `[Attachment] ${file?.name ?? ''}`,
+            // Honeypot: a bot would fill this field, a human/our JS leaves
+            // it empty — helps Web3Forms avoid classifying this as spam.
+            botcheck: '',
           }),
         }).catch(() => {});
       }
@@ -660,6 +663,9 @@ const t = ui.en.account;
             email: clientEmail,
             replyto: clientEmail,
             message: `Client ${clientName} (${clientEmail}) is requesting deletion of their account and data from their client area.`,
+            // Honeypot: a bot would fill this field, a human/our JS leaves
+            // it empty — helps Web3Forms avoid classifying this as spam.
+            botcheck: '',
           }),
         });
         const result = await response.json();

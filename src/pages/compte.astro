@@ -545,6 +545,9 @@ const t = ui.fr.account;
             email: clientEmail,
             replyto: clientEmail,
             message: body || `[Pièce jointe] ${file?.name ?? ''}`,
+            // Honeypot : un bot remplirait ce champ, un humain/notre JS le
+            // laisse vide — aide Web3Forms à ne pas classer en spam.
+            botcheck: '',
           }),
         }).catch(() => {});
       }
@@ -660,6 +663,9 @@ const t = ui.fr.account;
             email: clientEmail,
             replyto: clientEmail,
             message: `Le client ${clientName} (${clientEmail}) demande la suppression de son compte et de ses données depuis son espace client.`,
+            // Honeypot : un bot remplirait ce champ, un humain/notre JS le
+            // laisse vide — aide Web3Forms à ne pas classer en spam.
+            botcheck: '',
           }),
         });
         const result = await response.json();
