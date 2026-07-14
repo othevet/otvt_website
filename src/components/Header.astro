@@ -325,7 +325,9 @@ const pages = [
   function initMenuToggle() {
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('mobile-menu');
-    toggle?.addEventListener('click', () => {
+    if (!toggle || toggle.dataset.initialized) return;
+    toggle.dataset.initialized = 'true';
+    toggle.addEventListener('click', () => {
       const isHidden = menu?.classList.toggle('hidden');
       toggle.setAttribute('aria-expanded', String(!isHidden));
       toggle.setAttribute(

@@ -27,10 +27,20 @@ type MessageRecord = {
 };
 
 Deno.serve(async (req) => {
-  const payload = await req.json();
+  let payload: { record?: unknown };
+  try {
+    payload = await req.json();
+  } catch {
+    return new Response('invalid json', { status: 400 });
+  }
+
   const record = payload.record as MessageRecord | undefined;
 
-  if (!record || record.sender !== 'olivier') {
+  if (
+    !record ||
+    typeof record.client_id !== 'string' ||
+    record.sender !== 'olivier'
+  ) {
     return new Response('skip', { status: 200 });
   }
 

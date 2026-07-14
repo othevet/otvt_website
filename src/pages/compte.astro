@@ -218,6 +218,13 @@ const t = ui.fr.account;
 
 <script>
   import { supabase } from '../lib/supabase';
+  import {
+    MESSAGE_COLUMNS,
+    MAX_ATTACHMENT_SIZE,
+    slugifyFilename,
+    appendMessageBubble as appendMessageBubbleToThread,
+    type Message,
+  } from '../lib/messaging';
 
   const t = JSON.parse(
     document.getElementById('account-i18n')?.textContent ?? '{}',
@@ -229,39 +236,11 @@ const t = ui.fr.account;
 
   const loginPath = '/connexion';
 
-  type Message = {
-    id: string;
-    client_id: string;
-    sender: 'client' | 'olivier';
-    body: string | null;
-    created_at: string;
-    attachment_path: string | null;
-    attachment_name: string | null;
-    attachment_mime: string | null;
-  };
-
-  const MESSAGE_COLUMNS =
-    'id, client_id, sender, body, created_at, attachment_path, attachment_name, attachment_mime';
-  const MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024;
-
-  function slugifyFilename(name: string) {
-    return name.replace(/[^a-zA-Z0-9.-]+/g, '-').toLowerCase();
-  }
-
   let messagesChannel: ReturnType<typeof supabase.channel> | null = null;
   const renderedMessageIds = new Set<string>();
 
   function formatDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString('fr-FR');
-  }
-
-  function formatMessageTime(dateStr: string) {
-    return new Date(dateStr).toLocaleString('fr-FR', {
-      day: 'numeric',
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
   }
 
   function showSection(id: string) {
@@ -363,32 +342,6 @@ const t = ui.fr.account;
     if (thread) thread.scrollTop = thread.scrollHeight;
   }
 
-  async function renderAttachment(container: HTMLElement, message: Message) {
-    if (!message.attachment_path) return;
-    const { data, error } = await supabase.storage
-      .from('message-attachments')
-      .createSignedUrl(message.attachment_path, 3600);
-    if (error || !data) return;
-
-    container.classList.remove('hidden');
-    const link = document.createElement('a');
-    link.href = data.signedUrl;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-
-    if (message.attachment_mime?.startsWith('image/')) {
-      const img = document.createElement('img');
-      img.src = data.signedUrl;
-      img.alt = message.attachment_name ?? '';
-      img.className = 'max-h-48 rounded-lg object-cover';
-      link.appendChild(img);
-    } else {
-      link.className = 'text-xs underline underline-offset-2';
-      link.textContent = message.attachment_name ?? t.download;
-    }
-    container.appendChild(link);
-  }
-
   function appendMessageBubble(message: Message) {
     const thread = document.getElementById('messages-thread');
     const template = document.getElementById(
@@ -396,30 +349,16 @@ const t = ui.fr.account;
     ) as HTMLTemplateElement | null;
     if (!thread || !template) return;
 
-    const node = template.content.cloneNode(true) as DocumentFragment;
-    const row = node.querySelector('.message-row') as HTMLElement;
-    const bubble = node.querySelector('.message-bubble') as HTMLElement;
-    const isOwn = message.sender === 'client';
-
-    row.classList.add(isOwn ? 'justify-end' : 'justify-start');
-    bubble.classList.add(
-      ...(isOwn
-        ? ['bg-vert', 'text-white', 'rounded-br-sm']
-        : ['bg-surface-alt', 'text-ink', 'rounded-bl-sm']),
-    );
-    const bodyEl = node.querySelector('.message-body') as HTMLElement;
-    const timeEl = node.querySelector('.message-time');
-    const attachmentEl = node.querySelector('.message-attachment') as HTMLElement;
-    if (message.body) {
-      bodyEl.textContent = message.body;
-    } else {
-      bodyEl.classList.add('hidden');
-    }
-    if (timeEl) timeEl.textContent = formatMessageTime(message.created_at);
-    if (message.attachment_path) renderAttachment(attachmentEl, message);
-
-    thread.appendChild(node);
-    renderedMessageIds.add(message.id);
+    appendMessageBubbleToThread({
+      supabase,
+      thread,
+      template,
+      message,
+      isOwn: message.sender === 'client',
+      locale: 'fr-FR',
+      downloadLabel: t.download,
+      renderedMessageIds,
+    });
   }
 
   async function renderMessages(clientId: string) {
@@ -472,6 +411,12 @@ const t = ui.fr.account;
           hideSection('messages-empty');
           appendMessageBubble(message);
           scrollThreadToBottom();
+          if (message.sender === 'olivier') {
+            supabase
+              .from('messages')
+              .update({ read_at: new Date().toISOString() })
+              .eq('id', message.id);
+          }
         },
       )
       .subscribe();

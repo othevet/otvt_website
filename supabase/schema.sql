@@ -27,6 +27,8 @@ create table projects (
   updated_at timestamptz not null default now()
 );
 
+create index projects_client_id_idx on projects (client_id);
+
 create table invoices (
   id uuid primary key default gen_random_uuid(),
   client_id uuid not null references clients (id) on delete cascade,
@@ -37,6 +39,8 @@ create table invoices (
   issued_date date not null,
   created_at timestamptz not null default now()
 );
+
+create index invoices_client_id_idx on invoices (client_id);
 
 -- Row Level Security -----------------------------------------------------
 
@@ -74,8 +78,10 @@ create policy "client reads own invoices" on invoices
 --   <client_id>/2026-01-facture-003.pdf
 -- Le premier segment du chemin doit être l'UUID exact de clients.id.
 
-insert into storage.buckets (id, name, public)
-values ('invoices', 'invoices', false)
+-- file_size_limit et allowed_mime_types sont appliqués côté Storage, pas
+-- seulement par l'attribut "accept" du <input> côté client.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('invoices', 'invoices', false, 10485760, array['application/pdf'])
 on conflict (id) do nothing;
 
 create policy "client reads own invoice files" on storage.objects
