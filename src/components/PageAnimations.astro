@@ -25,6 +25,11 @@
     opacity: 1;
     transform: translateY(0);
   }
+  :root[data-intro-skip] [data-intro] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 
   [data-typewriter].is-typing::after {
     content: '';
@@ -122,10 +127,18 @@
     );
     if (elements.length === 0) return;
 
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Ne joue qu'une fois par session — le head script (Layout.astro) a
+    // déjà posé data-intro-skip avant le premier paint sur les
+    // navigations suivantes, donc pas besoin de rejouer la transition ici.
+    const alreadyShown = sessionStorage.getItem('otvt-intro-shown') === '1';
+    if (
+      alreadyShown ||
+      matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       elements.forEach((el) => el.classList.add('is-intro-in'));
       return;
     }
+    sessionStorage.setItem('otvt-intro-shown', '1');
 
     elements.forEach((el) => {
       el.style.transitionDelay = `${el.dataset.introDelay ?? '0'}ms`;

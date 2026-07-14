@@ -93,6 +93,21 @@ const structuredData = {
         document.addEventListener('astro:after-swap', applyStoredTheme);
       })();
     </script>
+    <script is:inline>
+      (function () {
+        // Le header est recréé à chaque navigation (nouveau noeud DOM).
+        // Sans ça, il repeindrait une frame masqué (data-intro) avant que
+        // PageAnimations.astro n'ait le temps de corriger — d'où un petit
+        // saut visible. On le fige en amont, avant même le premier paint.
+        function applyIntroSkip() {
+          if (sessionStorage.getItem('otvt-intro-shown') === '1') {
+            document.documentElement.dataset.introSkip = 'true';
+          }
+        }
+        applyIntroSkip();
+        document.addEventListener('astro:after-swap', applyIntroSkip);
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
