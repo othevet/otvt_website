@@ -11,6 +11,21 @@
     transform: translateY(0);
   }
 
+  [data-intro] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+  [data-intro='down'] {
+    transform: translateY(-14px);
+  }
+  [data-intro].is-intro-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   [data-typewriter].is-typing::after {
     content: '';
     display: inline-block;
@@ -29,6 +44,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    [data-intro] {
       opacity: 1;
       transform: none;
       transition: none;
@@ -96,7 +116,30 @@
     });
   }
 
+  function initIntro() {
+    const elements = document.querySelectorAll<HTMLElement>(
+      '[data-intro]:not(.is-intro-in)',
+    );
+    if (elements.length === 0) return;
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach((el) => el.classList.add('is-intro-in'));
+      return;
+    }
+
+    elements.forEach((el) => {
+      el.style.transitionDelay = `${el.dataset.introDelay ?? '0'}ms`;
+    });
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        elements.forEach((el) => el.classList.add('is-intro-in'));
+      });
+    });
+  }
+
   function initPageAnimations() {
+    initIntro();
     initScrollReveal();
     initTypewriter();
   }

@@ -30,7 +30,6 @@ const t = copy[locale];
   <div class="mx-auto w-full max-w-7xl px-6">
     <div
       class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
-      data-reveal
     >
       <!-- Terminal title bar -->
       <div
@@ -55,7 +54,7 @@ const t = copy[locale];
         </p>
         <!-- Layout -->
         <div class="grid sm:grid-cols-2 gap-12 sm:gap-16 items-center">
-          <div class="flex flex-col">
+          <div class="flex flex-col" data-intro="up" data-intro-delay="150">
             <p
               class="text-xs font-medium tracking-[0.15em] text-vert/85 uppercase mb-6"
             >
@@ -98,7 +97,11 @@ const t = copy[locale];
               </a>
             </div>
           </div>
-          <div class="flex justify-center sm:justify-end">
+          <div
+            class="flex justify-center sm:justify-end"
+            data-intro="up"
+            data-intro-delay="300"
+          >
             <div class="relative">
               <div class="absolute -inset-6 bg-jaune/20 rounded-full blur-3xl">
               </div>
