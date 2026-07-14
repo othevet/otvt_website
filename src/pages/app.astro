@@ -11,6 +11,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="mx-auto max-w-7xl">
       <div
         class="border border-vert/20 rounded-2xl overflow-hidden bg-surface shadow-sm"
+        data-reveal
       >
         <!-- Terminal title bar -->
         <div
@@ -31,7 +32,7 @@ import Layout from '../layouts/Layout.astro';
             <span class="text-vert font-semibold">olivier@otvt</span>:<span
               class="text-jaune">~</span
             ><span class="text-ink/70">$ </span><span
-              class="text-ink/70">ls -la projects/</span
+              class="text-ink/70" data-typewriter>ls -la projects/</span
             >
           </p>
 
@@ -53,7 +54,7 @@ import Layout from '../layouts/Layout.astro';
               href="https://disneyday-website.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              class="border border-vert/10 rounded-xl p-6 hover:border-vert/30 transition-colors block group"
+              class="border border-vert/10 rounded-xl p-6 hover:border-vert/30 hover:-translate-y-1 hover:shadow-md transition-all duration-200 block group"
             >
               <div class="flex items-center gap-2 mb-4">
                 <span class="w-2 h-2 rounded-full bg-vert"></span>
