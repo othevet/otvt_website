@@ -1700,7 +1700,10 @@ const tabButtonClass =
     if (!button || button.dataset.initialized) return;
     button.dataset.initialized = 'true';
     button.addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      // scope 'global' explicite : déjà le défaut de supabase-js, mais on
+      // ne veut pas dépendre d'un défaut implicite pour une action de
+      // sécurité — la déconnexion doit invalider tous les appareils.
+      await supabase.auth.signOut({ scope: 'global' });
       window.location.href = loginPath;
     });
   }
@@ -1710,7 +1713,10 @@ const tabButtonClass =
     if (!button || button.dataset.initialized) return;
     button.dataset.initialized = 'true';
     button.addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      // scope 'global' explicite : déjà le défaut de supabase-js, mais on
+      // ne veut pas dépendre d'un défaut implicite pour une action de
+      // sécurité — la déconnexion doit invalider tous les appareils.
+      await supabase.auth.signOut({ scope: 'global' });
       window.location.href = loginPath;
     });
   }

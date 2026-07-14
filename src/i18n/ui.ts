@@ -33,6 +33,8 @@ export const ui = {
       verifyCode: 'Valider',
       verifying: 'Vérification...',
       codeInvalid: 'Code invalide ou expiré. Redemandez un code.',
+      codeResendCooldown:
+        'Merci de patienter {{seconds}}s avant de redemander un code.',
       changeEmail: "Changer d'adresse email",
       checkingSession: 'Vérification de la session...',
       notLoggedIn: 'Vous devez vous connecter pour accéder à cet espace.',
@@ -58,6 +60,12 @@ export const ui = {
       messageError:
         "Erreur lors de l'envoi. Réessayez ou écrivez-moi directement à contact@otvt.fr.",
       attachmentTooLarge: 'Fichier trop volumineux (10 Mo maximum).',
+      dataTitle: 'Mes données',
+      exportData: 'Exporter mes données (JSON)',
+      exportError: "Erreur lors de l'export.",
+      deleteRequest: 'Demander la suppression de mon compte',
+      deleteRequestSent: 'Demande envoyée. Nous revenons vers vous sous 48h.',
+      deleteRequestError: "Erreur lors de l'envoi de la demande.",
     },
   },
   en: {
@@ -94,6 +102,7 @@ export const ui = {
       verifyCode: 'Verify',
       verifying: 'Verifying...',
       codeInvalid: 'Invalid or expired code. Request a new one.',
+      codeResendCooldown: 'Please wait {{seconds}}s before requesting a new code.',
       changeEmail: 'Use a different email',
       checkingSession: 'Checking your session...',
       notLoggedIn: 'You need to log in to access this area.',
@@ -119,6 +128,12 @@ export const ui = {
       messageError:
         'Something went wrong. Try again or email me directly at contact@otvt.fr.',
       attachmentTooLarge: 'File too large (10 MB maximum).',
+      dataTitle: 'My data',
+      exportData: 'Export my data (JSON)',
+      exportError: 'Something went wrong during export.',
+      deleteRequest: 'Request account deletion',
+      deleteRequestSent: "Request sent. We'll get back to you within 48h.",
+      deleteRequestError: 'Something went wrong sending the request.',
     },
   },
 } as const;

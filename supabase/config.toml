@@ -9,3 +9,9 @@ entrypoint = "./functions/notify-client-message/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/notify-client-message/*.html" ]
+
+[functions.log-login-device]
+enabled = true
+verify_jwt = true
+import_map = "./functions/log-login-device/deno.json"
+entrypoint = "./functions/log-login-device/index.ts"

@@ -187,11 +187,20 @@ import Layout from '../layouts/Layout.astro';
                   >, hébergement des données en Union européenne.
                 </li>
                 <li>
-                  Connexion sans mot de passe (lien magique envoyé par
-                  email), accès à vos données restreint techniquement au
-                  niveau de la base de données (chaque client ne peut
-                  interroger que ses propres données), chiffrement en
-                  transit (TLS).
+                  Connexion sans mot de passe (code de connexion à usage
+                  unique envoyé par email), accès à vos données restreint
+                  techniquement au niveau de la base de données (chaque
+                  client ne peut interroger que ses propres données),
+                  chiffrement en transit (TLS).
+                </li>
+                <li>
+                  Détection de connexion inhabituelle : lorsque vous vous
+                  connectez depuis un appareil ou navigateur qu'on ne
+                  reconnaît pas, nous conservons une empreinte technique
+                  (dérivée du navigateur et de l'adresse IP, pas les valeurs
+                  brutes) et vous envoyons un email de notification. Ces
+                  données sont utilisées uniquement à des fins de sécurité et
+                  ne sont jamais consultées à d'autres fins.
                 </li>
                 <li>
                   Durée de conservation : les factures sont soumises aux
@@ -202,9 +211,13 @@ import Layout from '../layouts/Layout.astro';
                   après le dernier contact.
                 </li>
                 <li>
-                  Vous pouvez demander la suppression de vos données de
-                  projet et de vos messages à tout moment par email, dans la
-                  limite de l'obligation de conservation des factures.
+                  Vous pouvez exporter vos données de projet, factures et
+                  messages à tout moment depuis votre espace client (bouton
+                  "Exporter mes données"), ou demander la suppression de
+                  votre compte et de vos données (bouton "Demander la
+                  suppression de mon compte" — nous revenons vers vous sous
+                  48h), dans la limite de l'obligation de conservation des
+                  factures.
                 </li>
               </ul>
             </div>

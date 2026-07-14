@@ -8,7 +8,14 @@ type LoginTranslations = {
   verifying: string;
   codeInvalid: string;
   verifyCode: string;
+  codeResendCooldown: string;
 };
+
+// Défense en profondeur côté client : Supabase applique déjà un cooldown
+// serveur (~60s par adresse) sur signInWithOtp, mais un retour visible
+// immédiat évite le spam-clic et les allers-retours inutiles.
+const CODE_RESEND_COOLDOWN_MS = 30_000;
+let lastCodeSentAt = 0;
 
 export function getRedirectPath(defaultPath: string) {
   const redirectParam = new URLSearchParams(window.location.search).get(
@@ -64,6 +71,18 @@ export function initLoginFlow(defaultPath: string, t: LoginTranslations) {
     const email = emailInput.value.trim();
     if (!email || !emailSubmit || !emailLabel) return;
 
+    const remainingCooldown =
+      CODE_RESEND_COOLDOWN_MS - (Date.now() - lastCodeSentAt);
+    if (remainingCooldown > 0) {
+      status.textContent = t.codeResendCooldown.replace(
+        '{{seconds}}',
+        String(Math.ceil(remainingCooldown / 1000)),
+      );
+      status.className = 'mt-5 text-sm text-danger';
+      status.classList.remove('hidden');
+      return;
+    }
+
     emailSubmit.setAttribute('disabled', 'true');
     emailLabel.textContent = t.sending;
     status.classList.add('hidden');
@@ -78,6 +97,7 @@ export function initLoginFlow(defaultPath: string, t: LoginTranslations) {
       status.className = 'mt-5 text-sm text-danger';
       status.classList.remove('hidden');
     } else {
+      lastCodeSentAt = Date.now();
       status.textContent = t.codeSent;
       status.className = 'mt-5 text-sm text-vert';
       status.classList.remove('hidden');
@@ -112,6 +132,10 @@ export function initLoginFlow(defaultPath: string, t: LoginTranslations) {
       codeSubmit.removeAttribute('disabled');
       codeLabel.textContent = t.verifyCode;
     } else {
+      // Best-effort : la connexion réussit dans tous les cas, cet appel ne
+      // fait que journaliser l'appareil et alerter par email s'il est
+      // nouveau. Ne jamais bloquer la redirection dessus.
+      supabase.functions.invoke('log-login-device').catch(() => {});
       window.location.href = getRedirectPath(defaultPath);
     }
   });

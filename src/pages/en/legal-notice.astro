@@ -181,10 +181,18 @@ import Layout from '../../layouts/Layout.astro';
                   >, with data hosted in the European Union.
                 </li>
                 <li>
-                  Passwordless login (magic link sent by email), access to
-                  your data is technically restricted at the database level
-                  (each client can only query their own data), encryption in
-                  transit (TLS).
+                  Passwordless login (one-time login code sent by email),
+                  access to your data is technically restricted at the
+                  database level (each client can only query their own
+                  data), encryption in transit (TLS).
+                </li>
+                <li>
+                  Unusual sign-in detection: when you sign in from a device
+                  or browser we don't recognize, we keep a technical
+                  fingerprint (derived from your browser and IP address, not
+                  the raw values) and send you a notification email. This
+                  data is used solely for security purposes and never for
+                  anything else.
                 </li>
                 <li>
                   Retention period: invoices are subject to statutory
@@ -195,9 +203,12 @@ import Layout from '../../layouts/Layout.astro';
                   after the last contact.
                 </li>
                 <li>
-                  You can request the deletion of your project data and
-                  messages at any time by email, within the limits of the
-                  invoice retention obligation.
+                  You can export your project, invoice and message data at
+                  any time from your client area ("Export my data" button),
+                  or request deletion of your account and data ("Request
+                  account deletion" button — we'll get back to you within
+                  48h), within the limits of the invoice retention
+                  obligation.
                 </li>
               </ul>
             </div>
