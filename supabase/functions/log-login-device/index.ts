@@ -52,9 +52,9 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
 
-  // Le runtime Supabase a déjà refusé la requête si le JWT est absent ou
-  // invalide (verify_jwt=true) ; on le revalide ici pour récupérer l'email
-  // de façon fiable, jamais fourni par le corps de la requête.
+  // Vérification manuelle du JWT (voir le commentaire en tête de fichier) :
+  // on récupère l'email de façon fiable, jamais fourni par le corps de la
+  // requête.
   const callerClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     global: { headers: { Authorization: req.headers.get('Authorization') ?? '' } },
   });
