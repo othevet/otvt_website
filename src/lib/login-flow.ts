@@ -132,13 +132,10 @@ export function initLoginFlow(defaultPath: string, t: LoginTranslations) {
       codeSubmit.removeAttribute('disabled');
       codeLabel.textContent = t.verifyCode;
     } else {
-      // DEBUG TEMPORAIRE : affiche le résultat de l'appel avant de
-      // rediriger, pour diagnostiquer pourquoi login_events reste vide.
-      // À retirer une fois le problème identifié.
-      const debugResult = await supabase.functions
-        .invoke('log-login-device')
-        .catch((err) => ({ data: null, error: String(err) }));
-      alert('log-login-device: ' + JSON.stringify(debugResult));
+      // Best-effort : la connexion réussit dans tous les cas, cet appel ne
+      // fait que journaliser l'appareil et alerter par email s'il est
+      // nouveau. Ne jamais bloquer la redirection dessus.
+      supabase.functions.invoke('log-login-device').catch(() => {});
       window.location.href = getRedirectPath(defaultPath);
     }
   });
