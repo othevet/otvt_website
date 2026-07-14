@@ -36,7 +36,9 @@ Un seul mécanisme d'auth pour tout le monde (clients **et** admin) : email + co
 
 ## Modèle de données et RLS
 
-Schéma de référence : `supabase/schema.sql` (à jour, généré à partir des migrations dans `supabase/migrations/`, qui sont la source de vérité appliquée réellement en base). Quatre tables : `clients`, `projects`, `invoices`, `messages`.
+Schéma de référence : `supabase/schema.sql` (à jour, généré à partir des migrations dans `supabase/migrations/`, qui sont la source de vérité appliquée réellement en base). Six tables : `clients`, `projects`, `invoices`, `messages`, `prospects`, `tasks`.
+
+`prospects` et `tasks` sont strictement internes à l'admin (pipeline commercial et tâches de projet) : contrairement aux quatre autres tables, elles n'ont **aucune** policy client, seulement une policy "admin full access" — rien de ce qu'elles contiennent n'est exposé à l'espace client, même indirectement.
 
 Principe RLS constant dans tout le projet : **les policies s'additionnent, elles ne se remplacent jamais**. Postgres combine plusieurs policies permissives pour une même action par un OU logique — donc chaque nouvelle capacité (l'admin peut tout faire, un client peut marquer un message comme lu, etc.) est ajoutée comme une policy **supplémentaire**, avec un nom distinct, jamais en modifiant une policy client existante. C'est ce qui a permis d'ajouter progressivement l'admin complet et la messagerie sans jamais casser le comportement client déjà en prod.
 
@@ -71,9 +73,11 @@ Les deux côtés s'abonnent à `postgres_changes` sur `messages` (`supabase.chan
 
 ## Back-office `/admin`
 
-Un seul fichier (`src/pages/admin.astro`), onglets Clients / Projets / Factures / Messages basculés en JS (`hidden`/visible), pas de framework, pas de composants partagés — même style que le reste du site : DOM manipulé directement (`document.getElementById`, `<template>` clonés pour les listes répétées), formulaires avec un `dataset.initialized` pour éviter les doubles écouteurs lors des re-render Astro (View Transitions).
+Un seul fichier (`src/pages/admin.astro`), onglets Clients / Projets / Factures / Messages / Prospects / Tâches basculés en JS (`hidden`/visible), pas de framework, pas de composants partagés — même style que le reste du site : DOM manipulé directement (`document.getElementById`, `<template>` clonés pour les listes répétées), formulaires avec un `dataset.initialized` pour éviter les doubles écouteurs lors des re-render Astro (View Transitions).
 
-CRUD complet sur `clients`/`projects`/`invoices`/`messages`, en s'appuyant entièrement sur les policies admin `for all` ajoutées au schéma (voir plus haut) — aucune route serveur, les mêmes appels `supabase-js` que partout ailleurs.
+CRUD complet sur `clients`/`projects`/`invoices`/`messages`/`prospects`/`tasks`, en s'appuyant entièrement sur les policies admin `for all` ajoutées au schéma (voir plus haut) — aucune route serveur, les mêmes appels `supabase-js` que partout ailleurs.
+
+Prospects et Tâches suivent le même pattern formulaire-en-haut/liste-en-dessous que les autres onglets, avec deux ajouts : un menu de filtre (par statut pour Prospects, par projet pour Tâches — `<select>` simple, pas de multi-sélection) et une mise en évidence des échéances dépassées (`next_follow_up` / `due_date` comparés à la date du jour en chaîne ISO, qui se compare correctement lexicographiquement). Le sélecteur de projet du formulaire Tâches est peuplé depuis un tableau `projects` désormais gardé en mémoire au niveau module (alimenté par `loadProjects()`), plutôt que rechargé séparément.
 
 ## Déploiement
 

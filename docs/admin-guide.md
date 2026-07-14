@@ -14,7 +14,9 @@ Si vous entrez un autre email que `contact@otvt.fr`, vous atterrirez sur l'espac
 
 ## Vue d'ensemble
 
-Quatre onglets en haut de la page : **Clients**, **Projets**, **Factures**, **Messages**. Chaque onglet a la même logique : un formulaire d'ajout en haut, une liste en dessous.
+Six onglets en haut de la page : **Clients**, **Projets**, **Factures**, **Messages**, **Prospects**, **Tâches**. Chaque onglet a la même logique : un formulaire d'ajout en haut, une liste en dessous.
+
+Prospects et Tâches sont **strictement internes** : rien de ce qui s'y trouve n'est jamais visible depuis l'espace client, même indirectement (le client voit juste le statut global d'un projet, jamais la liste de tâches associée).
 
 ## Clients
 
@@ -42,6 +44,27 @@ Le client voit ses factures dans son espace et peut télécharger le PDF (lien v
 - Cliquez sur un client pour ouvrir le fil de discussion.
 - Zone de réponse en bas : texte et/ou fichier joint (PDF ou image, 10 Mo max) — vous pouvez envoyer l'un, l'autre, ou les deux.
 - Le client reçoit un email automatique dès que vous répondez (via Resend). Si les messages n'apparaissent pas instantanément côté client sans recharger la page, c'est normal — voir [architecture.md](architecture.md#temps-réel) pour activer l'option "temps réel" côté Supabase si vous le souhaitez.
+
+## Prospects
+
+Pipeline commercial, avant qu'un contact devienne un client officiel (pas de lien direct avec la table Clients — le passage de l'un à l'autre se fait à la main en créant la ligne client une fois l'affaire conclue).
+
+- **Ajouter** : nom (seul champ obligatoire), email (optionnel), statut, date de relance (optionnel), notes.
+- **Statuts** : À contacter → En discussion → Devis envoyé → Gagné / Perdu. Changez le statut directement depuis le menu déroulant sur la ligne du prospect.
+- **Relance en retard** : si la date de relance est dépassée et que le prospect n'est pas encore Gagné/Perdu, la date s'affiche en rouge. Un badge sur l'onglet "Prospects" indique aussi le nombre total de relances en retard, comme le badge de messages non lus.
+- **Filtrer** : menu déroulant en haut de la liste pour n'afficher qu'un statut à la fois.
+- **Supprimer** : bouton "Supprimer" sur la ligne.
+
+## Tâches
+
+Liste de tâches internes, chacune rattachée à un projet.
+
+- **Ajouter** : choisissez le projet, un titre, une priorité (Faible / Moyenne / Élevée, Moyenne par défaut), une échéance optionnelle.
+- **Cocher une tâche** : la case à gauche du titre marque la tâche comme terminée (le titre passe en barré).
+- **Échéance dépassée** : affichée en rouge si la date est passée et que la tâche n'est pas encore cochée.
+- **Filtrer / grouper par projet** : le menu déroulant en haut de la liste permet d'isoler un seul projet ; sur "Tous les projets", la liste est automatiquement groupée par projet (avec le nom du client).
+- **Supprimer un projet ou un client supprime aussi ses tâches** (cascade), comme pour les factures et messages.
+- **Supprimer** : bouton "Supprimer" sur la ligne.
 
 ## Notes utiles
 
