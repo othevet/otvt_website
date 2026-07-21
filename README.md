@@ -9,7 +9,7 @@ Site vitrine + espace client d'Olivier Thévet, développeur web indépendant. B
 - **[Supabase](https://supabase.com)** — Postgres (RLS), Auth (email OTP), Storage (factures + pièces jointes), Edge Functions.
 - **[Resend](https://resend.com)** — emails transactionnels (SMTP pour Supabase Auth, API pour la notification "nouveau message").
 - **[Web3Forms](https://web3forms.com)** — formulaire de contact public et notification "message client" (ne peut notifier que le propriétaire du compte, voir `docs/architecture.md`).
-- Déployé sur **Vercel** (déploiement automatique sur push vers `main`, zero-config pour un site Astro statique).
+- Déployé sur **Netlify** (déploiement automatique sur push vers `main`, build via `netlify.toml`).
 
 ## Démarrer en local
 
