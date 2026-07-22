@@ -88,6 +88,6 @@ Prospects et Tâches suivent le même pattern formulaire-en-haut/liste-en-dessou
 
 ## Déploiement
 
-- **Site** : push sur `main` → build Cloudflare Pages automatique (build command `npm run build`, output directory `dist`, configurés dans le dashboard Cloudflare — pas de fichier de config dans le repo).
-- **Base de données / fonctions** : ne sont **pas** déployées par Cloudflare Pages. Le repo est lié au projet Supabase "otvt" (`supabase link --project-ref quylkiyusujqkluhhwgs`, réf visible dans `supabase/migrations/20260711135914_notify_client_message_trigger.sql`). Nouvelle migration : `supabase migration new <nom>`, écrire le SQL, `supabase db push`. Nouvelle version de la Edge Function : `supabase functions deploy notify-client-message`.
+- **Site** : push sur `main` → build Netlify automatique (config dans `netlify.toml` — `npm run build`, publie `dist/`).
+- **Base de données / fonctions** : ne sont **pas** déployées par Netlify. Le repo est lié au projet Supabase "otvt" (`supabase link --project-ref quylkiyusujqkluhhwgs`, réf visible dans `supabase/migrations/20260711135914_notify_client_message_trigger.sql`). Nouvelle migration : `supabase migration new <nom>`, écrire le SQL, `supabase db push`. Nouvelle version de la Edge Function : `supabase functions deploy notify-client-message`.
 - Le fichier `supabase/schema.sql` est un **document de référence humain** (à jour, lu d'un coup pour comprendre le schéma) — les migrations dans `supabase/migrations/` sont la source de vérité réellement appliquée. En cas de divergence, faire confiance aux migrations et corriger `schema.sql`.

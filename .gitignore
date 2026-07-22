@@ -23,7 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
-.wrangler
+.netlify
 
 # Supabase CLI local cache
 supabase/.temp/
