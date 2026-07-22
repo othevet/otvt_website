@@ -123,10 +123,10 @@ import Layout from '../../layouts/Layout.astro';
                   email.
                 </li>
                 <li>
-                  No cookies are set on this site. The client area (see
-                  below) uses the browser's <code>localStorage</code> to keep
-                  you signed in — this is not a cookie, and is strictly
-                  necessary for a feature you opt into by logging in.
+                  No cookies are set on this site. The browser's <code
+                    >localStorage</code
+                  > is used only to remember your light/dark theme
+                  preference — this is not a cookie.
                 </li>
                 <li>
                   The contact form is processed by the third-party provider
@@ -147,65 +147,6 @@ import Layout from '../../layouts/Layout.astro';
                   >contact@otvt.fr</a
                 >
               </p>
-            </div>
-
-            <div>
-              <h2 class="text-base font-semibold text-ink mb-2">
-                Client area
-              </h2>
-              <p>
-                The client area (login, project tracking, invoices,
-                messaging) processes data necessary to perform our
-                contractual relationship, not on the basis of consent.
-              </p>
-              <ul class="mt-3 space-y-2 list-disc list-inside">
-                <li>
-                  Data involved: login email, project information, invoices
-                  (and the information they contain). The client area's
-                  message form works just like the public contact form (see
-                  above): no history is stored within the client area
-                  itself.
-                </li>
-                <li>
-                  Sub-processor: <a
-                    href="https://supabase.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-vert underline decoration-vert/40 underline-offset-2 hover:text-vert/85 transition-colors"
-                    >Supabase Inc.</a
-                  >, with data hosted in the European Union.
-                </li>
-                <li>
-                  Passwordless login (one-time login code sent by email),
-                  access to your data is technically restricted at the
-                  database level (each client can only query their own
-                  data), encryption in transit (TLS).
-                </li>
-                <li>
-                  Unusual sign-in detection: when you sign in from a device
-                  or browser we don't recognize, we keep a technical
-                  fingerprint (derived from your browser and IP address, not
-                  the raw values) and send you a notification email. This
-                  data is used solely for security purposes and never for
-                  anything else.
-                </li>
-                <li>
-                  Retention period: invoices are subject to statutory
-                  accounting retention obligations (around 10 years under
-                  French law) and cannot be deleted before that period, even
-                  on request. Project data and messages are kept for the
-                  duration of the contractual relationship, then 3 years
-                  after the last contact.
-                </li>
-                <li>
-                  You can export your project, invoice and message data at
-                  any time from your client area ("Export my data" button),
-                  or request deletion of your account and data ("Request
-                  account deletion" button — we'll get back to you within
-                  48h), within the limits of the invoice retention
-                  obligation.
-                </li>
-              </ul>
             </div>
           </div>
         </div>

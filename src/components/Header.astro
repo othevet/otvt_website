@@ -5,7 +5,6 @@ import { ui } from '../i18n/ui';
 const locale = (Astro.currentLocale ?? 'fr') as Locale;
 const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
 const t = ui[locale];
-const accountLabel = t.account.accountEyebrow;
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const pageKey = getPageKeyFromPath(currentPath, locale) ?? 'home';
 const switchHref = routes[otherLocale][pageKey];
@@ -90,31 +89,6 @@ const pages = [
           >
         </button>
         <a
-          href={routes[locale].login}
-          aria-label={accountLabel}
-          title={accountLabel}
-          class="relative p-2 rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
-        >
-          <span
-            class="account-unread-dot hidden absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-vert ring-2 ring-bg"
-          ></span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
-              cx="12"
-              cy="7"
-              r="4"></circle></svg
-          >
-        </a>
-        <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
           class="px-3 py-1.5 text-xs font-semibold rounded-full border border-vert/20 text-ink/70 hover:text-vert hover:border-vert/40 transition-colors"
@@ -160,30 +134,6 @@ const pages = [
             ></path></svg
           >
         </button>
-        <a
-          href={routes[locale].login}
-          aria-label={accountLabel}
-          class="relative p-2 rounded-full border border-vert/20 text-ink/70"
-        >
-          <span
-            class="account-unread-dot hidden absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-vert ring-2 ring-bg"
-          ></span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            ><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle
-              cx="12"
-              cy="7"
-              r="4"></circle></svg
-          >
-        </a>
         <a
           href={switchHref}
           aria-label={t.langSwitchLabel}
@@ -271,39 +221,6 @@ const pages = [
 </style>
 
 <script>
-  import { supabase } from '../lib/supabase';
-
-  async function initUnreadBadge() {
-    const dots = document.querySelectorAll<HTMLElement>('.account-unread-dot');
-    if (dots.length === 0) return;
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) {
-      dots.forEach((dot) => dot.classList.add('hidden'));
-      return;
-    }
-
-    const { data: client } = await supabase
-      .from('clients')
-      .select('id')
-      .maybeSingle();
-    if (!client) {
-      dots.forEach((dot) => dot.classList.add('hidden'));
-      return;
-    }
-
-    const { count } = await supabase
-      .from('messages')
-      .select('id', { count: 'exact', head: true })
-      .eq('client_id', client.id)
-      .eq('sender', 'olivier')
-      .is('read_at', null);
-
-    dots.forEach((dot) => dot.classList.toggle('hidden', !count));
-  }
-
   function initThemeToggle() {
     const buttons = document.querySelectorAll<HTMLButtonElement>(
       '[data-theme-toggle]',
@@ -344,8 +261,6 @@ const pages = [
 
   initThemeToggle();
   initMenuToggle();
-  initUnreadBadge();
   document.addEventListener('astro:page-load', initThemeToggle);
   document.addEventListener('astro:page-load', initMenuToggle);
-  document.addEventListener('astro:page-load', initUnreadBadge);
 </script>

@@ -124,12 +124,10 @@ import Layout from '../layouts/Layout.astro';
                   moment par email.
                 </li>
                 <li>
-                  Aucun cookie n'est déposé sur ce site. L'espace client
-                  (voir ci-dessous) utilise le <code>localStorage</code> du
-                  navigateur pour maintenir votre session connectée — ce n'est
-                  pas un cookie, et c'est strictement nécessaire au
-                  fonctionnement d'une fonctionnalité que vous activez
-                  vous-même en vous connectant.
+                  Aucun cookie n'est déposé sur ce site. Le <code
+                    >localStorage</code
+                  > du navigateur est utilisé uniquement pour mémoriser votre
+                  préférence de thème clair/sombre — ce n'est pas un cookie.
                 </li>
                 <li>
                   Le formulaire de contact est traité par le prestataire
@@ -150,70 +148,6 @@ import Layout from '../layouts/Layout.astro';
                   >contact@otvt.fr</a
                 >
               </p>
-            </div>
-
-            <div>
-              <h2 class="text-base font-semibold text-ink mb-2">
-                Espace client
-              </h2>
-              <p>
-                L'espace client (connexion, suivi de projet, factures,
-                messagerie) traite des données nécessaires à l'exécution de
-                la relation contractuelle avec vous, et non sur la base de
-                votre consentement.
-              </p>
-              <ul class="mt-3 space-y-2 list-disc list-inside">
-                <li>
-                  Données concernées : email de connexion, informations de
-                  projet, factures (et les informations qu'elles contiennent).
-                  Le formulaire de message de l'espace client fonctionne
-                  comme le formulaire de contact public (voir ci-dessus) :
-                  aucun historique n'est conservé dans l'espace client
-                  lui-même.
-                </li>
-                <li>
-                  Sous-traitant : <a
-                    href="https://supabase.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-vert underline decoration-vert/40 underline-offset-2 hover:text-vert/85 transition-colors"
-                    >Supabase Inc.</a
-                  >, hébergement des données en Union européenne.
-                </li>
-                <li>
-                  Connexion sans mot de passe (code de connexion à usage
-                  unique envoyé par email), accès à vos données restreint
-                  techniquement au niveau de la base de données (chaque
-                  client ne peut interroger que ses propres données),
-                  chiffrement en transit (TLS).
-                </li>
-                <li>
-                  Détection de connexion inhabituelle : lorsque vous vous
-                  connectez depuis un appareil ou navigateur qu'on ne
-                  reconnaît pas, nous conservons une empreinte technique
-                  (dérivée du navigateur et de l'adresse IP, pas les valeurs
-                  brutes) et vous envoyons un email de notification. Ces
-                  données sont utilisées uniquement à des fins de sécurité et
-                  ne sont jamais consultées à d'autres fins.
-                </li>
-                <li>
-                  Durée de conservation : les factures sont soumises aux
-                  obligations légales de conservation comptable (environ 10
-                  ans) et ne peuvent pas être supprimées avant ce délai, même
-                  sur demande. Les données de projet et les messages sont
-                  conservés le temps de la relation contractuelle, puis 3 ans
-                  après le dernier contact.
-                </li>
-                <li>
-                  Vous pouvez exporter vos données de projet, factures et
-                  messages à tout moment depuis votre espace client (bouton
-                  "Exporter mes données"), ou demander la suppression de
-                  votre compte et de vos données (bouton "Demander la
-                  suppression de mon compte" — nous revenons vers vous sous
-                  48h), dans la limite de l'obligation de conservation des
-                  factures.
-                </li>
-              </ul>
             </div>
           </div>
         </div>
